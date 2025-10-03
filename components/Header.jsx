@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <header>
@@ -19,8 +19,12 @@ const Header = () => {
       </div>
       <div className="navbar d-flex justify-content-center">
         <ul className="d-flex list-unstyled">
-          <li>Home</li>
-          <li>Giochi da Tavolo</li>
+          <Link to="/">
+            <li>Home</li>
+          </Link>
+          <Link to="/giochi-da-tavolo">
+            <li>Giochi da Tavolo</li>
+          </Link>
           <li>Carte Collezionabili</li>
           <li>Cardistry</li>
           <li>Modellismo</li>
