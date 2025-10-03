@@ -1,3 +1,8 @@
+/* --------------utilities---------------- */
+.w-100px{
+  width: 100px;
+}
+
 /* -----------------------HEADER--------------------- */
 header {
   background-color: rgb(37, 4, 68);
@@ -24,4 +29,19 @@ li {
   background-image: url("/public/imgs/jumbo.webp");
   object-fit: cover;
   height: 600px;
+}
+
+ header a{
+  color: white;
+}
+
+/* --------------------CARRELLO------------------------- */
+
+.cart-list li{
+  color: rgb(0, 0, 0);
+  list-style-type: none;
+}
+
+.cart-list img{
+  width: 100px;
 }

@@ -12,9 +12,12 @@ const Header = () => {
           />
         </div>
         <div className="icons">
-          <i className="fa-solid fa-heart"></i>
-          <i className="fa-solid fa-user"></i>
-          <i className="fa-solid fa-cart-shopping"></i>
+          <Link to="/wishlist-prodotti">
+            <i className="fa-solid fa-heart"></i>
+          </Link>
+          <Link to="/carrello-prodotti">
+            <i className="fa-solid fa-cart-shopping"></i>
+          </Link>
         </div>
       </div>
       <div className="navbar d-flex justify-content-center">

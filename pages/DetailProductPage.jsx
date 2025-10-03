@@ -1,5 +1,4 @@
-import React from "react";
-
+import { Link } from "react-router-dom";
 const DetailProductPage = () => {
   return (
     <div>
@@ -10,7 +9,7 @@ const DetailProductPage = () => {
           </div>
           <div className="row">
             <div className="col-12 col-md-6">
-              <img src="/imgs/virtuoso.jpg" alt="" />
+              <img className="img-fluid" src="/imgs/virtuoso.jpg" alt="" />
             </div>
             <div className="col-12 col-md-6">
               <h3>NOME DEL PRODOTTO</h3>
@@ -32,10 +31,12 @@ const DetailProductPage = () => {
               </p>
               <hr />
               <div className="d-flex gap-3 align-items-center">
-                <button className="btn btn-primary">
-                  Aggiungi al Carrello
-                </button>
-                <i className="fa-solid fa-heart"></i>
+                <Link to="/carrello-prodotti">
+                  <div className="btn btn-primary">Aggiungi al Carrello</div>
+                </Link>
+                <Link to="/wishlist-prodotti">
+                  <i className="fa-solid fa-heart"></i>
+                </Link>
                 <div>quantità</div>
               </div>
             </div>
