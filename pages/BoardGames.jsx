@@ -9,7 +9,7 @@ const BoardGames = () => {
           </div>
           <div className="row">
             <div className="col-sm-12  col-md-3 category-card">
-              <Link to="/giochi-da-tavolo">
+              <Link to="/dettaglio-prodotto">
                 <div className="card-image">
                   <img className="img-fluid" src="/imgs/virtuoso.jpg" alt="" />
                 </div>

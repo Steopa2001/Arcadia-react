@@ -1,33 +1,27 @@
-
-
 /* -----------------------HEADER--------------------- */
-header{
+header {
   background-color: rgb(37, 4, 68);
   padding: 20px;
 }
 
-header img{
+header img {
   width: 150px;
 }
-.icons{
+.icons {
   color: #fff;
-  
 }
-.fa-solid{
+.fa-solid {
   padding: 15px;
 }
 
-li{
+li {
   color: #fff;
   margin-left: 15px;
 }
 
 /* -----------------------JUMBOTRON--------------------- */
-.jumbotron{
+.jumbotron {
   background-image: url("/public/imgs/jumbo.webp");
   object-fit: cover;
   height: 600px;
-
 }
-
-/* -----------------------CARDS--------------------- */
