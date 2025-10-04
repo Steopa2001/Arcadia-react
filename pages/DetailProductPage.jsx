@@ -9,7 +9,7 @@ const DetailProductPage = () => {
           </div>
           <div className="row">
             <div className="col-12 col-md-6">
-              <img className="img-fluid" src="/imgs/virtuoso.jpg" alt="" />
+              <img className="img-fluid" src="/img/virtuoso.jpg" alt="" />
             </div>
             <div className="col-12 col-md-6">
               <h3>NOME DEL PRODOTTO</h3>

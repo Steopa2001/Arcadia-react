@@ -26,7 +26,7 @@ li {
 
 /* -----------------------JUMBOTRON--------------------- */
 .jumbotron {
-  background-image: url("/public/imgs/jumbo.webp");
+  background-image: url("/public/img/jumbo.webp");
   object-fit: cover;
   height: 600px;
 }

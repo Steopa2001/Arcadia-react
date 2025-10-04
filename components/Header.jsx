@@ -3,7 +3,7 @@ const Header = () => {
   return (
     <header>
       <div className="d-flex justify-content-between align-items-center">
-        <img src="./imgs/Arcadia-logo.png" alt="logo" />
+        <img src="./img/Arcadia-logo.png" alt="logo" />
         <div>
           <input
             className="form-control"
