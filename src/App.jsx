@@ -14,6 +14,9 @@ function App() {
           <Route index element={<Homepage />} />
           <Route path="/dettaglio-prodotto" element={<DetailProductPage />} />
           <Route path="/giochi-da-tavolo" element={<BoardGames />} />
+          <Route path="/carte-collezionabili" element={<BoardGames />} />
+          <Route path="/cardistry" element={<BoardGames />} />
+          <Route path="/modellismo" element={<BoardGames />} />
           <Route path="/carrello-prodotti" element={<Cart />} />
           <Route path="/wishlist-prodotti" element={<WishList />} />
         </Route>

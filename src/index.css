@@ -1,5 +1,5 @@
 /* --------------utilities---------------- */
-.w-100px{
+.w-100px {
   width: 100px;
 }
 
@@ -12,9 +12,11 @@ header {
 header img {
   width: 150px;
 }
+
 .icons {
   color: #fff;
 }
+
 .fa-solid {
   padding: 15px;
 }
@@ -26,22 +28,22 @@ li {
 
 /* -----------------------JUMBOTRON--------------------- */
 .jumbotron {
-  background-image: url("/public/img/jumbo.webp");
-  object-fit: cover;
+  background-image: url("/img/jumbo.webp");
+  object-fit: contain;
   height: 600px;
 }
 
- header a{
+header a {
   color: white;
 }
 
 /* --------------------CARRELLO------------------------- */
 
-.cart-list li{
+.cart-list li {
   color: rgb(0, 0, 0);
   list-style-type: none;
 }
 
-.cart-list img{
+.cart-list img {
   width: 100px;
 }

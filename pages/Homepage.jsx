@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 const homepage = () => {
   // variabile di stato
   const [games, setGames] = useState([]);
+  const [categories, setCategories] = useState([]);
+
   // chiamata per tutti i prodotti
   const fetchGames = () => {
     axios.get("http://localhost:3000/products").then((resp) => {
@@ -11,7 +13,15 @@ const homepage = () => {
     });
   };
 
+  const fetchCategories = () => {
+    axios.get("http://localhost:3000/categories").then((resp) => {
+      setCategories(resp.data);
+    })
+  }
+
   useEffect(fetchGames, []);
+
+  useEffect(fetchCategories, []);
 
   return (
     <>
@@ -19,28 +29,18 @@ const homepage = () => {
       <div className="jumbotron"></div>
       <div className="container my-5">
         <div className="row">
-          <div className="col-sm-12  col-md-3 category-card">
-            <Link to="/giochi-da-tavolo">
-              <div className="card-image">
-                <img className="img-fluid" src="/img/giochi-tavolo-categoria.jpg" alt="" />
+          {categories.map((category) => {
+            return (
+              <div className="col-sm-12  col-md-3 category-card">
+                <Link to={`/${category.slug}`}>
+                  <div className="card-image">
+                    <img className="img-fluid" src={category.image} alt={category.name} />
+                  </div>
+                </Link>
               </div>
-            </Link>
-          </div>
-          <div className="col-sm-12 col-md-3 category-card">
-            <div className="card-image">
-              <img className="img-fluid" src="/img/carte-collezionabili.jpeg" alt="" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-3 category-card">
-            <div className="card-image">
-              <img id="cardistry" className="img-fluid" src="/img/cardistry.png" alt="" />
-            </div>
-          </div>
-          <div className="col-sm-12 col-md-3 category-card">
-            <div className="card-image">
-              <img className="img-fluid" src="/img/modellismo.jpg" alt="" />
-            </div>
-          </div>
+            )
+          })}
+
         </div>
         <hr />
         {/*----------LISTA PRODOTTI--------------  */}
@@ -50,7 +50,7 @@ const homepage = () => {
               <div className="col-12 col-md-3" key={game.id}>
                 <Link to="/dettaglio-prodotto">
                   <div className="card-image">
-                    <img className="img-fluid" src={game.image} alt="" />
+                    <img className="img-fluid" src={game.image} alt={game.name} />
                   </div>
                 </Link>
               </div>
