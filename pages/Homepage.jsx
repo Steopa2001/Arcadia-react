@@ -25,6 +25,7 @@ const Homepage = () => {
       setGames(resp.data);
     });
   }, []);
+  
 
   return (
     <div className="homepage">
