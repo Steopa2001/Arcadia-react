@@ -1,49 +1,54 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 const DetailProductPage = () => {
+  const { id } = useParams();
+  const [products, setProducts] = useState({});
+  const fetchProduct = () => {
+    axios.get(`http://localhost:3000/products/${id}`).then((resp) => {
+      setProducts(resp.data);
+    });
+  };
+
+  useEffect(fetchProduct, []);
+
   return (
-    <div>
       <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h2>PAGINA DI DETTAGLIO</h2>
+        <div className="row  py-5">
+          <div className="col-12 col-md-6">
+            <img
+              className="img-fluid"
+              src={products.image}
+              alt={products.name}
+            />
           </div>
-          <div className="row">
-            <div className="col-12 col-md-6">
-              <img className="img-fluid" src="/img/virtuoso.jpg" alt="" />
-            </div>
-            <div className="col-12 col-md-6">
-              <h3>NOME DEL PRODOTTO</h3>
-              <p>
-                <em>prezzo</em> 20$
-              </p>
-              <hr />
-              <p>genere: ... </p>
-              <p>Numero giocatori: ... </p>
-              <p>età consigliata: ... </p>
-              <p>lingua: ...</p>
-              <p>durata: ...</p>
-              <p>difficoltà: ...</p>
-              <p>
-                descrizione: Lorem ipsum dolor sit, amet consectetur adipisicing
-                elit. Magnam ullam quisquam reprehenderit tenetur suscipit,
-                dicta praesentium alias neque fugit veniam voluptatem! Est
-                dolores quam beatae debitis explicabo error tempora voluptatem.
-              </p>
-              <hr />
-              <div className="d-flex gap-3 align-items-center">
-                <Link to="/carrello-prodotti">
-                  <div className="btn btn-primary">Aggiungi al Carrello</div>
-                </Link>
-                <Link to="/wishlist-prodotti">
-                  <i className="fa-solid fa-heart"></i>
-                </Link>
-                <div>quantità</div>
-              </div>
+          <div className="col-12 col-md-6">
+            <h3>{products.name}</h3>
+            <p>
+              <em>{products.price}</em>
+            </p>
+            <hr />
+            <p>{products.genre} </p>
+            <p>{products.player_number}</p>
+            <p>{products.recommended_age}</p>
+            <p>{products.language}</p>
+            <p>{products.duration}</p>
+            <p>{products.complexity}</p>
+            <p>{products.description}</p>
+            <hr />
+            <div className="d-flex gap-3 align-items-center">
+              <Link to="/carrello-prodotti">
+                <div className="btn btn-primary">Aggiungi al Carrello</div>
+              </Link>
+              <Link to="/wishlist-prodotti">
+                <i className="fa-solid fa-heart"></i>
+              </Link>
+              <div>quantità</div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
 

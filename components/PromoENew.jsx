@@ -1,6 +1,16 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 const PromoENew = () => {
+  const [promos, setPromos] = useState([]);
+  // chiamate API
+  useEffect(() => {
+    axios.get("http://localhost:3000/products").then((resp) => {
+      setPromos(resp.data);
+    });
+  }, []);
+
   const promoRef = useRef(null);
   const newRef = useRef(null);
 
@@ -24,48 +34,19 @@ const PromoENew = () => {
           >
             &#10094;
           </button>
-
           <div className="products" ref={promoRef}>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 1" />
-              <p>Promo 1</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 2" />
-              <p>Promo 2</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 3" />
-              <p>Promo 3</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 4" />
-              <p>Promo 4</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 5" />
-              <p>Promo 5</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 6" />
-              <p>Promo 6</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 7" />
-              <p>Promo 7</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 8" />
-              <p>Promo 8</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 9" />
-              <p>Promo 9</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Promo 10" />
-              <p>Promo 10</p>
-            </div>
+            {promos.map((promo) => {
+              if (promo.discount != 0.00) {
+                return (
+                  <div className="product-card" key={promo.id}>
+                    <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                      <img src={promo.image} alt={promo.name} />
+                    </Link>
+                    <p>{promo.name}</p>
+                  </div>
+                );
+              }
+            })}
           </div>
 
           <button
@@ -79,7 +60,7 @@ const PromoENew = () => {
 
       {/* NUOVI ARRIVI */}
       <div className="promo-section">
-        <h2>Nuovi Arrivi</h2>
+        <h2>Le nostre scelte</h2>
         <div className="scroll-container">
           <button
             className="scroll-btn left"
@@ -89,7 +70,19 @@ const PromoENew = () => {
           </button>
 
           <div className="products" ref={newRef}>
-            <div className="product-card">
+            {promos.map((promo) => {
+              if (promo.price >= 50.00) {
+                return (
+                  <div className="product-card" key={promo.id}>
+                    <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                      <img src={promo.image} alt={promo.name} />
+                    </Link>
+                    <p>{promo.name}</p>
+                  </div>
+                );
+              }
+            })}
+            {/* <div className="product-card">
               <img src="/imgs/virtuoso.jpg" alt="Nuovo 1" />
               <p>Nuovo 1</p>
             </div>
@@ -124,7 +117,7 @@ const PromoENew = () => {
             <div className="product-card">
               <img src="/imgs/virtuoso.jpg" alt="Nuovo 9" />
               <p>Nuovo 9</p>
-            </div>
+            </div> */}
           </div>
 
           <button

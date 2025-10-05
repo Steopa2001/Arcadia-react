@@ -71,9 +71,12 @@ const Homepage = () => {
         <hr />
       </div>
 
+        {/* ---------------- PROMO & NUOVI ARRIVI ---------------- */}
+      <PromoENew />
+
       {/* ---------------- PRODOTTI ---------------- */}
       <div className="container my-5">
-        <div className="row">
+        <div className="row gy-4">
           {games.length > 0 ? (
             games.map((game) => (
               <div key={game.id} className="col-12 col-md-3">
@@ -96,8 +99,7 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* ---------------- PROMO & NUOVI ARRIVI ---------------- */}
-      <PromoENew />
+    
     </div>
   );
 };

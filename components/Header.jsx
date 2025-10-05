@@ -6,7 +6,7 @@ const Header = () => {
       {/* logo - search - icone */}
       <div className="header-top d-flex justify-content-between align-items-center">
         <Link to='/'>
-        <img src="./img/Arcadia-logo.png" alt="logo" className="logo" />
+        <img src="/img/Arcadia-logo.png" alt="logo" className="logo" />
         </Link>
         <div className="search-bar">
           <input type="text" placeholder="Cerca per prodotto..." />
