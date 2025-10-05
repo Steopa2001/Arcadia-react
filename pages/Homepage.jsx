@@ -34,7 +34,7 @@ const Homepage = () => {
         <div className="jumbotron-content">
           <h1>Benvenuto in Arcadia</h1>
           <button onClick={handleScroll} className="btn-cta">
-            Scopri ora
+            Scopa ora
           </button>
         </div>
       </div>

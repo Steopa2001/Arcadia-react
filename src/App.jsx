@@ -5,6 +5,7 @@ import BoardGames from "../pages/BoardGames";
 import DetailProductPage from "../pages/DetailProductPage";
 import Cart from "../pages/Cart";
 import WishList from "../pages/WishList";
+import AllProducts from "../pages/AllProducts";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/giochi-da-tavolo" element={<BoardGames />} />
           <Route path="/carrello-prodotti" element={<Cart />} />
           <Route path="/wishlist-prodotti" element={<WishList />} />
+          <Route path="/tutti-prodotti" element={<AllProducts />} />
         </Route>
       </Routes>
     </BrowserRouter>

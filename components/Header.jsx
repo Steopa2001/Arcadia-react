@@ -5,8 +5,8 @@ const Header = () => {
     <header>
       {/* logo - search - icone */}
       <div className="header-top d-flex justify-content-between align-items-center">
-        <Link to='/'>
-        <img src="/img/Arcadia-logo.png" alt="logo" className="logo" />
+        <Link to="/">
+          <img src="/img/Arcadia-logo.png" alt="logo" className="logo" />
         </Link>
         <div className="search-bar">
           <input type="text" placeholder="Cerca per prodotto..." />
@@ -36,6 +36,9 @@ const Header = () => {
           <li>Carte Collezionabili</li>
           <li>Cardistry</li>
           <li>Modellismo</li>
+          <Link to="/tutti-prodotti">
+            <li>Tutti i Prodotti</li>
+          </Link>
         </ul>
       </nav>
     </header>

@@ -82,42 +82,6 @@ const PromoENew = () => {
                 );
               }
             })}
-            {/* <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 1" />
-              <p>Nuovo 1</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 2" />
-              <p>Nuovo 2</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 3" />
-              <p>Nuovo 3</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 4" />
-              <p>Nuovo 4</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 5" />
-              <p>Nuovo 5</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 6" />
-              <p>Nuovo 6</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 7" />
-              <p>Nuovo 7</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 8" />
-              <p>Nuovo 8</p>
-            </div>
-            <div className="product-card">
-              <img src="/imgs/virtuoso.jpg" alt="Nuovo 9" />
-              <p>Nuovo 9</p>
-            </div> */}
           </div>
 
           <button
