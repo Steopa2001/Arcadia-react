@@ -14,41 +14,45 @@ const DetailProductPage = () => {
   useEffect(fetchProduct, []);
 
   return (
-      <div className="container">
-        <div className="row  py-5">
-          <div className="col-12 col-md-6">
-            <img
-              className="img-fluid"
-              src={products.image}
-              alt={products.name}
-            />
-          </div>
-          <div className="col-12 col-md-6">
-            <h3>{products.name}</h3>
-            <p>
-              <em>{products.price}</em>
-            </p>
-            <hr />
-            <p>{products.genre} </p>
-            <p>{products.player_number}</p>
-            <p>{products.recommended_age}</p>
-            <p>{products.language}</p>
-            <p>{products.duration}</p>
-            <p>{products.complexity}</p>
-            <p>{products.description}</p>
-            <hr />
-            <div className="d-flex gap-3 align-items-center">
-              <Link to="/carrello-prodotti">
-                <div className="btn btn-primary">Aggiungi al Carrello</div>
-              </Link>
-              <Link to="/wishlist-prodotti">
-                <i className="fa-solid fa-heart"></i>
-              </Link>
-              <div>quantità</div>
-            </div>
+    <div className="container">
+      <div className="row  py-5">
+        <div className="col-12 col-md-6">
+          <img className="img-fluid" src={products.image} alt={products.name} />
+        </div>
+        <div className="col-12 col-md-6">
+          <h3>{products.name}</h3>
+          <p>
+            <em>{products.price} &euro;</em>
+          </p>
+          <hr />
+          <p>GENERE: {products.genre} </p>
+          {products.player_number == null ? (
+            <p></p>
+          ) : (
+            <p>NUMERO GIOCATORI: {products.player_number}</p>
+          )}
+
+          <p>ETA' CONSIGLIATA: {products.recommended_age}</p>
+          <p>LINGUA: {products.language}</p>
+          <p>DURATA: {products.duration}</p>
+          <p>DIFFICOLTA': {products.complexity}</p>
+          <p>
+            DESCRIZIONE: <br />
+            {products.description}
+          </p>
+          <hr />
+          <div className="d-flex gap-3 align-items-center">
+            <Link to="/carrello-prodotti">
+              <div className="btn btn-primary">Aggiungi al Carrello</div>
+            </Link>
+            <Link to="/wishlist-prodotti">
+              <i className="fa-solid fa-heart"></i>
+            </Link>
+            <div>quantità</div>
           </div>
         </div>
       </div>
+    </div>
   );
 };
 
