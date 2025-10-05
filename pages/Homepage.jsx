@@ -34,13 +34,14 @@ const Homepage = () => {
         <div className="jumbotron-content">
           <h1>Benvenuto in Arcadia</h1>
           <button onClick={handleScroll} className="btn-cta">
-            Scopa ora
+            Scopri ora
           </button>
         </div>
       </div>
 
       {/* ---------------- CATEGORIE ---------------- */}
       <div ref={sectionRef} className="container section-cards">
+        <h2 className="text-white text-center ">CATEGORIE</h2>
         <div className="row">
           {categories.length > 0 ? (
             categories.map((category) => (
@@ -73,31 +74,6 @@ const Homepage = () => {
 
         {/* ---------------- PROMO & NUOVI ARRIVI ---------------- */}
       <PromoENew />
-
-      {/* ---------------- PRODOTTI ---------------- */}
-      <div className="container my-5">
-        <div className="row gy-4">
-          {games.length > 0 ? (
-            games.map((game) => (
-              <div key={game.id} className="col-12 col-md-3">
-                <Link to={`/dettaglio-prodotto/${game.id}`}>
-                  <div className="card-image">
-                    <img
-                      className="img-fluid"
-                      src={game.image}
-                      alt={game.name}
-                    />
-                  </div>
-                </Link>
-              </div>
-            ))
-          ) : (
-            <p style={{ color: "#fff", textAlign: "center" }}>
-              Caricamento prodotti...
-            </p>
-          )}
-        </div>
-      </div>
 
     
     </div>

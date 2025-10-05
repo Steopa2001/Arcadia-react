@@ -1,11 +1,49 @@
-import React from 'react'
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const OurChoiches = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [promos, setPromos] = useState([]);
 
-export default OurChoiches
+  // chiamate API
+  useEffect(() => {
+    axios.get("http://localhost:3000/products").then((resp) => {
+      setPromos(resp.data);
+    });
+  }, []);
+
+  return (
+    <div className="container my-5">
+      <div className="row gy-4">
+        {promos.length > 0 ? (
+          promos.map((promo) => {
+            if (promo.price >= 50.00) {
+              return (
+                <div key={promo.id} className="col-12 col-md-3">
+                  <Link to={`/prodotti-preferiti/${promo.id}`}>
+                    <div className="card-image">
+                      <img
+                        className="img-fluid"
+                        src={promo.image}
+                        alt={promo.name}
+                      />
+                    </div>
+                  </Link>
+                  <p className="text-center">{promo.name}</p>
+                </div>
+              );
+            } else {
+              return null;
+            }
+          })
+        ) : (
+          <p style={{ color: "#fff", textAlign: "center" }}>
+            Caricamento prodotti...
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default OurChoiches;
