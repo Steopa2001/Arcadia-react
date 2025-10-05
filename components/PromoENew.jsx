@@ -27,6 +27,7 @@ const PromoENew = () => {
       {/* PROMO */}
       <div className="promo-section">
         <h2>Le promo</h2>
+        <Link to="/promo-prodotti"><p>tutte le promo</p></Link>
         <div className="scroll-container">
           <button
             className="scroll-btn left"

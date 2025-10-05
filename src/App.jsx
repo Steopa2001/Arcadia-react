@@ -6,6 +6,8 @@ import DetailProductPage from "../pages/DetailProductPage";
 import Cart from "../pages/Cart";
 import WishList from "../pages/WishList";
 import AllProducts from "../pages/AllProducts";
+import PromoPage from "../pages/PromoPage";
+import OurChoiches from "../pages/OurChoiches";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/carrello-prodotti" element={<Cart />} />
           <Route path="/wishlist-prodotti" element={<WishList />} />
           <Route path="/tutti-prodotti" element={<AllProducts />} />
+          <Route path="/promo-prodotti" element={<PromoPage />} />
+          <Route path="/prodotti-preferiti" element={<OurChoiches />} />
         </Route>
       </Routes>
     </BrowserRouter>
