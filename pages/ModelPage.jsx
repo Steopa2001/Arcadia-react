@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 
 
-const BoardGames = () => {
+const ModelPage = () => {
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h1>GIOCHI DA TAVOLO</h1>
+            <h1>MODELLISMO</h1>
           </div>
           <div className="row">
             <div className="col-sm-12  col-md-3 category-card">
@@ -24,4 +24,4 @@ const BoardGames = () => {
   );
 };
 
-export default BoardGames;
+export default ModelPage;
