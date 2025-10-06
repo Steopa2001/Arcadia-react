@@ -1,24 +1,31 @@
 import { Link } from "react-router-dom";
-
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const BoardGames = () => {
+  const [products, setProducts] = useState([]);
+  const categoryId = 1; // ID categoria 
+
+  useEffect(() => {
+    axios.get(`http://localhost:3000/products/category/${categoryId}`)
+      .then(res => setProducts(res.data))
+      .catch(err => console.error(err));
+  }, [categoryId]);
+
   return (
-    <div>
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <h1>GIOCHI DA TAVOLO</h1>
+    <div className="container">
+      <div className="row">
+        <div className="col-12"><h1>GIOCHI DA TAVOLO</h1></div>
+        {products.map(prod => (
+          <div key={prod.id} className="col-sm-12 col-md-3 category-card mb-3">
+            <p>{prod.name}</p>
+            <Link to={`/dettaglio-prodotto/${prod.id}`}>
+              <div className="card-image">
+                <img className="img-fluid" src={prod.image} alt={prod.name} />
+              </div>
+            </Link>
           </div>
-          <div className="row">
-            <div className="col-sm-12  col-md-3 category-card">
-              <Link to="/dettaglio-prodotto">
-                <div className="card-image">
-                  <img className="img-fluid" src="/img/virtuoso.jpg" alt="" />
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
