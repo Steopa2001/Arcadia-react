@@ -27,7 +27,9 @@ const PromoENew = () => {
       {/* PROMO */}
       <div className="promo-section">
         <h2>Le promo</h2>
-        <Link to="/promo-prodotti"><p className="text-light">tutte le promo</p></Link>
+        <Link to="/promo-prodotti">
+          <p className="section-link">tutte le promo</p>
+        </Link>
         <div className="scroll-container">
           <button
             className="scroll-btn left"
@@ -37,13 +39,13 @@ const PromoENew = () => {
           </button>
           <div className="products" ref={promoRef}>
             {promos.map((promo) => {
-              if (promo.discount != 0.00) {
+              if (promo.discount != 0.0) {
                 return (
                   <div className="product-card" key={promo.id}>
                     <Link to={`/dettaglio-prodotto/${promo.id}`}>
                       <img src={promo.image} alt={promo.name} />
                     </Link>
-                    <p>{promo.name}</p>
+                    <p className="product-title">{promo.name}</p>
                   </div>
                 );
               }
@@ -62,7 +64,9 @@ const PromoENew = () => {
       {/* LE NOSTRE SCELTE */}
       <div className="promo-section">
         <h2>Le nostre scelte</h2>
-        <Link to="/prodotti-preferiti"><p className="text-light">tutte le nostre scelte</p></Link>
+        <Link to="/prodotti-preferiti">
+          <p className="section-link">tutte le nostre scelte</p>
+        </Link>
         <div className="scroll-container">
           <button
             className="scroll-btn left"
@@ -73,13 +77,13 @@ const PromoENew = () => {
 
           <div className="products" ref={newRef}>
             {promos.map((promo) => {
-              if (promo.price >= 50.00) {
+              if (promo.price >= 50.0) {
                 return (
                   <div className="product-card" key={promo.id}>
                     <Link to={`/dettaglio-prodotto/${promo.id}`}>
                       <img src={promo.image} alt={promo.name} />
                     </Link>
-                    <p>{promo.name}</p>
+                    <p className="product-title">{promo.name}</p>
                   </div>
                 );
               }

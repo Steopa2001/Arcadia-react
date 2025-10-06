@@ -25,7 +25,6 @@ const Homepage = () => {
       setGames(resp.data);
     });
   }, []);
-  
 
   return (
     <div className="homepage">
@@ -41,7 +40,7 @@ const Homepage = () => {
 
       {/* ---------------- CATEGORIE ---------------- */}
       <div ref={sectionRef} className="container section-cards">
-        <h2 className="text-white text-center ">CATEGORIE</h2>
+        <h2 className="categories-title">CATEGORIE</h2>
         <div className="row">
           {categories.length > 0 ? (
             categories.map((category) => (
@@ -72,10 +71,8 @@ const Homepage = () => {
         <hr />
       </div>
 
-        {/* ---------------- PROMO & NUOVI ARRIVI ---------------- */}
+      {/* ---------------- PROMO & NUOVI ARRIVI ---------------- */}
       <PromoENew />
-
-    
     </div>
   );
 };
