@@ -17,10 +17,10 @@ const OurChoiches = () => {
       <div className="row gy-4">
         {promos.length > 0 ? (
           promos.map((promo) => {
-            if (promo.price >= 50.00) {
+            if (promo.price >= 50.0) {
               return (
                 <div key={promo.id} className="col-12 col-md-3">
-                  <Link to={`/prodotti-preferiti/${promo.id}`}>
+                  <Link to={`/dettaglio-prodotto/${promo.id}`}>
                     <div className="card-image">
                       <img
                         className="img-fluid"
