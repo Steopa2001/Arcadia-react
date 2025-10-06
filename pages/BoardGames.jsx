@@ -4,22 +4,25 @@ import axios from "axios";
 
 const BoardGames = () => {
   const [products, setProducts] = useState([]);
-  const categoryId = 1; // ID categoria 
+  const categoryId = 1; // ID categoria
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/products/category/${categoryId}`)
-      .then(res => setProducts(res.data))
-      .catch(err => console.error(err));
+    axios
+      .get(`http://localhost:3000/products/category/${categoryId}`)
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error(err));
   }, [categoryId]);
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col-12"><h1>GIOCHI DA TAVOLO</h1></div>
-        {products.map(prod => (
+        <div className="col-12">
+          <h1>GIOCHI DA TAVOLO</h1>
+        </div>
+        {products.map((prod) => (
           <div key={prod.id} className="col-sm-12 col-md-3 category-card mb-3">
             <p>{prod.name}</p>
-            <Link to={`/dettaglio-prodotto/${prod.id}`}>
+            <Link to={`/dettaglio-prodotto/${prod.slug}`}>
               <div className="card-image">
                 <img className="img-fluid" src={prod.image} alt={prod.name} />
               </div>

@@ -19,7 +19,7 @@ const AllProducts = () => {
           {games.length > 0 ? (
             games.map((game) => (
               <div key={game.id} className="col-12 col-md-3">
-                <Link to={`/dettaglio-prodotto/${game.id}`}>
+                <Link to={`/dettaglio-prodotto/${game.slug}`}>
                   <div className="card-image">
                     <img
                       className="img-fluid"

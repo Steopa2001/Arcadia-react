@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const DetailProductPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [products, setProducts] = useState({});
 
   const fetchProduct = () => {
-    axios.get(`http://localhost:3000/products/${id}`).then((resp) => {
+    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp) => { 
       setProducts(resp.data);
     });
   };

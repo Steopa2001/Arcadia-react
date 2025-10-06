@@ -20,7 +20,7 @@ const OurChoiches = () => {
             if (promo.price >= 50.0) {
               return (
                 <div key={promo.id} className="col-12 col-md-3">
-                  <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                  <Link to={`/dettaglio-prodotto/${promo.slug}`}>
                     <div className="card-image">
                       <img
                         className="img-fluid"

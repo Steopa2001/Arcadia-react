@@ -20,7 +20,7 @@ const PromoPage = () => {
             if (promo.discount != 0.0) {
               return (
                 <div key={promo.id} className="col-12 col-md-3">
-                  <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                  <Link to={`/dettaglio-prodotto/${promo.slug}`}>
                     <div className="card-image">
                       <img
                         className="img-fluid"

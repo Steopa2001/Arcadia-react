@@ -42,7 +42,7 @@ const PromoENew = () => {
               if (promo.discount != 0.0) {
                 return (
                   <div className="product-card" key={promo.id}>
-                    <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                    <Link to={`/dettaglio-prodotto/${promo.slug}`}>
                       <img src={promo.image} alt={promo.name} />
                     </Link>
                     <p className="product-title">{promo.name}</p>
@@ -80,7 +80,7 @@ const PromoENew = () => {
               if (promo.price >= 50.0) {
                 return (
                   <div className="product-card" key={promo.id}>
-                    <Link to={`/dettaglio-prodotto/${promo.id}`}>
+                    <Link to={`/dettaglio-prodotto/${promo.slug}`}>
                       <img src={promo.image} alt={promo.name} />
                     </Link>
                     <p className="product-title">{promo.name}</p>

@@ -19,7 +19,7 @@ function App() {
         <Route element={<DefaultLayout />}>
           <Route index element={<Homepage />} />
           <Route
-            path="/dettaglio-prodotto/:id"
+            path="/dettaglio-prodotto/:slug"
             element={<DetailProductPage />}
           />
           <Route path="/giochi-da-tavolo" element={<BoardGames />} />

@@ -22,7 +22,7 @@ const CardistryPage = () => {
         {products.map((prod) => (
           <div key={prod.id} className="col-sm-12 col-md-3 category-card mb-3">
             <p>{prod.name}</p>
-            <Link to={`/dettaglio-prodotto/${prod.id}`}>
+            <Link to={`/dettaglio-prodotto/${prod.slug}`}>
               <div className="card-image">
                 <img className="img-fluid" src={prod.image} alt={prod.name} />
               </div>
