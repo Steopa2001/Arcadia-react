@@ -27,7 +27,7 @@ const Homepage = () => {
   }, []);
 
   return (
-    <div className="homepage">
+    <div className="homepage" style={{ overflow: "auto" }}>
       {/* jumbotron */}
       <div className="jumbotron">
         <div className="jumbotron-content">
