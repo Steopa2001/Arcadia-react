@@ -3,111 +3,153 @@ import axios from "axios";
 import Checkout from "../components/checkout";
 
 const Cart = () => {
+  const [cart, setCart] = useState([]);
+  const [maxQuantity, setMaxQuantity] = useState(10);
 
-  const [cart, setCart] = useState([])
-  const [maxQuantity, setMaxQuantity] = useState(10)
+  const [showCheckout, setShowCheckout] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/cart').then((resp) => {
-      const productsWithQuantity = resp.data.map(product => ({
+    axios.get("http://localhost:3000/cart").then((resp) => {
+      const productsWithQuantity = resp.data.map((product) => ({
         ...product,
-        quantity: product.quantity || 1
+        quantity: product.quantity || 1,
       }));
       setCart(productsWithQuantity);
     });
-  }, [])
+  }, []);
 
   const refreshQuantity = (id, operation) => {
-    setCart(products => {
-      return products.map(product => {
+    setCart((products) => {
+      return products.map((product) => {
         if (product.id === id) {
           const newQuantity = (product.quantity || 1) + operation;
           return { ...product, quantity: newQuantity < 1 ? 1 : newQuantity };
-        }
-        else {
+        } else {
           return product;
         }
-      })
-    })
-  }
+      });
+    });
+  };
 
   return (
     <div className="container my-5">
-      {
-        cart.length === 0 ?
-          <h2 className="text-center">Il carrello &egrave; vuoto</h2> :
-          <>
-            <h2>CARRELLO</h2>
-            <table className="table text-center my-4">
-              <thead className="table-secondary">
-                <tr>
-                  <th>PRODOTTO</th>
-                  <th>PREZZO</th>
-                  <th>QUANTITA'</th>
-                  <th>TOTALE</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart.map((productCart) => {
+      {cart.length === 0 ? (
+        <h2 className="text-center">Il carrello &egrave; vuoto</h2>
+      ) : (
+        <>
+          <h2>CARRELLO</h2>
+          <table className="table text-center my-4">
+            <thead className="table-secondary">
+              <tr>
+                <th>PRODOTTO</th>
+                <th>PREZZO</th>
+                <th>QUANTITA'</th>
+                <th>TOTALE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((productCart) => {
+                const { image, price, quantity, id, name } = productCart;
 
-                  const { image, price, quantity, id, name } = productCart;
-
-                  return (
-                    <tr className="align-middle">
-                      <td>
-                        <img className="w-100px" src={image} alt={name} />
-                      </td>
-                      <td>{parseFloat(price).toFixed(2)} &euro;</td>
-                      <td>
-                        <button className="px-2 fs-6" onClick={() => {
+                return (
+                  <tr className="align-middle">
+                    <td>
+                      <img className="w-100px" src={image} alt={name} />
+                    </td>
+                    <td>{parseFloat(price).toFixed(2)} &euro;</td>
+                    <td>
+                      <button
+                        className="px-2 fs-6"
+                        onClick={() => {
                           if (quantity !== maxQuantity) {
-                            refreshQuantity(id, +1)
+                            refreshQuantity(id, +1);
                           }
-                        }
-                        }
-                        >+</button> <br />
-                        {quantity} <br />
-                        <button className="px-3 fs-6" onClick={() => {
+                        }}
+                      >
+                        +
+                      </button>{" "}
+                      <br />
+                      {quantity} <br />
+                      <button
+                        className="px-3 fs-6"
+                        onClick={() => {
                           if (quantity === 1) {
                             axios.delete(`http://localhost:3000/cart/${id}`);
-                            alert(`${name} è stato rimosso dal carrello`)
-                            axios.get('http://localhost:3000/cart').then((resp) => {
-                              const productsWithQuantity = resp.data.map(product => ({
-                                ...product,
-                                quantity: product.quantity || 1
-                              }));
+                            alert(`${name} è stato rimosso dal carrello`);
+                            axios
+                              .get("http://localhost:3000/cart")
+                              .then((resp) => {
+                                const productsWithQuantity = resp.data.map(
+                                  (product) => ({
+                                    ...product,
+                                    quantity: product.quantity || 1,
+                                  })
+                                );
+                                setCart(productsWithQuantity);
+                              });
+                          } else {
+                            refreshQuantity(id, -1);
+                          }
+                        }}
+                      >
+                        -
+                      </button>
+                    </td>
+                    <td>
+                      {(
+                        parseFloat(price).toFixed(2) * parseInt(quantity)
+                      ).toFixed(2)}{" "}
+                      &euro;
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          axios.delete(`http://localhost:3000/cart/${id}`);
+                          alert(`${name} è stato rimosso dal carrello`);
+                          axios
+                            .get("http://localhost:3000/cart")
+                            .then((resp) => {
+                              const productsWithQuantity = resp.data.map(
+                                (product) => ({
+                                  ...product,
+                                  quantity: product.quantity || 1,
+                                })
+                              );
                               setCart(productsWithQuantity);
                             });
-                          }
-                          else {
-                            refreshQuantity(id, -1)
-                          }
-                        }}>-</button>
-                      </td>
-                      <td>{(parseFloat(price).toFixed(2) * parseInt(quantity)).toFixed(2)} &euro;</td>
-                      <td><button className="btn btn-danger" onClick={() => {
-                        axios.delete(`http://localhost:3000/cart/${id}`);
-                        alert(`${name} è stato rimosso dal carrello`)
-                        axios.get('http://localhost:3000/cart').then((resp) => {
-                          const productsWithQuantity = resp.data.map(product => ({
-                            ...product,
-                            quantity: product.quantity || 1
-                          }));
-                          setCart(productsWithQuantity);
-                        });
-                      }}>X</button></td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </>
-      }
-      <Checkout/>
-    </div >
+                        }}
+                      >
+                        X
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </>
+      )}
+      <div className="text-center">
+        {/* Bottone */}
+        <div className="checkout">
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowCheckout(!showCheckout)}
+          >
+            {showCheckout ? "Chiudi checkout" : "Checkout"}
+          </button>
+        </div>
+
+        {/* Mostra la componente solo se showCheckout è true */}
+        {showCheckout && (
+          <div className="mt-4">
+            <Checkout />
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
 export default Cart;
-
-
