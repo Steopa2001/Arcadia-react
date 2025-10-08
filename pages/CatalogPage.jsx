@@ -137,7 +137,10 @@ export default function CatalogPage({ fixedCategoryId }) {
                     </div>
                   </Link>
                   <div className="card-footer bg-white border-0">
-                    <button type="button" className="btn btn-dark btn-sm w-100">
+                    <button type="button" className="btn btn-dark btn-sm w-100" onClick={() => {
+                      axios.post('http://localhost:3000/cart', product);
+                      alert(`${product.name} è stato aggiunto al carrello`)
+                    }}>
                       Aggiungi al carrello
                     </button>
                   </div>

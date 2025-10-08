@@ -1,33 +1,111 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const Cart = () => {
+
+  const [cart, setCart] = useState([])
+  const [maxQuantity, setMaxQuantity] = useState(10)
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/cart').then((resp) => {
+      const productsWithQuantity = resp.data.map(product => ({
+        ...product,
+        quantity: product.quantity || 1
+      }));
+      setCart(productsWithQuantity);
+    });
+  }, [])
+
+  const refreshQuantity = (id, operation) => {
+    setCart(products => {
+      return products.map(product => {
+        if (product.id === id) {
+          const newQuantity = (product.quantity || 1) + operation;
+          return { ...product, quantity: newQuantity < 1 ? 1 : newQuantity };
+        }
+        else {
+          return product;
+        }
+      })
+    })
+  }
+
   return (
-    <div className="container">
-      <h2>CARRELLO</h2>
-      <table className="table text-center">
-        <thead className="table-secondary">
-          <tr>
-            <th>PRODOTTO</th>
-            <th>PREZZO</th>
-            <th>QUANTITA'</th>
-            <th>TOTALE</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="align-middle">
-            <td>
-              <img className="w-100px" src="/imgs/virtuoso.jpg" alt="img"/> 
-            </td>
-            <td>PREZZO</td>
-            <td>QUANTITA'</td>
-            <td>TOTALE</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <div className="container my-5">
+      {
+        cart.length === 0 ?
+          <h2 className="text-center">Il carrello &egrave; vuoto</h2> :
+          <>
+            <h2>CARRELLO</h2>
+            <table className="table text-center my-4">
+              <thead className="table-secondary">
+                <tr>
+                  <th>PRODOTTO</th>
+                  <th>PREZZO</th>
+                  <th>QUANTITA'</th>
+                  <th>TOTALE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((productCart) => {
+
+                  const { image, price, quantity, id, name } = productCart;
+
+                  return (
+                    <tr className="align-middle">
+                      <td>
+                        <img className="w-100px" src={image} alt={name} />
+                      </td>
+                      <td>{parseFloat(price).toFixed(2)} &euro;</td>
+                      <td>
+                        <button className="px-2 fs-6" onClick={() => {
+                          if (quantity !== maxQuantity) {
+                            refreshQuantity(id, +1)
+                          }
+                        }
+                        }
+                        >+</button> <br />
+                        {quantity} <br />
+                        <button className="px-3 fs-6" onClick={() => {
+                          if (quantity === 1) {
+                            axios.delete(`http://localhost:3000/cart/${id}`);
+                            alert(`${name} è stato rimosso dal carrello`)
+                            axios.get('http://localhost:3000/cart').then((resp) => {
+                              const productsWithQuantity = resp.data.map(product => ({
+                                ...product,
+                                quantity: product.quantity || 1
+                              }));
+                              setCart(productsWithQuantity);
+                            });
+                          }
+                          else {
+                            refreshQuantity(id, -1)
+                          }
+                        }}>-</button>
+                      </td>
+                      <td>{(parseFloat(price).toFixed(2) * parseInt(quantity)).toFixed(2)} &euro;</td>
+                      <td><button className="btn btn-danger" onClick={() => {
+                        axios.delete(`http://localhost:3000/cart/${id}`);
+                        alert(`${name} è stato rimosso dal carrello`)
+                        axios.get('http://localhost:3000/cart').then((resp) => {
+                          const productsWithQuantity = resp.data.map(product => ({
+                            ...product,
+                            quantity: product.quantity || 1
+                          }));
+                          setCart(productsWithQuantity);
+                        });
+                      }}>X</button></td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </>
+      }
+    </div >
   );
 };
 
 export default Cart;
 
-              
+
