@@ -8,7 +8,7 @@ const DetailProductPage = () => {
   const [products, setProducts] = useState({});
 
   const fetchProduct = () => {
-    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp) => { 
+    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp) => {
       setProducts(resp.data);
     });
   };
@@ -77,7 +77,10 @@ const DetailProductPage = () => {
 
             <div className="d-flex gap-3 align-items-center">
               <Link to="/carrello-prodotti">
-                <div className="btn btn-primary">Aggiungi al Carrello</div>
+                <div className="btn btn-primary" onClick={() => {
+                  axios.post('http://localhost:3000/cart', products);
+                  alert(`${products.name} è stato aggiunto al carrello`)
+                }}>Aggiungi al Carrello</div>
               </Link>
               <Link to="/wishlist-prodotti">
                 <i className="fa-solid fa-heart"></i>

@@ -34,13 +34,13 @@ const Header = () => {
             <li>Giochi da Tavolo</li>
           </Link>
           <Link to='/carte-collezionabili'>
-          <li>Carte Collezionabili</li>
+            <li>Carte Collezionabili</li>
           </Link>
           <Link to='cardistry'>
-          <li>Cardistry</li>
+            <li>Cardistry</li>
           </Link>
           <Link to='modellismo'>
-          <li>Modellismo</li>
+            <li>Modellismo</li>
           </Link>
           <Link to="/tutti-prodotti">
             <li>Tutti i Prodotti</li>
