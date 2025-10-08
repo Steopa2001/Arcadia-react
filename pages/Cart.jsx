@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Checkout from "../components/checkout";
 
 const Cart = () => {
 
@@ -102,6 +103,7 @@ const Cart = () => {
             </table>
           </>
       }
+      <Checkout/>
     </div >
   );
 };
