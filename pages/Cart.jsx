@@ -144,7 +144,7 @@ const Cart = () => {
         {/* Mostra la componente solo se showCheckout è true */}
         {showCheckout && (
           <div className="mt-4">
-            <Checkout />
+            <Checkout cartItems={cart} />
           </div>
         )}
       </div>
