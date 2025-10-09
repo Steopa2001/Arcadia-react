@@ -6,84 +6,46 @@ const CatalogPage = ({ fixedCategoryId }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
-  // stato ordinamento
   const [sortOption, setSortOption] = useState("name_asc");
 
-  // carica prodotti
   useEffect(() => {
     axios.get("http://localhost:3000/products").then((res) => {
       setAllProducts(res.data);
     });
   }, []);
 
-  // filtro per categoria
   const productsByCategory = fixedCategoryId
     ? allProducts.filter(
         (product) => String(product.category_id) === String(fixedCategoryId)
       )
     : allProducts;
 
-  // filtro per nome
   const filteredProducts = productsByCategory.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // ordinamento su nome/prezzo
-  // parto dalla lista dei prodotti già filtrati
   let sortedProducts = [...filteredProducts];
 
-  // se l'utente sceglie "Nome dalla A alla Z"
   if (sortOption === "name_asc") {
-    sortedProducts.sort(function (firstProduct, secondProduct) {
-      // confronto i nomi in ordine alfabetico
-      if (firstProduct.name < secondProduct.name) {
-        return -1; // il primo resta prima
-      }
-
-      if (firstProduct.name > secondProduct.name) {
-        return 1; // il primo va dopo
-      }
-
-      return 0; // i nomi sono uguali
-    });
+    sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
   }
 
-  // se l'utente sceglie "Nome dalla Z alla A"
   if (sortOption === "name_desc") {
-    sortedProducts.sort(function (firstProduct, secondProduct) {
-      // qui faccio l'opposto: i nomi che vengono dopo devono stare prima
-      if (firstProduct.name > secondProduct.name) {
-        return -1; // sposto in alto
-      }
-
-      if (firstProduct.name < secondProduct.name) {
-        return 1; // sposto in basso
-      }
-
-      return 0; // i nomi sono uguali
-    });
+    sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
   }
 
-  // se l'utente sceglie "Prezzo crescente"
   if (sortOption === "price_asc") {
-    sortedProducts.sort(function (firstProduct, secondProduct) {
-      // metto prima i prodotti con prezzo più basso
-      return firstProduct.price - secondProduct.price;
-    });
+    sortedProducts.sort((a, b) => a.price - b.price);
   }
 
-  // se l'utente sceglie "Prezzo decrescente"
   if (sortOption === "price_desc") {
-    sortedProducts.sort(function (firstProduct, secondProduct) {
-      // metto prima i prodotti con prezzo più alto
-      return secondProduct.price - firstProduct.price;
-    });
+    sortedProducts.sort((a, b) => b.price - a.price);
   }
 
   return (
     <div className="container py-4">
       {/* barra superiore: search + controlli vista + select ordinamento in linea */}
-      <div className="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
+      <div className="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3 controls-bar">
         {/* blocco ricerca */}
         <div className="flex-grow-1">
           <label className="form-label">Cerca</label>
@@ -100,25 +62,24 @@ const CatalogPage = ({ fixedCategoryId }) => {
         {/* blocco per scegliere la visualizzazione + select ordinamento */}
         <div className="d-flex align-items-center gap-3">
           {/* vista */}
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-semibold text-uppercase">Visualizza</span>
+          <div className="d-flex align-items-center gap-2 view-mode">
             <button
               type="button"
-              className={`btn ${viewMode === "grid" ? "active" : ""}`}
+              className={`view-toggle ${viewMode === "grid" ? "active" : ""}`}
               onClick={() => setViewMode("grid")}
             >
-              Griglia
+              <i className="fa-solid fa-grip"></i>
             </button>
             <button
               type="button"
-              className={`btn ${viewMode === "list" ? "active" : ""}`}
+              className={`view-toggle ${viewMode === "list" ? "active" : ""}`}
               onClick={() => setViewMode("list")}
             >
-              Lista
+              <i className="fa-solid fa-list"></i>
             </button>
           </div>
 
-          {/*select ordinamento  */}
+          {/* select ordinamento */}
           <div>
             <label className="form-label mb-0 small">Ordina per</label>
             <select
@@ -172,9 +133,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                     type="button"
                     className="btn btn-dark btn-sm w-100"
                     onClick={() => {
-                      // aggiunge al carrello via api
                       axios.post("http://localhost:3000/cart", product);
-                      // avviso semplice
                       alert(`${product.name} è stato aggiunto al carrello`);
                     }}
                   >
@@ -225,9 +184,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                   type="button"
                   className="btn btn-dark btn-sm w-100"
                   onClick={() => {
-                    // aggiunge al carrello via api
                     axios.post("http://localhost:3000/cart", product);
-                    // avviso semplice
                     alert(`${product.name} è stato aggiunto al carrello`);
                   }}
                 >
@@ -239,7 +196,6 @@ const CatalogPage = ({ fixedCategoryId }) => {
         </div>
       )}
 
-      {/* nessun risultato */}
       {sortedProducts.length === 0 && (
         <div className="py-5 text-center text-muted">
           Nessun prodotto trovato
