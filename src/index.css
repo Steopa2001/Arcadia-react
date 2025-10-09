@@ -827,8 +827,9 @@ footer img.logo {
   margin-left: 60px;
 }
 
-.icons {
-  color: #fff;
+.icons a {
+  color: #f3e9ff !important;
+  text-decoration: none !important;
 }
 
 footer li {
@@ -853,6 +854,14 @@ footer li:hover {
 
 .checkout {
   display: block;
+}
+
+/* bottone notfound */
+.container .btn-main {
+  padding: 8px 8px;
+  font-size: 0.85rem;
+  text-align: center;
+  border-radius: 4px;
 }
 
 /* -------------- CATALOGO ---------------- */

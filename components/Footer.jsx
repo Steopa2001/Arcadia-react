@@ -18,6 +18,7 @@ const Footer = () => {
                 autorizzata è severatamente vietata.
               </div>
             </div>
+
             <div className="col-3 text-center">
               <h4>ACCOUNT</h4>
               <ul className="list-unstyled">
@@ -25,6 +26,7 @@ const Footer = () => {
                 <li>Gestioni iscrizioni</li>
               </ul>
             </div>
+
             <div className="col-3 text-center">
               <h4>MENU</h4>
               <ul className="list-unstyled">
@@ -38,15 +40,16 @@ const Footer = () => {
                 <Link to="/carte-collezionabili" className="link">
                   <li>Carte collezionabili</li>
                 </Link>
-                <Link to="cardistry" className="link">
+                <Link to="/cardistry" className="link">
                   <li>Cardistry</li>
                 </Link>
-                <Link to="modellismo" className="link">
+                <Link to="/modellismo" className="link">
                   <li>Modellismo</li>
                 </Link>
                 <li>Promo</li>
               </ul>
             </div>
+
             <div className="col-3 text-center">
               <h4>ARCADIA</h4>
               <ul className="list-unstyled">
@@ -59,11 +62,19 @@ const Footer = () => {
               </ul>
             </div>
           </div>
+
+          {/* --- SEZIONE ICONE --- */}
           <div className="col-12 mt-5 mb-5">
             <div className="icons">
-              <i class="fa-brands fa-instagram"></i>
-              <i class="fa-brands fa-facebook-f"></i>
-              <i class="fa-brands fa-discord"></i>
+              <Link to="/not-found" className="icon instagram">
+                <i className="fa-brands fa-instagram"></i>
+              </Link>
+              <Link to="/not-found" className="icon facebook">
+                <i className="fa-brands fa-facebook-f"></i>
+              </Link>
+              <Link to="/not-found" className="icon discord">
+                <i className="fa-brands fa-discord"></i>
+              </Link>
             </div>
           </div>
         </div>
