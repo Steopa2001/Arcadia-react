@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const Checkout = () => {
+const Checkout = ({ cartItems }) => {
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -37,13 +37,7 @@ const Checkout = () => {
     cardHolder: "",
   });
 
-  // Demo carrello
-  const [cartItems] = useState([
-    { id: 1, name: "Gioco da tavolo", price: 29.9, qty: 2 },
-    { id: 2, name: "Espansione", price: 15.5, qty: 1 },
-  ]);
-
-  const total = cartItems.reduce((acc, i) => acc + i.price * i.qty, 0);
+  const total = cartItems.reduce((acc, i) => acc + parseFloat(i.price) * parseInt(i.quantity), 0);
 
   // ----------------------Handlers-----------------------
   const handleChange = (e) => {
@@ -88,14 +82,12 @@ const Checkout = () => {
       phone: formData.phone,
       total,
 
-      // payment_method: paymentMethod,
-      // ...billing,
-      // items: cartItems.map((i) => ({
-      //   id: i.id,
-      //   name: i.name,
-      //   price: i.price,
-      //   qty: i.qty,
-      // })),
+      items: cartItems.map((i) => ({
+        id: i.id,
+        name: i.name,
+        price: i.price,
+        qty: i.quantity,
+      })),
     };
 
     axios
@@ -436,11 +428,12 @@ const Checkout = () => {
                   className="list-group-item d-flex justify-content-between align-items-center"
                 >
                   <span>
-                    {item.name} ×{item.qty}
+                    {item.name} ×{item.quantity}
                   </span>
-                  €{item.price.toFixed(2)}
+                  €{parseFloat(item.price).toFixed(2)}
                 </li>
               ))}
+
               <li className="list-group-item d-flex justify-content-between">
                 <strong>Totale</strong>
                 <strong>€{total.toFixed(2)}</strong>
