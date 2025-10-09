@@ -2,16 +2,18 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const DetailProductPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1); // stato quantità
+  const navigate = useNavigate();
 
   const fetchProduct = () => {
-    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp) => {
+    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp, err) => {
       setProduct(resp.data);
-    });
+    }).catch((err) => navigate('/not-found', { replace: true }));
   };
 
   useEffect(fetchProduct, [slug]);
