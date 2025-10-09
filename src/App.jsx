@@ -11,6 +11,7 @@ import OurChoiches from "../pages/OurChoiches";
 import CollectiblesPage from "../pages/CollectiblesPage";
 import CardistryPage from "../pages/CardistryPage";
 import ModelPage from "../pages/ModelPage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/carte-collezionabili" element={<CollectiblesPage />} />
           <Route path="/cardistry" element={<CardistryPage />} />
           <Route path="/modellismo" element={<ModelPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
