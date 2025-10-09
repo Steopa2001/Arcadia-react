@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DefaultLayout from "../layouts/DefaultLayout";
 import Homepage from "../pages/Homepage";
 import BoardGames from "../pages/BoardGames";
@@ -32,7 +32,8 @@ function App() {
           <Route path="/carte-collezionabili" element={<CollectiblesPage />} />
           <Route path="/cardistry" element={<CardistryPage />} />
           <Route path="/modellismo" element={<ModelPage />} />
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="/not-found" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>
