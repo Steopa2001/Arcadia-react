@@ -6,7 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 // pagina catalogo riutilizzabile
-export default function CatalogPage ({ fixedCategoryId }) {
+export default function CatalogPage({ fixedCategoryId }) {
   // stato prodotti
   const [allProducts, setAllProducts] = useState([]);
   // stato vista
@@ -16,7 +16,7 @@ export default function CatalogPage ({ fixedCategoryId }) {
   // stato ricerca
   const [searchTerm, setSearchTerm] = useState("");
 
-  // effetto: carica prodotti 
+  // effetto: carica prodotti
   useEffect(() => {
     // richiesta prodotti
     axios.get("http://localhost:3000/products").then((response) => {
@@ -33,7 +33,7 @@ export default function CatalogPage ({ fixedCategoryId }) {
     // confronto come stringa per evitare problemi di tipo
     visibleProducts = visibleProducts.filter((product) => {
       // ritorna solo prodotti con category_id uguale
-      return (product.category_id + "") === (fixedCategoryId + "");
+      return product.category_id + "" === fixedCategoryId + "";
     });
   }
 
@@ -48,7 +48,9 @@ export default function CatalogPage ({ fixedCategoryId }) {
       // prezzo come stringa con fallback
       const productPrice = (product.price != null ? product.price : "") + "";
       // mantieni se matcha nome o prezzo
-      return productName.includes(searchQuery) || productPrice.includes(searchQuery);
+      return (
+        productName.includes(searchQuery) || productPrice.includes(searchQuery)
+      );
     });
   }
 
@@ -60,9 +62,9 @@ export default function CatalogPage ({ fixedCategoryId }) {
   // ordina la lista visibile
   visibleProducts.sort((productA, productB) => {
     // valore A in base alla chiave
-    const valueA = sortKey === "price" ? +productA.price : (productA.name || "");
+    const valueA = sortKey === "price" ? +productA.price : productA.name || "";
     // valore B in base alla chiave
-    const valueB = sortKey === "price" ? +productB.price : (productB.name || "");
+    const valueB = sortKey === "price" ? +productB.price : productB.name || "";
     // confronta minore
     if (valueA < valueB) return isAscending ? -1 : 1;
     // confronta maggiore
@@ -80,7 +82,9 @@ export default function CatalogPage ({ fixedCategoryId }) {
         {/* blocco ricerca */}
         <div className="flex-grow-1">
           {/* etichetta input */}
-          <label htmlFor="searchProducts" className="form-label mb-1">Cerca</label>
+          <label htmlFor="searchProducts" className="form-label mb-1">
+            Cerca
+          </label>
           {/* input ricerca */}
           <input
             id="searchProducts"
@@ -98,7 +102,9 @@ export default function CatalogPage ({ fixedCategoryId }) {
           {/* bottone griglia */}
           <button
             type="button"
-            className={`btn btn-outline-dark ${viewMode === "grid" ? "active" : ""}`}
+            className={`btn btn-outline-dark ${
+              viewMode === "grid" ? "active" : ""
+            }`}
             onClick={() => setViewMode("grid")}
           >
             Griglia
@@ -106,7 +112,9 @@ export default function CatalogPage ({ fixedCategoryId }) {
           {/* bottone lista */}
           <button
             type="button"
-            className={`btn btn-outline-dark ${viewMode === "list" ? "active" : ""}`}
+            className={`btn btn-outline-dark ${
+              viewMode === "list" ? "active" : ""
+            }`}
             onClick={() => setViewMode("list")}
           >
             Lista
@@ -145,33 +153,46 @@ export default function CatalogPage ({ fixedCategoryId }) {
       )}
 
       {/* lista prodotti se ci sono */}
-      {visibleProducts.length > 0 && (
+      {visibleProducts.length > 0 &&
         // se vista griglia
-        viewMode === "grid" ? (
+        (viewMode === "grid" ? (
           // griglia bootstrap
           <div className="row g-3">
             {/* ciclo prodotti */}
             {visibleProducts.map((product) => (
               // colonna card
-              <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div
+                key={product.id}
+                className="col-12 col-sm-6 col-md-4 col-lg-3"
+              >
                 {/* card prodotto */}
-                <div className="card h-100" style={{ border: "1px solid #e5e5e5" }}>
+                <div className="card h-100">
                   {/* link al dettaglio */}
-                  <Link to={`/dettaglio-prodotto/${product.slug}`} className="text-decoration-none" style={{ color: "inherit" }}>
+                  <Link
+                    to={`/dettaglio-prodotto/${product.slug}`}
+                    className="text-decoration-none"
+                    style={{ color: "inherit" }}
+                  >
                     {/* immagine prodotto */}
                     <img
                       src={product.image}
                       alt={product.name}
                       className="card-img-top"
                       loading="lazy"
-                      style={{ height: "250px", width: "100%", objectFit: "cover" }}
+                      style={{
+                        height: "250px",
+                        width: "100%",
+                        objectFit: "cover",
+                      }}
                     />
                     {/* corpo card */}
                     <div className="card-body">
                       {/* nome prodotto */}
                       <h6 className="card-title mb-2">{product.name}</h6>
                       {/* prezzo prodotto */}
-                      <div className="fw-bold">€ {Number(product.price).toFixed(2)}</div>
+                      <div className="fw-bold">
+                        € {Number(product.price).toFixed(2)}
+                      </div>
                     </div>
                   </Link>
                   {/* footer card */}
@@ -200,7 +221,10 @@ export default function CatalogPage ({ fixedCategoryId }) {
             {/* ciclo prodotti */}
             {visibleProducts.map((product) => (
               // riga prodotto
-              <div key={product.id} className="border rounded p-3 d-flex gap-3 align-items-center">
+              <div
+                key={product.id}
+                className="border rounded p-3 d-flex gap-3 align-items-center"
+              >
                 {/* link immagine */}
                 <Link to={`/dettaglio-prodotto/${product.slug}`}>
                   {/* immagine mini */}
@@ -208,41 +232,52 @@ export default function CatalogPage ({ fixedCategoryId }) {
                     src={product.image}
                     alt={product.name}
                     loading="lazy"
-                    style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: 6 }}
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      objectFit: "cover",
+                      borderRadius: 6,
+                    }}
                   />
                 </Link>
                 {/* info testo */}
                 <div className="flex-grow-1">
                   {/* link nome */}
-                  <Link to={`/dettaglio-prodotto/${product.slug}`} className="text-decoration-none text-dark" style={{ fontWeight: 500 }}>
+                  <Link
+                    to={`/dettaglio-prodotto/${product.slug}`}
+                    className="text-decoration-none text-dark"
+                    style={{ fontWeight: 500 }}
+                  >
                     <h6 className="mb-1">{product.name}</h6>
                   </Link>
                 </div>
                 {/* prezzo a destra */}
-                <div className="fw-bold" style={{ minWidth: 120, textAlign: "right" }}>
+                <div
+                  className="fw-bold"
+                  style={{ minWidth: 120, textAlign: "right" }}
+                >
                   € {Number(product.price).toFixed(2)}
                 </div>
                 {/* bottone a destra */}
                 <div style={{ minWidth: 180, textAlign: "right" }}>
-                       {/* bottone carrello */}
-                    <button
-                      type="button"
-                      className="btn btn-dark btn-sm w-100"
-                      onClick={() => {
-                        // aggiunge al carrello via api
-                        axios.post("http://localhost:3000/cart", product);
-                        // avviso semplice
-                        alert(`${product.name} è stato aggiunto al carrello`);
-                      }}
-                    >
-                      Aggiungi al carrello
-                    </button>
+                  {/* bottone carrello */}
+                  <button
+                    type="button"
+                    className="btn btn-dark btn-sm w-100"
+                    onClick={() => {
+                      // aggiunge al carrello via api
+                      axios.post("http://localhost:3000/cart", product);
+                      // avviso semplice
+                      alert(`${product.name} è stato aggiunto al carrello`);
+                    }}
+                  >
+                    Aggiungi al carrello
+                  </button>
                 </div>
               </div>
             ))}
           </div>
-        )
-      )}
+        ))}
     </div>
   );
 }

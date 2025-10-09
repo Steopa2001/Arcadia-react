@@ -106,15 +106,13 @@ const Checkout = () => {
       })
       .catch((err) => {
         console.error(err);
-        alert(
-          "Errore durante la creazione dell'ordine"
-        );
+        alert("Errore durante la creazione dell'ordine");
       });
   };
 
   return (
     <div className="container py-4">
-      <h2 className="mb-4">Checkout</h2>
+      <h2 className="checkout-title">Checkout</h2>
 
       <form onSubmit={handleSubmit}>
         {/* Spedizione */}
@@ -373,7 +371,6 @@ const Checkout = () => {
                       required
                     />
                   </div>
-
 
                   <div className="col-sm-6 col-md-3">
                     <label className="form-label">CAP</label>

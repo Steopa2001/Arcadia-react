@@ -39,12 +39,12 @@ const Cart = () => {
         <>
           <h2>CARRELLO</h2>
           <table className="table text-center my-4">
-            <thead className="table-secondary">
+            <thead className="cart-header">
               <tr>
-                <th>PRODOTTO</th>
-                <th>PREZZO</th>
-                <th>QUANTITA'</th>
-                <th>TOTALE</th>
+                <th className="col-product">PRODOTTO</th>
+                <th className="col-price">PREZZO</th>
+                <th className="col-quantity">QUANTITÀ</th>
+                <th className="col-total">TOTALE</th>
               </tr>
             </thead>
             <tbody>

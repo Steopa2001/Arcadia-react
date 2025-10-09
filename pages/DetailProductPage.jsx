@@ -5,15 +5,30 @@ import axios from "axios";
 
 const DetailProductPage = () => {
   const { slug } = useParams();
-  const [products, setProducts] = useState({});
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1); // stato quantità
 
   const fetchProduct = () => {
     axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp) => {
-      setProducts(resp.data);
+      setProduct(resp.data);
     });
   };
 
-  useEffect(fetchProduct, []);
+  useEffect(fetchProduct, [slug]);
+
+  const handleAddToCart = () => {
+    const productWithQuantity = { ...product, quantity };
+    axios.post("http://localhost:3000/cart", productWithQuantity);
+    alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+  };
+
+  const increaseQuantity = () => {
+    setQuantity((prev) => (prev < 10 ? prev + 1 : prev)); // limite massimo 10
+  };
+
+  const decreaseQuantity = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+  };
 
   return (
     <div className="detail-page">
@@ -21,71 +36,81 @@ const DetailProductPage = () => {
         <div className="row py-5">
           {/* immagine prodotto */}
           <div className="col-12 col-md-6">
-            <img
-              className="img-fluid"
-              src={products.image}
-              alt={products.name}
-            />
+            <img className="img-fluid" src={product.image} alt={product.name} />
           </div>
 
           {/* dettagli prodotto */}
           <div className="col-12 col-md-6">
-            <h3 className="detail-title">{products.name}</h3>
+            <h3 className="detail-title">{product.name}</h3>
             <p>
-              <em>{products.price} &euro;</em>
+              <em>{product.price} &euro;</em>
             </p>
 
-            {/* separatore */}
             <hr className="detail-separator" />
 
             <p className="detail-info">
-              <span className="detail-label">GENERE:</span> {products.genre}
+              <span className="detail-label">GENERE:</span> {product.genre}
             </p>
 
-            {products.player_number == null ? null : (
+            {product.player_number != null && (
               <p className="detail-info">
                 <span className="detail-label">NUMERO GIOCATORI:</span>{" "}
-                {products.player_number}
+                {product.player_number}
               </p>
             )}
 
             <p className="detail-info">
               <span className="detail-label">ETÀ CONSIGLIATA:</span>{" "}
-              {products.recommended_age}
+              {product.recommended_age}
             </p>
 
             <p className="detail-info">
-              <span className="detail-label">LINGUA:</span> {products.language}
+              <span className="detail-label">LINGUA:</span> {product.language}
             </p>
 
             <p className="detail-info">
-              <span className="detail-label">DURATA:</span> {products.duration}
+              <span className="detail-label">DURATA:</span> {product.duration}
             </p>
 
             <p className="detail-info">
               <span className="detail-label">DIFFICOLTÀ:</span>{" "}
-              {products.complexity}
+              {product.complexity}
             </p>
 
             <p className="detail-info">
               <span className="detail-label">DESCRIZIONE:</span> <br />
-              {products.description}
+              {product.description}
             </p>
 
-            {/* separatore */}
             <hr className="detail-separator" />
 
             <div className="d-flex gap-3 align-items-center">
-              <Link to="/carrello-prodotti">
-                <div className="btn btn-primary" onClick={() => {
-                  axios.post('http://localhost:3000/cart', products);
-                  alert(`${products.name} è stato aggiunto al carrello`)
-                }}>Aggiungi al Carrello</div>
-              </Link>
+              {/* selezione quantità */}
+              <div className="d-flex align-items-center quantity-selector">
+                <button
+                  className="btn btn-light quantity-btn"
+                  onClick={decreaseQuantity}
+                >
+                  -
+                </button>
+                <span className="quantity-value mx-2">{quantity}</span>
+                <button
+                  className="btn btn-light quantity-btn"
+                  onClick={increaseQuantity}
+                >
+                  +
+                </button>
+              </div>
+
+              {/* bottone carrello */}
+              <div className="btn btn-primary" onClick={handleAddToCart}>
+                Aggiungi al Carrello
+              </div>
+
+              {/* wishlist */}
               <Link to="/wishlist-prodotti">
                 <i className="fa-solid fa-heart"></i>
               </Link>
-              <div>quantità</div>
             </div>
           </div>
         </div>
