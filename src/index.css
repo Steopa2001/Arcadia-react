@@ -16,7 +16,8 @@ body {
 
 /* homepage  */
 .homepage {
-  background: url("https://i.pinimg.com/1200x/af/68/b6/af68b611d68c4fc34ece206497ece5ac.jpg") no-repeat center top;
+  background: url("https://i.pinimg.com/1200x/af/68/b6/af68b611d68c4fc34ece206497ece5ac.jpg")
+    no-repeat center top;
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
@@ -37,7 +38,7 @@ body {
   pointer-events: none;
 }
 
-.homepage>* {
+.homepage > * {
   position: relative;
   z-index: 1;
 }
@@ -63,7 +64,8 @@ header {
     0 0 25px rgba(180, 120, 255, 0.2);
   transition: all 0.4s ease;
   margin: 0;
-  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1)) drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
+  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1))
+    drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
 }
 
 /* hover */
@@ -85,7 +87,8 @@ header {
 header img.logo {
   width: 120px;
   margin-left: 40px;
-  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1)) drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
+  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1))
+    drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
 }
 
 /* barra di ricerca */
@@ -296,12 +299,14 @@ a:active {
   transform: translateX(-50%);
   width: 60px;
   height: 2px;
-  background: linear-gradient(to right,
-      transparent,
-      #e2b977,
-      #f0e6c8,
-      #e2b977,
-      transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e2b977,
+    #f0e6c8,
+    #e2b977,
+    transparent
+  );
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(213, 160, 74, 0.7);
 }
@@ -377,14 +382,16 @@ a:active {
   overflow: hidden;
   border: none;
   height: 2px;
-  background: linear-gradient(to right,
-      transparent,
-      #d5a04a,
-      #e2b977,
-      #f0e6c8,
-      #e2b977,
-      #d5a04a,
-      transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    #d5a04a,
+    #e2b977,
+    #f0e6c8,
+    #e2b977,
+    #d5a04a,
+    transparent
+  );
   border-radius: 8px;
   margin: 60px 0;
   box-shadow: 0 0 15px rgba(240, 230, 200, 0.7),
@@ -398,12 +405,14 @@ a:active {
   left: -60%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(to right,
-      transparent,
-      rgba(255, 255, 255, 1),
-      rgba(255, 240, 200, 0.9),
-      rgba(255, 255, 255, 1),
-      transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 1),
+    rgba(255, 240, 200, 0.9),
+    rgba(255, 255, 255, 1),
+    transparent
+  );
   box-shadow: 0 0 25px rgba(255, 240, 200, 0.8),
     0 0 45px rgba(240, 200, 120, 0.5);
   filter: blur(2px);
@@ -474,12 +483,14 @@ a:active {
   transform: translateX(-50%);
   width: 90px;
   height: 1px;
-  background: linear-gradient(to right,
-      transparent,
-      #e2b977,
-      #f0e6c8,
-      #e2b977,
-      transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e2b977,
+    #f0e6c8,
+    #e2b977,
+    transparent
+  );
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(213, 160, 74, 0.7);
 }
@@ -586,7 +597,8 @@ a:active {
 /* ------------------ DETTAGLIO PRODOTTO ------------------ */
 
 .detail-page {
-  background: url("https://i.pinimg.com/originals/1e/0c/36/1e0c364034676f9029ad7f74acb202c9.gif") center repeat;
+  background: url("https://i.pinimg.com/originals/1e/0c/36/1e0c364034676f9029ad7f74acb202c9.gif")
+    center repeat;
   min-height: 100vh;
 }
 
@@ -646,14 +658,16 @@ p em {
 
 /* separatore */
 .detail-separator {
-  background: linear-gradient(to right,
-      transparent,
-      #2a0136,
-      #2d004d,
-      #a85cff,
-      #2d004d,
-      #2a0136,
-      transparent) !important;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #2a0136,
+    #2d004d,
+    #a85cff,
+    #2d004d,
+    #2a0136,
+    transparent
+  ) !important;
 }
 
 /* bottone */
@@ -681,9 +695,11 @@ p em {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0.15),
-      transparent 70%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15),
+    transparent 70%
+  );
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -825,7 +841,10 @@ footer li:hover {
 }
 
 .icons {
-  font-size: 30px;
+  font-size: 23px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 
 .icons:hover {
@@ -1025,9 +1044,11 @@ select.form-select:focus {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0.15),
-      transparent 70%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15),
+    transparent 70%
+  );
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1117,10 +1138,12 @@ select.form-select:focus {
   left: -120%;
   width: 80%;
   height: 100%;
-  background: linear-gradient(120deg,
-      rgba(255, 255, 255, 0.7) 0%,
-      rgba(255, 255, 255, 0.15) 50%,
-      transparent 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1321,7 +1344,6 @@ select.form-select:focus {
   letter-spacing: 1px;
   margin-bottom: 10px;
 }
-
 
 .btn-main {
   width: 200px;
