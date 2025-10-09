@@ -171,11 +171,12 @@ const CatalogPage = ({ fixedCategoryId }) => {
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={() =>
-                      axios
-                        .post("http://localhost:3000/cart", product)
-                        .catch(console.error)
-                    }
+                    onClick={() => {
+                      // aggiunge al carrello via api
+                      axios.post("http://localhost:3000/cart", product);
+                      // avviso semplice
+                      alert(`${product.name} è stato aggiunto al carrello`);
+                    }}
                   >
                     Aggiungi al carrello
                   </button>
@@ -223,11 +224,12 @@ const CatalogPage = ({ fixedCategoryId }) => {
                 <button
                   type="button"
                   className="btn btn-dark btn-sm w-100"
-                  onClick={() =>
-                    axios
-                      .post("http://localhost:3000/cart", product)
-                      .catch(console.error)
-                  }
+                  onClick={() => {
+                    // aggiunge al carrello via api
+                    axios.post("http://localhost:3000/cart", product);
+                    // avviso semplice
+                    alert(`${product.name} è stato aggiunto al carrello`);
+                  }}
                 >
                   Aggiungi al carrello
                 </button>
