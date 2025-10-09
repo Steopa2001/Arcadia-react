@@ -886,14 +886,6 @@ footer li:hover {
   display: block;
 }
 
-/* bottone notfound */
-.container .btn-main {
-  padding: 8px 8px;
-  font-size: 0.85rem;
-  text-align: center;
-  border-radius: 4px;
-}
-
 /* -------------- CATALOGO ---------------- */
 
 /* contenitore principale dei controlli */
@@ -1196,7 +1188,6 @@ select.form-select:focus {
 /* ---------------- footer card fix ---------------- */
 .card-footer {
   background: #ffffff !important;
-  /* bianco puro */
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   margin-top: auto;
   padding-top: 0.75rem;
@@ -1372,4 +1363,56 @@ select.form-select:focus {
   color: white;
   padding: 25px 15px;
   font-size: 18px;
+}
+
+/* ---------------- PAGINA 404 ---------------- */
+
+.notfound-container {
+  position: relative;
+  height: 90vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notfound-bg {
+  width: 35%;
+  max-width: 900px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  background-color: black;
+}
+
+/* hotspot invisibili */
+.hotspot {
+  position: absolute;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* posizionamento pulsanti */
+.hotspot-yes {
+  top: 68%;
+  left: 34.8%;
+  width: 70px;
+  height: 42px;
+}
+
+.hotspot-no {
+  top: 68%;
+  right: 35.8%;
+  width: 70px;
+  height: 42px;
 }
