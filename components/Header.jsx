@@ -1,9 +1,35 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Header = () => {
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    // Recupera il numero di prodotti nel carrello
+    axios.get("http://localhost:3000/cart").then((resp) => {
+      setCartCount(resp.data.length);
+    });
+  }, []);
+
+  // aggiornamento n carrello
+  useEffect(() => {
+    const fetchCart = () => {
+      axios.get("http://localhost:3000/cart").then((resp) => {
+        setCartCount(resp.data.length);
+      });
+    };
+
+    fetchCart(); // prima chiamata immediata
+
+    const interval = setInterval(fetchCart, 1000); // aggiorna ogni 1s
+
+    return () => clearInterval(interval); // clear quando cambia pagina
+  }, []);
+
   return (
     <header>
-      {/* logo - gif - icone */}
+      {/* logo - scritta - icone */}
       <div className="header-top d-flex justify-content-between align-items-center">
         {/* logo */}
         <Link to="/">
@@ -20,11 +46,15 @@ const Header = () => {
           <Link to="/wishlist-prodotti">
             <i className="fa-solid fa-heart"></i>
           </Link>
+
           <Link to="/account">
             <i className="fa-solid fa-user"></i>
           </Link>
-          <Link to="/carrello-prodotti">
+
+          {/* carrello con contatore */}
+          <Link to="/carrello-prodotti" className="cart-icon">
             <i className="fa-solid fa-cart-shopping"></i>
+            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
           </Link>
         </div>
       </div>

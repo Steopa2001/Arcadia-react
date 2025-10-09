@@ -133,6 +133,36 @@ header img.logo {
   text-shadow: 0 0 8px #4e188b, 0 0 16px #fff;
   transition: all 0.3s ease;
 }
+.cart-icon {
+  position: relative;
+  display: inline-block;
+}
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: linear-gradient(135deg, #2d004d, #a15cff);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 50%;
+  padding: 2px 6px;
+  line-height: 1;
+  box-shadow: 0 0 6px rgba(168, 92, 255, 0.5);
+  animation: pop 0.3s ease;
+}
+
+/* pop */
+@keyframes pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 /* riga sotto: navbar */
 .header-nav {
