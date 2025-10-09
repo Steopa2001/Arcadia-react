@@ -6,25 +6,34 @@ const Header = () => {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
-    // Recupera il numero di prodotti nel carrello
-    axios.get("http://localhost:3000/cart").then((resp) => {
-      setCartCount(resp.data.length);
-    });
-  }, []);
-
-  // aggiornamento n carrello
-  useEffect(() => {
-    const fetchCart = () => {
-      axios.get("http://localhost:3000/cart").then((resp) => {
-        setCartCount(resp.data.length);
-      });
+    const fetchCart = async () => {
+      try {
+        const resp = await axios.get("http://localhost:3000/cart");
+        const totalItems = resp.data.reduce(
+          (sum, item) => sum + (item.quantity || 1),
+          0
+        );
+        setCartCount(totalItems);
+      } catch (error) {
+        console.error("Errore nel recupero del carrello:", error);
+      }
     };
 
-    fetchCart(); // prima chiamata immediata
+    // chiamata iniziale
+    fetchCart();
 
-    const interval = setInterval(fetchCart, 1000); // aggiorna ogni 1s
+    // ascolta evento personalizzato
+    const handleCartUpdated = () => fetchCart();
+    window.addEventListener("cart-updated", handleCartUpdated);
 
-    return () => clearInterval(interval); // clear quando cambia pagina
+    // fallback: controlla ogni 2 secondi
+    const interval = setInterval(fetchCart, 2000);
+
+    // cleanup
+    return () => {
+      window.removeEventListener("cart-updated", handleCartUpdated);
+      clearInterval(interval);
+    };
   }, []);
 
   return (

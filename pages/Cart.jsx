@@ -5,9 +5,9 @@ import Checkout from "../components/checkout";
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [maxQuantity, setMaxQuantity] = useState(10);
-
   const [showCheckout, setShowCheckout] = useState(false);
 
+  // carica il carrello
   useEffect(() => {
     axios.get("http://localhost:3000/cart").then((resp) => {
       const productsWithQuantity = resp.data.map((product) => ({
@@ -18,17 +18,32 @@ const Cart = () => {
     });
   }, []);
 
+  // aggiorna quantità prodotto
   const refreshQuantity = (id, operation) => {
-    setCart((products) => {
-      return products.map((product) => {
+    setCart((products) =>
+      products.map((product) => {
         if (product.id === id) {
           const newQuantity = (product.quantity || 1) + operation;
-          return { ...product, quantity: newQuantity < 1 ? 1 : newQuantity };
-        } else {
-          return product;
+          const safeQuantity = newQuantity < 1 ? 1 : newQuantity;
+
+          // aggiorna il backend (PATCH)
+          axios
+            .patch(`http://localhost:3000/cart/${id}`, {
+              quantity: safeQuantity,
+            })
+            .then(() => {
+              // aggiorna anche header
+              window.dispatchEvent(new Event("cart-updated"));
+            })
+            .catch((err) =>
+              console.error("Errore aggiornamento quantità:", err)
+            );
+
+          return { ...product, quantity: safeQuantity };
         }
-      });
-    });
+        return product;
+      })
+    );
   };
 
   return (
@@ -52,7 +67,7 @@ const Cart = () => {
                 const { image, price, quantity, id, name } = productCart;
 
                 return (
-                  <tr className="align-middle">
+                  <tr className="align-middle" key={id}>
                     <td>
                       <img className="w-100px" src={image} alt={name} />
                     </td>
@@ -61,15 +76,16 @@ const Cart = () => {
                       <button
                         className="px-2 fs-6"
                         onClick={() => {
-                          if (quantity !== maxQuantity) {
+                          if (quantity < maxQuantity) {
                             refreshQuantity(id, +1);
                           }
                         }}
                       >
                         +
-                      </button>{" "}
+                      </button>
                       <br />
-                      {quantity} <br />
+                      {quantity}
+                      <br />
                       <button
                         className="px-3 fs-6"
                         onClick={() => {
@@ -86,6 +102,7 @@ const Cart = () => {
                                   })
                                 );
                                 setCart(productsWithQuantity);
+                                window.dispatchEvent(new Event("cart-updated"));
                               });
                           } else {
                             refreshQuantity(id, -1);
@@ -96,9 +113,7 @@ const Cart = () => {
                       </button>
                     </td>
                     <td>
-                      {(
-                        parseFloat(price).toFixed(2) * parseInt(quantity)
-                      ).toFixed(2)}{" "}
+                      {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "}
                       &euro;
                     </td>
                     <td>
@@ -117,6 +132,7 @@ const Cart = () => {
                                 })
                               );
                               setCart(productsWithQuantity);
+                              window.dispatchEvent(new Event("cart-updated"));
                             });
                         }}
                       >
@@ -130,8 +146,8 @@ const Cart = () => {
           </table>
         </>
       )}
+
       <div className="text-center">
-        {/* Bottone */}
         <div className="checkout">
           <button
             className="btn btn-primary"
@@ -141,7 +157,6 @@ const Cart = () => {
           </button>
         </div>
 
-        {/* Mostra la componente solo se showCheckout è true */}
         {showCheckout && (
           <div className="mt-4">
             <Checkout cartItems={cart} />
