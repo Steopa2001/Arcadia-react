@@ -3,41 +3,56 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const CatalogPage = ({ fixedCategoryId }) => {
+  // stato che contiene tutti i prodotti caricati
   const [allProducts, setAllProducts] = useState([]);
+
+  // stato per il termine di ricerca
   const [searchTerm, setSearchTerm] = useState("");
+
+  // stato per la modalità di visualizzazione (griglia o lista)
   const [viewMode, setViewMode] = useState("grid");
+
+  // stato per l'opzione di ordinamento selezionata
   const [sortOption, setSortOption] = useState("name_asc");
 
+  // carica i prodotti dal backend al primo render
   useEffect(() => {
     axios.get("http://localhost:3000/products").then((res) => {
       setAllProducts(res.data);
     });
   }, []);
 
+  // filtro per categoria (se viene passato un fixedCategoryId)
   const productsByCategory = fixedCategoryId
     ? allProducts.filter(
         (product) => String(product.category_id) === String(fixedCategoryId)
       )
     : allProducts;
 
+  // filtro per nome del prodotto (ricerca)
   const filteredProducts = productsByCategory.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // array ordinato da visualizzare (partendo dai prodotti filtrati)
   let sortedProducts = [...filteredProducts];
 
+  // ordinamento alfabetico A-Z
   if (sortOption === "name_asc") {
     sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
   }
 
+  // ordinamento alfabetico Z-A
   if (sortOption === "name_desc") {
     sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
   }
 
+  // ordinamento prezzo crescente
   if (sortOption === "price_asc") {
     sortedProducts.sort((a, b) => a.price - b.price);
   }
 
+  // ordinamento prezzo decrescente
   if (sortOption === "price_desc") {
     sortedProducts.sort((a, b) => b.price - a.price);
   }
@@ -61,7 +76,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
 
         {/* blocco per scegliere la visualizzazione + select ordinamento */}
         <div className="d-flex align-items-center gap-3">
-          {/* vista */}
+          {/* vista (griglia / lista) */}
           <div className="d-flex align-items-center gap-2 view-mode">
             <button
               type="button"
@@ -102,6 +117,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
           {sortedProducts.map((product) => (
             <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
               <div className="card h-100">
+                {/* immagine e link al dettaglio prodotto */}
                 <Link
                   to={`/dettaglio-prodotto/${product.slug}`}
                   className="text-decoration-none"
@@ -120,6 +136,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                   />
                 </Link>
 
+                {/* corpo card con nome e prezzo */}
                 <div className="card-body">
                   <h6 className="card-title mb-2">{product.name}</h6>
                   <div className="fw-bold">
@@ -133,7 +150,9 @@ const CatalogPage = ({ fixedCategoryId }) => {
                     type="button"
                     className="btn btn-dark btn-sm w-100"
                     onClick={() => {
+                      // aggiunge al carrello via API
                       axios.post("http://localhost:3000/cart", product);
+                      // avviso semplice all’utente
                       alert(`${product.name} è stato aggiunto al carrello`);
                     }}
                   >
@@ -145,12 +164,14 @@ const CatalogPage = ({ fixedCategoryId }) => {
           ))}
         </div>
       ) : (
+        // modalità lista
         <div className="vstack gap-2">
           {sortedProducts.map((product) => (
             <div
               key={product.id}
               className="border rounded p-3 d-flex gap-3 align-items-center"
             >
+              {/* immagine e link al dettaglio prodotto */}
               <Link to={`/dettaglio-prodotto/${product.slug}`}>
                 <img
                   src={product.image}
@@ -165,6 +186,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                 />
               </Link>
 
+              {/* descrizione e nome */}
               <div className="flex-grow-1">
                 <Link
                   to={`/dettaglio-prodotto/${product.slug}`}
@@ -175,6 +197,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                 <div className="text-muted">{product.description}</div>
               </div>
 
+              {/* prezzo + bottone carrello */}
               <div className="fw-bold text-end" style={{ minWidth: 120 }}>
                 € {Number(product.price).toFixed(2)}
               </div>
@@ -184,7 +207,9 @@ const CatalogPage = ({ fixedCategoryId }) => {
                   type="button"
                   className="btn btn-dark btn-sm w-100"
                   onClick={() => {
+                    // aggiunge al carrello via API
                     axios.post("http://localhost:3000/cart", product);
+                    // avviso semplice all’utente
                     alert(`${product.name} è stato aggiunto al carrello`);
                   }}
                 >
@@ -196,6 +221,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
         </div>
       )}
 
+      {/* messaggio se nessun prodotto viene trovato */}
       {sortedProducts.length === 0 && (
         <div className="py-5 text-center text-muted">
           Nessun prodotto trovato
