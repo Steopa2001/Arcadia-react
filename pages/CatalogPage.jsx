@@ -102,9 +102,8 @@ export default function CatalogPage({ fixedCategoryId }) {
           {/* bottone griglia */}
           <button
             type="button"
-            className={`btn btn-outline-dark ${
-              viewMode === "grid" ? "active" : ""
-            }`}
+            className={`btn btn-outline-dark ${viewMode === "grid" ? "active" : ""
+              }`}
             onClick={() => setViewMode("grid")}
           >
             Griglia
@@ -112,9 +111,8 @@ export default function CatalogPage({ fixedCategoryId }) {
           {/* bottone lista */}
           <button
             type="button"
-            className={`btn btn-outline-dark ${
-              viewMode === "list" ? "active" : ""
-            }`}
+            className={`btn btn-outline-dark ${viewMode === "list" ? "active" : ""
+              }`}
             onClick={() => setViewMode("list")}
           >
             Lista
@@ -248,7 +246,8 @@ export default function CatalogPage({ fixedCategoryId }) {
                     className="text-decoration-none text-dark"
                     style={{ fontWeight: 500 }}
                   >
-                    <h6 className="mb-1">{product.name}</h6>
+                    <h4 className="mb-1">{product.name}</h4>
+                    <span>{product.description}</span>
                   </Link>
                 </div>
                 {/* prezzo a destra */}
