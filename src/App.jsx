@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import ScrollToTopNotFound from "../components/ScrollToTop"; // 👈 aggiungi questo
+import ScrollToTopNotFound from "../components/ScrollToTop";
 import DefaultLayout from "../layouts/DefaultLayout";
 import Homepage from "../pages/Homepage";
 import BoardGames from "../pages/BoardGames";
@@ -17,7 +17,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 function App() {
   return (
     <BrowserRouter>
-      <ScrollToTopNotFound /> {/* 👈 aggiungi questa riga */}
+      <ScrollToTopNotFound />
       <Routes>
         <Route element={<DefaultLayout />}>
           <Route index element={<Homepage />} />
