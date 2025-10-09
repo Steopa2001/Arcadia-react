@@ -1,282 +1,250 @@
-// importa hook react
 import { useEffect, useState } from "react";
-// importa axios
 import axios from "axios";
-// importa Link router
 import { Link } from "react-router-dom";
 
-// pagina catalogo riutilizzabile
-export default function CatalogPage({ fixedCategoryId }) {
-  // stato prodotti
+const CatalogPage = ({ fixedCategoryId }) => {
   const [allProducts, setAllProducts] = useState([]);
-  // stato vista
+  const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState("grid");
   // stato ordinamento
   const [sortOption, setSortOption] = useState("name_asc");
-  // stato ricerca
-  const [searchTerm, setSearchTerm] = useState("");
 
-  // effetto: carica prodotti
+  // carica prodotti
   useEffect(() => {
-    // richiesta prodotti
-    axios.get("http://localhost:3000/products").then((response) => {
-      // salva prodotti
-      setAllProducts(response.data);
+    axios.get("http://localhost:3000/products").then((res) => {
+      setAllProducts(res.data);
     });
   }, []);
 
-  // copia lavorabile dei prodotti
-  let visibleProducts = Array.isArray(allProducts) ? allProducts.slice() : [];
+  // filtro per categoria
+  const productsByCategory = fixedCategoryId
+    ? allProducts.filter(
+        (product) => String(product.category_id) === String(fixedCategoryId)
+      )
+    : allProducts;
 
-  // se ho categoria fissa filtro per category_id
-  if (fixedCategoryId != null) {
-    // confronto come stringa per evitare problemi di tipo
-    visibleProducts = visibleProducts.filter((product) => {
-      // ritorna solo prodotti con category_id uguale
-      return product.category_id + "" === fixedCategoryId + "";
+  // filtro per nome
+  const filteredProducts = productsByCategory.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // ordinamento su nome/prezzo
+  // parto dalla lista dei prodotti già filtrati
+  let sortedProducts = [...filteredProducts];
+
+  // se l'utente sceglie "Nome dalla A alla Z"
+  if (sortOption === "name_asc") {
+    sortedProducts.sort(function (firstProduct, secondProduct) {
+      // confronto i nomi in ordine alfabetico
+      if (firstProduct.name < secondProduct.name) {
+        return -1; // il primo resta prima
+      }
+
+      if (firstProduct.name > secondProduct.name) {
+        return 1; // il primo va dopo
+      }
+
+      return 0; // i nomi sono uguali
     });
   }
 
-  // se ho testo di ricerca applico filtro
-  if (searchTerm) {
-    // preparo query in minuscolo
-    const searchQuery = (searchTerm + "").toLowerCase();
-    // filtro per nome o prezzo che contengono la query
-    visibleProducts = visibleProducts.filter((product) => {
-      // nome in minuscolo con fallback vuoto
-      const productName = ((product.name || "") + "").toLowerCase();
-      // prezzo come stringa con fallback
-      const productPrice = (product.price != null ? product.price : "") + "";
-      // mantieni se matcha nome o prezzo
-      return (
-        productName.includes(searchQuery) || productPrice.includes(searchQuery)
-      );
+  // se l'utente sceglie "Nome dalla Z alla A"
+  if (sortOption === "name_desc") {
+    sortedProducts.sort(function (firstProduct, secondProduct) {
+      // qui faccio l'opposto: i nomi che vengono dopo devono stare prima
+      if (firstProduct.name > secondProduct.name) {
+        return -1; // sposto in alto
+      }
+
+      if (firstProduct.name < secondProduct.name) {
+        return 1; // sposto in basso
+      }
+
+      return 0; // i nomi sono uguali
     });
   }
 
-  // prendo chiave e direzione da sortOption
-  const [sortKey, sortDirection] = sortOption.split("_");
-  // true se ascendente
-  const isAscending = sortDirection === "asc";
+  // se l'utente sceglie "Prezzo crescente"
+  if (sortOption === "price_asc") {
+    sortedProducts.sort(function (firstProduct, secondProduct) {
+      // metto prima i prodotti con prezzo più basso
+      return firstProduct.price - secondProduct.price;
+    });
+  }
 
-  // ordina la lista visibile
-  visibleProducts.sort((productA, productB) => {
-    // valore A in base alla chiave
-    const valueA = sortKey === "price" ? +productA.price : productA.name || "";
-    // valore B in base alla chiave
-    const valueB = sortKey === "price" ? +productB.price : productB.name || "";
-    // confronta minore
-    if (valueA < valueB) return isAscending ? -1 : 1;
-    // confronta maggiore
-    if (valueA > valueB) return isAscending ? 1 : -1;
-    // uguali
-    return 0;
-  });
+  // se l'utente sceglie "Prezzo decrescente"
+  if (sortOption === "price_desc") {
+    sortedProducts.sort(function (firstProduct, secondProduct) {
+      // metto prima i prodotti con prezzo più alto
+      return secondProduct.price - firstProduct.price;
+    });
+  }
 
-  // ritorna interfaccia
   return (
-    // container pagina
     <div className="container py-4">
-      {/* barra controlli */}
-      <div className="d-flex flex-wrap align-items-end gap-3 mb-4">
+      {/* barra superiore: search + controlli vista + select ordinamento in linea */}
+      <div className="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-3">
         {/* blocco ricerca */}
         <div className="flex-grow-1">
-          {/* etichetta input */}
-          <label htmlFor="searchProducts" className="form-label mb-1">
-            Cerca
-          </label>
-          {/* input ricerca */}
+          <label className="form-label">Cerca</label>
           <input
-            id="searchProducts"
+            id="search"
+            type="text"
             className="form-control"
             placeholder="Cerca un prodotto..."
             value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        {/* blocco vista */}
-        <div className="d-flex align-items-center gap-2">
-          {/* testo vista */}
-          <span className="fw-semibold text-uppercase">Visualizza</span>
-          {/* bottone griglia */}
-          <button
-            type="button"
-            className={`btn btn-outline-dark ${viewMode === "grid" ? "active" : ""
-              }`}
-            onClick={() => setViewMode("grid")}
-          >
-            Griglia
-          </button>
-          {/* bottone lista */}
-          <button
-            type="button"
-            className={`btn btn-outline-dark ${viewMode === "list" ? "active" : ""
-              }`}
-            onClick={() => setViewMode("list")}
-          >
-            Lista
-          </button>
-        </div>
+        {/* blocco per scegliere la visualizzazione + select ordinamento */}
+        <div className="d-flex align-items-center gap-3">
+          {/* vista */}
+          <div className="d-flex align-items-center gap-2">
+            <span className="fw-semibold text-uppercase">Visualizza</span>
+            <button
+              type="button"
+              className={`btn ${viewMode === "grid" ? "active" : ""}`}
+              onClick={() => setViewMode("grid")}
+            >
+              Griglia
+            </button>
+            <button
+              type="button"
+              className={`btn ${viewMode === "list" ? "active" : ""}`}
+              onClick={() => setViewMode("list")}
+            >
+              Lista
+            </button>
+          </div>
 
-        {/* blocco ordinamento */}
-        <div className="ms-auto">
-          {/* etichetta select */}
-          <label className="form-label mb-1">Ordina per</label>
-          {/* select ordinamento */}
-          <select
-            className="form-select"
-            value={sortOption}
-            onChange={(event) => setSortOption(event.target.value)}
-          >
-            {/* opzione nome asc */}
-            <option value="name_asc">Nome A-Z</option>
-            {/* opzione nome desc */}
-            <option value="name_desc">Nome Z-A</option>
-            {/* opzione prezzo asc */}
-            <option value="price_asc">Prezzo crescente</option>
-            {/* opzione prezzo desc */}
-            <option value="price_desc">Prezzo decrescente</option>
-          </select>
+          {/*select ordinamento  */}
+          <div>
+            <label className="form-label mb-0 small">Ordina per</label>
+            <select
+              className="form-select form-select-sm"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+            >
+              <option value="name_asc">Nome A-Z</option>
+              <option value="name_desc">Nome Z-A</option>
+              <option value="price_asc">Prezzo crescente</option>
+              <option value="price_desc">Prezzo decrescente</option>
+            </select>
+          </div>
         </div>
-
-        {/* conteggio risultati */}
-        <div className="text-muted">{visibleProducts.length} risultati</div>
       </div>
 
-      {/* messaggio nessun gioco solo se cerchi e non trovi */}
-      {searchTerm && visibleProducts.length === 0 && (
-        // box messaggio
-        <div className="py-5">Nessun gioco trovato</div>
-      )}
-
-      {/* lista prodotti se ci sono */}
-      {visibleProducts.length > 0 &&
-        // se vista griglia
-        (viewMode === "grid" ? (
-          // griglia bootstrap
-          <div className="row g-3">
-            {/* ciclo prodotti */}
-            {visibleProducts.map((product) => (
-              // colonna card
-              <div
-                key={product.id}
-                className="col-12 col-sm-6 col-md-4 col-lg-3"
-              >
-                {/* card prodotto */}
-                <div className="card h-100">
-                  {/* link al dettaglio */}
-                  <Link
-                    to={`/dettaglio-prodotto/${product.slug}`}
-                    className="text-decoration-none"
-                    style={{ color: "inherit" }}
-                  >
-                    {/* immagine prodotto */}
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="card-img-top"
-                      loading="lazy"
-                      style={{
-                        height: "250px",
-                        width: "100%",
-                        objectFit: "cover",
-                      }}
-                    />
-                    {/* corpo card */}
-                    <div className="card-body">
-                      {/* nome prodotto */}
-                      <h6 className="card-title mb-2">{product.name}</h6>
-                      {/* prezzo prodotto */}
-                      <div className="fw-bold">
-                        € {Number(product.price).toFixed(2)}
-                      </div>
-                    </div>
-                  </Link>
-                  {/* footer card */}
-                  <div className="card-footer bg-white border-0">
-                    {/* bottone carrello */}
-                    <button
-                      type="button"
-                      className="btn btn-dark btn-sm w-100"
-                      onClick={() => {
-                        // aggiunge al carrello via api
-                        axios.post("http://localhost:3000/cart", product);
-                        // avviso semplice
-                        alert(`${product.name} è stato aggiunto al carrello`);
-                      }}
-                    >
-                      Aggiungi al carrello
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          // se vista lista
-          <div className="vstack gap-2">
-            {/* ciclo prodotti */}
-            {visibleProducts.map((product) => (
-              // riga prodotto
-              <div
-                key={product.id}
-                className="border rounded p-3 d-flex gap-3 align-items-center"
-              >
-                {/* link immagine */}
-                <Link to={`/dettaglio-prodotto/${product.slug}`}>
-                  {/* immagine mini */}
+      {/* lista prodotti */}
+      {viewMode === "grid" ? (
+        <div className="row g-3">
+          {sortedProducts.map((product) => (
+            <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
+              <div className="card h-100">
+                <Link
+                  to={`/dettaglio-prodotto/${product.slug}`}
+                  className="text-decoration-none"
+                  style={{ color: "inherit" }}
+                >
                   <img
                     src={product.image}
                     alt={product.name}
+                    className="card-img-top"
                     loading="lazy"
                     style={{
-                      width: "120px",
-                      height: "120px",
+                      height: "250px",
+                      width: "100%",
                       objectFit: "cover",
-                      borderRadius: 6,
                     }}
                   />
                 </Link>
-                {/* info testo */}
-                <div className="flex-grow-1">
-                  {/* link nome */}
-                  <Link
-                    to={`/dettaglio-prodotto/${product.slug}`}
-                    className="text-decoration-none text-dark"
-                    style={{ fontWeight: 500 }}
-                  >
-                    <h4 className="mb-1">{product.name}</h4>
-                    <span>{product.description}</span>
-                  </Link>
+
+                <div className="card-body">
+                  <h6 className="card-title mb-2">{product.name}</h6>
+                  <div className="fw-bold">
+                    € {Number(product.price).toFixed(2)}
+                  </div>
                 </div>
-                {/* prezzo a destra */}
-                <div
-                  className="fw-bold"
-                  style={{ minWidth: 120, textAlign: "right" }}
-                >
-                  € {Number(product.price).toFixed(2)}
-                </div>
-                {/* bottone a destra */}
-                <div style={{ minWidth: 180, textAlign: "right" }}>
-                  {/* bottone carrello */}
+
+                {/* footer con bottone carrello */}
+                <div className="card-footer bg-white border-0">
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={() => {
-                      // aggiunge al carrello via api
-                      axios.post("http://localhost:3000/cart", product);
-                      // avviso semplice
-                      alert(`${product.name} è stato aggiunto al carrello`);
-                    }}
+                    onClick={() =>
+                      axios
+                        .post("http://localhost:3000/cart", product)
+                        .catch(console.error)
+                    }
                   >
                     Aggiungi al carrello
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
-        ))}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="vstack gap-2">
+          {sortedProducts.map((product) => (
+            <div
+              key={product.id}
+              className="border rounded p-3 d-flex gap-3 align-items-center"
+            >
+              <Link to={`/dettaglio-prodotto/${product.slug}`}>
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "cover",
+                    borderRadius: 6,
+                  }}
+                />
+              </Link>
+
+              <div className="flex-grow-1">
+                <Link
+                  to={`/dettaglio-prodotto/${product.slug}`}
+                  className="text-decoration-none text-dark"
+                >
+                  <h5 className="mb-1">{product.name}</h5>
+                </Link>
+                <div className="text-muted">{product.description}</div>
+              </div>
+
+              <div className="fw-bold text-end" style={{ minWidth: 120 }}>
+                € {Number(product.price).toFixed(2)}
+              </div>
+
+              <div style={{ minWidth: 180 }}>
+                <button
+                  type="button"
+                  className="btn btn-dark btn-sm w-100"
+                  onClick={() =>
+                    axios
+                      .post("http://localhost:3000/cart", product)
+                      .catch(console.error)
+                  }
+                >
+                  Aggiungi al carrello
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* nessun risultato */}
+      {sortedProducts.length === 0 && (
+        <div className="py-5 text-center text-muted">
+          Nessun prodotto trovato
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default CatalogPage;
