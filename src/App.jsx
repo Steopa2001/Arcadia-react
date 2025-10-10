@@ -16,15 +16,18 @@ import ModelPage from "../pages/ModelPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import CartContext from "./contexts/cartContext";
 
+// 💬 importiamo Aria (il chatbot)
+import Chatbot from "../components/Chatbot";
+
 function App() {
   const [numberCart, setNumberCart] = useState(() => {
-    const saved = localStorage.getItem('numberCart')
+    const saved = localStorage.getItem("numberCart");
     return saved ? parseInt(saved) : 0;
-  })
+  });
 
   useEffect(() => {
-    localStorage.setItem('numberCart', numberCart)
-  }, [numberCart])
+    localStorage.setItem("numberCart", numberCart);
+  }, [numberCart]);
 
   return (
     <CartContext.Provider value={{ numberCart, setNumberCart }}>
@@ -43,13 +46,19 @@ function App() {
             <Route path="/tutti-prodotti" element={<AllProducts />} />
             <Route path="/promo-prodotti" element={<PromoPage />} />
             <Route path="/prodotti-preferiti" element={<OurChoiches />} />
-            <Route path="/carte-collezionabili" element={<CollectiblesPage />} />
+            <Route
+              path="/carte-collezionabili"
+              element={<CollectiblesPage />}
+            />
             <Route path="/cardistry" element={<CardistryPage />} />
             <Route path="/modellismo" element={<ModelPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
           </Route>
         </Routes>
+
+        {/* 💬 Aria sempre visibile in basso a destra */}
+        <Chatbot />
       </BrowserRouter>
     </CartContext.Provider>
   );
