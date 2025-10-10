@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import CartContext from "../src/contexts/cartContext";
 
 const CatalogPage = ({ fixedCategoryId }) => {
   // stato che contiene tutti i prodotti caricati
@@ -15,6 +16,8 @@ const CatalogPage = ({ fixedCategoryId }) => {
   // stato per l'opzione di ordinamento selezionata
   const [sortOption, setSortOption] = useState("name_asc");
 
+  const { numberCart, setNumberCart } = useContext(CartContext)
+
   // carica i prodotti dal backend al primo render
   useEffect(() => {
     axios.get("http://localhost:3000/products").then((res) => {
@@ -25,8 +28,8 @@ const CatalogPage = ({ fixedCategoryId }) => {
   // filtro per categoria (se viene passato un fixedCategoryId)
   const productsByCategory = fixedCategoryId
     ? allProducts.filter(
-        (product) => String(product.category_id) === String(fixedCategoryId)
-      )
+      (product) => String(product.category_id) === String(fixedCategoryId)
+    )
     : allProducts;
 
   // filtro per nome del prodotto (ricerca)
@@ -152,6 +155,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                     onClick={() => {
                       // aggiunge al carrello via API
                       axios.post("http://localhost:3000/cart", product);
+                      setNumberCart(numberCart + 1)
                       // avviso semplice all’utente
                       alert(`${product.name} è stato aggiunto al carrello`);
                     }}
@@ -209,6 +213,7 @@ const CatalogPage = ({ fixedCategoryId }) => {
                   onClick={() => {
                     // aggiunge al carrello via API
                     axios.post("http://localhost:3000/cart", product);
+                    setNumberCart(numberCart + 1)
                     // avviso semplice all’utente
                     alert(`${product.name} è stato aggiunto al carrello`);
                   }}

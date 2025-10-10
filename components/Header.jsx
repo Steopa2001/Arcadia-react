@@ -1,40 +1,10 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useContext } from "react";
+import CartContext from "../src/contexts/cartContext";
 
 const Header = () => {
-  const [cartCount, setCartCount] = useState(0);
 
-  useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const resp = await axios.get("http://localhost:3000/cart");
-        const totalItems = resp.data.reduce(
-          (sum, item) => sum + (item.quantity || 1),
-          0
-        );
-        setCartCount(totalItems);
-      } catch (error) {
-        console.error("Errore nel recupero del carrello:", error);
-      }
-    };
-
-    // chiamata iniziale
-    fetchCart();
-
-    // ascolta evento personalizzato
-    const handleCartUpdated = () => fetchCart();
-    window.addEventListener("cart-updated", handleCartUpdated);
-
-    // fallback: controlla ogni 2 secondi
-    const interval = setInterval(fetchCart, 2000);
-
-    // cleanup
-    return () => {
-      window.removeEventListener("cart-updated", handleCartUpdated);
-      clearInterval(interval);
-    };
-  }, []);
+  const { numberCart } = useContext(CartContext);
 
   return (
     <header>
@@ -62,8 +32,9 @@ const Header = () => {
 
           {/* carrello con contatore */}
           <Link to="/carrello-prodotti" className="cart-icon">
-            <i className="fa-solid fa-cart-shopping"></i>
-            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+            <i className="fa-solid fa-cart-shopping">
+              {numberCart !== 0 ? numberCart : null}
+            </i>
           </Link>
         </div>
       </div>

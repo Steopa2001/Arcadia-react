@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import CartContext from "../src/contexts/cartContext";
 
 const DetailProductPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1); // stato quantità
+  const { numberCart, setNumberCart } = useContext(CartContext)
   const navigate = useNavigate();
 
   const fetchProduct = () => {
@@ -21,6 +23,7 @@ const DetailProductPage = () => {
   const handleAddToCart = () => {
     const productWithQuantity = { ...product, quantity };
     axios.post("http://localhost:3000/cart", productWithQuantity);
+    setNumberCart(numberCart + quantity)
     alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
   };
 

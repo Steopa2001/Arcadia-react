@@ -1,22 +1,39 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Checkout from "../components/checkout";
+import CartContext from "../src/contexts/cartContext";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [maxQuantity, setMaxQuantity] = useState(10);
   const [showCheckout, setShowCheckout] = useState(false);
+  const { setNumberCart } = useContext(CartContext)
 
   // carica il carrello
   useEffect(() => {
     axios.get("http://localhost:3000/cart").then((resp) => {
-      const productsWithQuantity = resp.data.map((product) => ({
+      const productsWithQuantity = resp.data.map(product => ({
         ...product,
-        quantity: product.quantity || 1,
+        quantity: product.quantity || 1
       }));
+
       setCart(productsWithQuantity);
+
+      const totalCart = productsWithQuantity.reduce((sum, product) => {
+        return (
+          sum + (product.quantity || 1),
+          0
+        )
+      })
+      setNumberCart(totalCart)
     });
-  }, []);
+  }, [setNumberCart]);
+
+  useEffect(() => {
+    const total = cart.reduce((sum, product) => sum + (product.quantity || 1), 0);
+    setNumberCart(total);
+    localStorage.setItem("numberCart", JSON.stringify(total));
+  }, [cart, setNumberCart]);
 
   // aggiorna quantità prodotto
   const refreshQuantity = (id, operation) => {
@@ -26,15 +43,23 @@ const Cart = () => {
           const newQuantity = (product.quantity || 1) + operation;
           const safeQuantity = newQuantity < 1 ? 1 : newQuantity;
 
-          // aggiorna il backend (PATCH)
+          // aggiorna il backend(PATCH)
           axios
             .patch(`http://localhost:3000/cart/${id}`, {
               quantity: safeQuantity,
             })
-            .then(() => {
-              // aggiorna anche header
-              window.dispatchEvent(new Event("cart-updated"));
-            })
+            // .then(() => {
+            //   axios.get("http://localhost:3000/cart").then((resp) => {
+            //     const updatedCart = resp.data.map(product => ({
+            //       ...product,
+            //       quantity: product.quantity || 1,
+            //     }));
+            //     setCart(updatedCart);
+
+            //     const totalItems = updatedCart.reduce((sum, product) => sum + product.quantity, 0);
+            //     setNumberCart(totalItems);
+            //   });
+            // })
             .catch((err) =>
               console.error("Errore aggiornamento quantità:", err)
             );
@@ -90,20 +115,28 @@ const Cart = () => {
                         className="px-3 fs-6"
                         onClick={() => {
                           if (quantity === 1) {
-                            axios.delete(`http://localhost:3000/cart/${id}`);
+                            setCart(prev => prev.filter(product => product.id !== id));
+                            setNumberCart(prev => prev - 1);
+                            axios.delete(`http://localhost:3000/cart/${id}`)
+                              .catch(err => console.error(err));
                             alert(`${name} è stato rimosso dal carrello`);
-                            axios
-                              .get("http://localhost:3000/cart")
-                              .then((resp) => {
-                                const productsWithQuantity = resp.data.map(
-                                  (product) => ({
-                                    ...product,
-                                    quantity: product.quantity || 1,
-                                  })
-                                );
-                                setCart(productsWithQuantity);
-                                window.dispatchEvent(new Event("cart-updated"));
-                              });
+                            // axios
+                            //   .get("http://localhost:3000/cart")
+                            //   .then((resp) => {
+                            //     const productsWithQuantity = resp.data.map(
+                            //       (product) => ({
+                            //         ...product,
+                            //         quantity: product.quantity || 1,
+                            //       })
+                            //     );
+                            //     setCart(productsWithQuantity);
+
+                            //     const totalItems = productsWithQuantity.reduce(
+                            //       (sum, product) => sum + product.quantity,
+                            //       0
+                            //     );
+                            //     setNumberCart(totalItems);
+                            //   });
                           } else {
                             refreshQuantity(id, -1);
                           }
@@ -132,7 +165,12 @@ const Cart = () => {
                                 })
                               );
                               setCart(productsWithQuantity);
-                              window.dispatchEvent(new Event("cart-updated"));
+
+                              const totalItems = productsWithQuantity.reduce(
+                                (sum, product) => sum + product.quantity,
+                                0
+                              );
+                              setNumberCart(totalItems);
                             });
                         }}
                       >
@@ -145,7 +183,8 @@ const Cart = () => {
             </tbody>
           </table>
         </>
-      )}
+      )
+      }
 
       <div className="text-center">
         <div className="checkout">
@@ -163,7 +202,7 @@ const Cart = () => {
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 
