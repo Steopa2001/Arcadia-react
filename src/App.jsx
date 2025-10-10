@@ -16,7 +16,7 @@ import ModelPage from "../pages/ModelPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import CartContext from "./contexts/cartContext";
 
-// 💬 importiamo Aria (il chatbot)
+// importiamo Aria (il chatbot)
 import Chatbot from "../components/Chatbot";
 
 function App() {
@@ -57,7 +57,7 @@ function App() {
           </Route>
         </Routes>
 
-        {/* 💬 Aria sempre visibile in basso a destra */}
+        {/* Aria sempre visibile in basso a destra */}
         <Chatbot />
       </BrowserRouter>
     </CartContext.Provider>
