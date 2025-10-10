@@ -19,20 +19,22 @@ const Cart = () => {
 
       setCart(productsWithQuantity);
 
-      const totalCart = productsWithQuantity.reduce((sum, product) => {
-        return (
-          sum + (product.quantity || 1),
-          0
-        )
-      })
-      setNumberCart(totalCart)
+      if (cart.length > 0) {
+        const totalCart = productsWithQuantity.reduce((sum, product) => {
+          return (
+            sum + (product.quantity || 1),
+            0
+          )
+        })
+        setNumberCart(totalCart)
+      }
     });
   }, [setNumberCart]);
 
   useEffect(() => {
     const total = cart.reduce((sum, product) => sum + (product.quantity || 1), 0);
     setNumberCart(total);
-    localStorage.setItem("numberCart", JSON.stringify(total));
+    localStorage.setItem("numberCart", parseInt(total));
   }, [cart, setNumberCart]);
 
   // aggiorna quantità prodotto

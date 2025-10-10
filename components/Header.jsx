@@ -33,7 +33,7 @@ const Header = () => {
           {/* carrello con contatore */}
           <Link to="/carrello-prodotti" className="cart-icon">
             <i className="fa-solid fa-cart-shopping">
-              {numberCart !== 0 ? numberCart : null}
+              {numberCart > 0 && <span className="cart-count">{numberCart}</span>}
             </i>
           </Link>
         </div>
