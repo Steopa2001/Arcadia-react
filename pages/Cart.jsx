@@ -1,38 +1,39 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Checkout from "../components/checkout";
+import ModalCheckout from "../components/ModalCheckout";
 import CartContext from "../src/contexts/cartContext";
 
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [maxQuantity, setMaxQuantity] = useState(10);
   const [showCheckout, setShowCheckout] = useState(false);
-  const { setNumberCart } = useContext(CartContext)
+  const { setNumberCart } = useContext(CartContext);
 
   // carica il carrello
   useEffect(() => {
     axios.get("http://localhost:3000/cart").then((resp) => {
-      const productsWithQuantity = resp.data.map(product => ({
+      const productsWithQuantity = resp.data.map((product) => ({
         ...product,
-        quantity: product.quantity || 1
+        quantity: product.quantity || 1,
       }));
 
       setCart(productsWithQuantity);
 
       if (cart.length > 0) {
         const totalCart = productsWithQuantity.reduce((sum, product) => {
-          return (
-            sum + (product.quantity || 1),
-            0
-          )
-        })
-        setNumberCart(totalCart)
+          return sum + (product.quantity || 1), 0;
+        });
+        setNumberCart(totalCart);
       }
     });
   }, [setNumberCart]);
 
   useEffect(() => {
-    const total = cart.reduce((sum, product) => sum + (product.quantity || 1), 0);
+    const total = cart.reduce(
+      (sum, product) => sum + (product.quantity || 1),
+      0
+    );
     setNumberCart(total);
     localStorage.setItem("numberCart", parseInt(total));
   }, [cart, setNumberCart]);
@@ -117,10 +118,13 @@ const Cart = () => {
                         className="px-3 fs-6"
                         onClick={() => {
                           if (quantity === 1) {
-                            setCart(prev => prev.filter(product => product.id !== id));
-                            setNumberCart(prev => prev - 1);
-                            axios.delete(`http://localhost:3000/cart/${id}`)
-                              .catch(err => console.error(err));
+                            setCart((prev) =>
+                              prev.filter((product) => product.id !== id)
+                            );
+                            setNumberCart((prev) => prev - 1);
+                            axios
+                              .delete(`http://localhost:3000/cart/${id}`)
+                              .catch((err) => console.error(err));
                             alert(`${name} è stato rimosso dal carrello`);
                             // axios
                             //   .get("http://localhost:3000/cart")
@@ -185,26 +189,24 @@ const Cart = () => {
             </tbody>
           </table>
         </>
-      )
-      }
+      )}
 
+      {/**/}
       <div className="text-center">
-        <div className="checkout">
-          <button
-            className="btn btn-primary"
-            onClick={() => setShowCheckout(!showCheckout)}
-          >
-            {showCheckout ? "Chiudi checkout" : "Checkout"}
-          </button>
-        </div>
+        <button
+          className="btn btn-primary"
+          onClick={() => setShowCheckout(true)}
+        >
+          Checkout
+        </button>
 
-        {showCheckout && (
-          <div className="mt-4">
-            <Checkout cartItems={cart} />
-          </div>
-        )}
+        <ModalCheckout
+          show={showCheckout}
+          onClose={() => setShowCheckout(false)}
+          cartItems={cart}
+        />
       </div>
-    </div >
+    </div>
   );
 };
 

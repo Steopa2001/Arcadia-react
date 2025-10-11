@@ -774,12 +774,12 @@ p em {
 }
 .fa-heart {
   font-size: 1.4rem;
-  color: #480577;
+  color: #ccb334;
   transition: all 0.3s ease;
 }
 
 .fa-heart:hover {
-  color: #b58cc8;
+  color: #d1b837;
   transform: scale(1.15);
 }
 
@@ -1371,23 +1371,174 @@ select.form-select:focus {
 }
 
 /* ---------------- CHECKOUT ---------------- */
-.checkout .btn.btn-primary {
-  border-radius: 0;
+/* === OVERLAY === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  backdrop-filter: blur(4px);
 }
 
+/* === CONTENITORE MODALE === */
+.arcadia-modal {
+  background-color: #fff !important;
+  border-radius: 0 !important;
+  padding: 25px 40px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+  width: 95%;
+  max-width: 1100px;
+  max-height: 800px;
+  overflow-y: auto;
+  position: relative;
+  border: 1px solid #ddd;
+  animation: fadeInUp 0.25s ease-out;
+}
+
+/* Animazione */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === PULSANTE CHIUDI === */
+.btn-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-close:hover {
+  opacity: 1;
+  color: #3b0b4f;
+  transform: scale(1.1);
+}
+
+/* === FORM STYLING === */
+.arcadia-modal form {
+  font-family: "Poppins", sans-serif;
+}
+
+.arcadia-modal label {
+  font-weight: 500;
+  font-size: 15px;
+  color: #222;
+}
+
+.arcadia-modal input {
+  border-radius: 0 !important;
+  border: 1px solid #ddd;
+  padding: 10px 12px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.arcadia-modal input:focus {
+  border-color: #2d004d;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+}
+
+/* === TITOLI === */
 .checkout-title {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 26px;
   text-transform: uppercase;
-  font-size: 30px;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: #1f1f1f;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.btn-main {
-  width: 200px;
-  background: linear-gradient(135deg, #000000, #2d004d 50%, #000000);
-  color: white;
-  padding: 25px 15px;
+/* === SOTTOSEZIONI  === */
+.card-body h3,
+.card-body h4 {
+  font-family: "raleway", sans-serif;
+  font-weight: 600;
+  color: #3b0b4f;
   font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 25px;
+}
+
+/* === SPAZI TRA SEZIONI === */
+.arcadia-modal .card {
+  border-radius: 0 !important;
+  margin-bottom: 55px !important;
+}
+
+.card-body {
+  padding: 30px 35px !important;
+}
+
+.card-body h3,
+.card-body h4 {
+  margin-bottom: 25px !important;
+}
+
+/* === CHECKBOX FATTURAZIONE === */
+.form-check-input {
+  accent-color: #6c63ff;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.form-check-input:checked {
+  box-shadow: 0 0 0 3px rgba(73, 16, 177, 0.3);
+  transform: scale(1.05);
+}
+
+.form-check-label {
+  margin-left: 6px;
+  color: #2d004d;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+/* === BOTTONE PRINCIPALE === */
+.btn.btn-primary {
+  background-color: #6c63ff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 0 !important;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.btn.btn-primary:hover {
+  background-color: #5852d6;
+  transform: translateY(-2px);
+}
+
+/* === SCROLLBAR === */
+.arcadia-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.arcadia-modal::-webkit-scrollbar-thumb {
+  background-color: rgba(119, 23, 198, 0.5);
+  border-radius: 0;
 }
 
 /* ---------------- PAGINA 404 ---------------- */
@@ -1440,4 +1591,306 @@ select.form-select:focus {
   right: 35.8%;
   width: 70px;
   height: 42px;
+}
+
+/* -------------------- WISHLIST ----------------------------- */
+
+/* Overlay che sfoca la pagina */
+.wishlist-gif-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  background: rgba(10, 0, 30, 0.35);
+  z-index: 9999;
+  animation: fadeInOutOverlay 2s ease;
+}
+
+/* GIF centrale */
+.wishlist-gif {
+  width: 180px;
+  height: auto;
+  animation: fadeInOutGif 2s ease;
+}
+
+/* dissolvenza del blur overlay */
+@keyframes fadeInOutOverlay {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  10% {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+  90% {
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+
+/* dissolvenza della GIF */
+@keyframes fadeInOutGif {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+.wishlist-container {
+  background: url("https://wallpapers.com/images/hd/lord-of-the-rings-wkdzi1bgb1i7mnb5.jpg")
+    center/cover no-repeat;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 60px 60px;
+}
+
+/* === Tabella wishlist === */
+.wishlist-container .table {
+  width: 100%;
+  border-collapse: collapse !important;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(211, 171, 40, 0.25);
+  transition: box-shadow 0.3s ease;
+}
+
+.wishlist-container .table:hover {
+  box-shadow: 0 0 25px rgba(60, 11, 115, 0.35);
+}
+
+/* === Celle === */
+.wishlist-container .table th,
+.wishlist-container .table td {
+  border: none !important;
+  background-color: transparent;
+  vertical-align: middle;
+  padding: 18px;
+}
+
+/* === Intestazioni === */
+.wishlist-container .table thead th {
+  background-color: transparent;
+  color: #000000;
+  font-family: "Raleway", sans-serif;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 1rem;
+  border-bottom: 2px solid rgba(168, 92, 255, 0.2);
+}
+
+/* === Righe === */
+.wishlist-container .table tbody tr {
+  background-color: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 0;
+}
+
+.wishlist-container .table tbody tr:hover {
+  background-color: transparent;
+  box-shadow: 0 0 6px 2px rgba(154, 127, 6, 0.3),
+    0 0 20px 4px rgba(42, 11, 77, 0.4);
+  border-radius: 10px;
+  transform: scale(1.01);
+  z-index: 1;
+}
+
+.btn-wishlist {
+  font-family: "Raleway", serif;
+  background: linear-gradient(135deg, #816d08, #7b6c10, #b5a014);
+  color: #fdf9e6;
+  border: 1px solid #d4c169;
+  border-radius: 4px;
+  padding: 7px 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+/* effetto luce */
+.btn-wishlist::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.25),
+    transparent 70%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+
+/* hover */
+.btn-wishlist:hover {
+  background: linear-gradient(135deg, #6b5e10, #9a851a, #d1b837);
+  color: #fffbe8;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.6),
+    0 0 30px rgba(255, 220, 100, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn-wishlist:hover::after {
+  left: 130%;
+}
+
+/* bottone rimuovi*/
+.btn.btn-outline-danger {
+  font-family: "Raleway", serif;
+  background: linear-gradient(135deg, #5a0000, #7b0a0a, #a11212);
+  color: #fff;
+  border: 1px solid #ff6666;
+  border-radius: 4px;
+  padding: 7px 18px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 0.8rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(200, 50, 50, 0.25);
+}
+
+.btn.btn-outline-danger::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15),
+    transparent 70%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+}
+
+.btn.btn-outline-danger:hover {
+  background: linear-gradient(135deg, #7b0a0a, #b31919, #ff4d4d);
+  border-color: #ff8080;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(255, 90, 90, 0.6), 0 0 25px rgba(255, 120, 120, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn.btn-outline-danger:hover::after {
+  left: 130%;
+}
+
+/* stile prezzo */
+.table.wishlist-header + tbody td:nth-child(2),
+.table.text-center.my-4 td:nth-child(2) {
+  font-family: "Raleway", serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #c8b033;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 6px rgba(168, 92, 255, 0.2);
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.table.text-center.my-4 td:nth-child(2):hover {
+  color: #d5a04a;
+  text-shadow: 0 0 10px rgba(168, 92, 255, 0.4);
+}
+
+/* sfondo trasparente della modale */
+.modal.fade.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(15, 0, 30, 0.6) !important;
+  backdrop-filter: blur(5px);
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+}
+
+/* contenitore del popup */
+.modal.fade.show .bg-white {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(168, 92, 255, 0.3);
+  box-shadow: 0 0 20px rgba(168, 92, 255, 0.4);
+  border-radius: 16px;
+  padding: 30px;
+  color: #f2e9ff;
+  text-shadow: 0 0 10px rgba(168, 92, 255, 0.3);
+}
+
+.modal-text {
+  color: #2d004d;
+  text-shadow: 0 0 8px rgba(168, 92, 255, 0.4);
+  letter-spacing: 0.5px;
+}
+
+/* bottone "Sì" */
+.modal .btn.btn-dark {
+  font-family: "Raleway", serif;
+  background: linear-gradient(135deg, #2a0136, #3d0a57, #4e1b70);
+  color: #f5f3f7;
+  border: 1px solid #a85cff;
+  border-radius: 4px;
+  padding: 8px 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(125, 42, 232, 0.25);
+}
+
+.modal .btn.btn-dark:hover {
+  background: linear-gradient(135deg, #3b0b4f, #5b1b85, #b58cc8);
+  box-shadow: 0 0 12px rgba(125, 42, 232, 0.6), 0 0 25px rgba(168, 92, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* bottone "Annulla"  */
+.modal .btn.btn-outline-secondary {
+  background: transparent;
+  border: 1px solid rgba(168, 92, 255, 0.4);
+  color: #d7baff;
+  border-radius: 4px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(168, 92, 255, 0.15);
+}
+
+.modal .btn.btn-outline-secondary:hover {
+  background: linear-gradient(135deg, #43215f, #7c48b3);
+  color: #fff;
+  border-color: #a85cff;
+  box-shadow: 0 0 15px rgba(168, 92, 255, 0.6);
+  transform: translateY(-2px);
 }

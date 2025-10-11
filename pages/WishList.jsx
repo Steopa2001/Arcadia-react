@@ -5,6 +5,7 @@ const WishList = () => {
   const [wishlist, setWishlist] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showGif, setShowGif] = useState(false);
 
   // funzione per aggiungere un prodotto della wishlist al carrello
   const handleAddToCart = async (product) => {
@@ -18,7 +19,10 @@ const WishList = () => {
         productWithQuantity
       );
       console.log("✅ Prodotto aggiunto al carrello:", resp.data);
-      alert(`${product.name} è stato aggiunto al carrello 🛒`);
+
+      // Mostra la GIF
+      setShowGif(true);
+      setTimeout(() => setShowGif(false), 2000); // dopo 2s scompare
     } catch (err) {
       console.error("Errore durante l'aggiunta al carrello:", err);
       alert("Errore durante l'aggiunta al carrello");
@@ -67,9 +71,7 @@ const WishList = () => {
   };
 
   return (
-    <div className="container my-5">
-      <h2 className="text-center mb-4">LA TUA WISHLIST</h2>
-
+    <div className="wishlist-container">
       {wishlist.length === 0 ? (
         <h4 className="text-center text-muted">La tua wishlist è vuota 💔</h4>
       ) : (
@@ -98,7 +100,7 @@ const WishList = () => {
                   <td>{parseFloat(price).toFixed(2)} €</td>
                   <td>
                     <button
-                      className="btn btn-dark me-2"
+                      className="btn-wishlist me-3"
                       onClick={() => handleAddToCart(product)}
                     >
                       Aggiungi al carrello
@@ -135,7 +137,7 @@ const WishList = () => {
             className="bg-white p-4 rounded-4 shadow"
             style={{ minWidth: "320px", textAlign: "center" }}
           >
-            <p className="mb-3 fs-5 fw-semibold">
+            <p className="modal-text mb-3 fs-5 fw-semibold">
               Sicuro di volerlo rimuovere dalla wishlist?
             </p>
             <div className="d-flex justify-content-center gap-3">
@@ -150,6 +152,17 @@ const WishList = () => {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* GIF overlay dopo aggiunta al carrello */}
+      {showGif && (
+        <div className="wishlist-gif-overlay">
+          <img
+            src="/img/magic.gif"
+            alt="Aggiunto al carrello"
+            className="wishlist-gif"
+          />
         </div>
       )}
     </div>
