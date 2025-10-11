@@ -1,7 +1,7 @@
 import CatalogPage from "./CatalogPage"
 
 const BoardGames = () => {
-  return <CatalogPage fixedCategoryId={1}/>
+  return <CatalogPage/>
 }
 
 export default BoardGames;

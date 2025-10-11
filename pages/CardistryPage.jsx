@@ -1,7 +1,7 @@
 import CatalogPage from "./CatalogPage"
 
 const CardistryPage = () => {
-  return <CatalogPage fixedCategoryId={3}/>
+  return <CatalogPage/>
 }
 
 export default CardistryPage;

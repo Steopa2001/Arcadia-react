@@ -15,6 +15,7 @@ import CardistryPage from "../pages/CardistryPage";
 import ModelPage from "../pages/ModelPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import CartContext from "./contexts/cartContext";
+import CatalogPage from "../pages/CatalogPage";
 
 // importiamo Aria (il chatbot)
 import Chatbot from "../components/Chatbot";
@@ -54,6 +55,7 @@ function App() {
             <Route path="/modellismo" element={<ModelPage />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
+            <Route path="/catalogo/:categoryId" element={<CatalogPage />} />
           </Route>
         </Routes>
 

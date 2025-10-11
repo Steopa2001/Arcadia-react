@@ -1,7 +1,7 @@
 import CatalogPage from "./CatalogPage"
 
 const ModelPage = () => {
-  return <CatalogPage fixedCategoryId={4}/>
+  return <CatalogPage/>
 }
 
 export default ModelPage;
