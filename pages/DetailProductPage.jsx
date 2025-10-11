@@ -30,7 +30,7 @@ const DetailProductPage = () => {
     alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
   };
 
-  // 🩷 Aggiungi prodotto alla wishlist
+  // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = () => {
     axios
       .post("http://localhost:3000/wishlist", product)
@@ -132,7 +132,7 @@ const DetailProductPage = () => {
                 Aggiungi al Carrello
               </div>
 
-              {/* ❤️ bottone wishlist */}
+              {/* bottone wishlist */}
               <button className="btn-wishlist" onClick={handleAddToWishlist}>
                 <i className="fa-solid fa-heart"></i>
               </button>

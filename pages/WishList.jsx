@@ -6,6 +6,25 @@ const WishList = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  // funzione per aggiungere un prodotto della wishlist al carrello
+  const handleAddToCart = async (product) => {
+    try {
+      const productWithQuantity = {
+        ...product,
+        quantity: product.quantity || 1,
+      };
+      const resp = await axios.post(
+        "http://localhost:3000/cart",
+        productWithQuantity
+      );
+      console.log("✅ Prodotto aggiunto al carrello:", resp.data);
+      alert(`${product.name} è stato aggiunto al carrello 🛒`);
+    } catch (err) {
+      console.error("Errore durante l'aggiunta al carrello:", err);
+      alert("Errore durante l'aggiunta al carrello");
+    }
+  };
+
   // Carica wishlist dal backend
   useEffect(() => {
     axios
@@ -80,9 +99,7 @@ const WishList = () => {
                   <td>
                     <button
                       className="btn btn-dark me-2"
-                      onClick={() =>
-                        alert(`${name} aggiunto al carrello (demo)`)
-                      }
+                      onClick={() => handleAddToCart(product)}
                     >
                       Aggiungi al carrello
                     </button>
