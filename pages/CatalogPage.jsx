@@ -4,7 +4,8 @@ import { useParams, Link } from "react-router-dom";
 import CartContext from "../src/contexts/cartContext";
 
 const CatalogPage = () => {
-   const { categoryId } = useParams(); 
+   const { slug } = useParams();
+
 
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +19,7 @@ const CatalogPage = () => {
   axios.get("http://localhost:3000/products", {
     params: {
       q: searchTerm,
-      category_id: categoryId,
+      slug: slug,
       sort: sortOption.split("_")[0],
       order: sortOption.split("_")[1],
     },
@@ -32,7 +33,7 @@ const CatalogPage = () => {
   // chiama il backend all’avvio e quando cambiano ricerca/ordinamento/categoria
   useEffect(() => {
     loadProducts();
-  }, [searchTerm, sortOption, categoryId]);
+  }, [searchTerm, sortOption, slug]);
 
   return (
     <div className="container py-4">

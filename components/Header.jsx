@@ -45,16 +45,16 @@ const Header = () => {
           <Link to="/">
             <li>Home</li>
           </Link>
-          <Link to="/giochi-da-tavolo">
+          <Link to="/catalogo/giochi-da-tavolo">
             <li>Giochi da Tavolo</li>
           </Link>
-          <Link to="/carte-collezionabili">
+          <Link to="/catalogo/carte-collezionabili">
             <li>Carte Collezionabili</li>
           </Link>
-          <Link to="/cardistry">
+          <Link to="/catalogo/cardistry">
             <li>Cardistry</li>
           </Link>
-          <Link to="/modellismo">
+          <Link to="/catalogo/modellismo">
             <li>Modellismo</li>
           </Link>
           <Link to="/tutti-prodotti">

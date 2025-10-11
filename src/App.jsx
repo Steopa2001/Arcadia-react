@@ -55,7 +55,7 @@ function App() {
             <Route path="/modellismo" element={<Navigate to="/catalogo/4" />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
-            <Route path="/catalogo/:categoryId" element={<CatalogPage />} />
+            <Route path="/catalogo/:slug" element={<CatalogPage />} />
           </Route>
         </Routes>
 
