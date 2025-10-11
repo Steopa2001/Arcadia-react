@@ -9,13 +9,16 @@ const DetailProductPage = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1); // stato quantità
-  const { numberCart, setNumberCart } = useContext(CartContext)
+  const { numberCart, setNumberCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const fetchProduct = () => {
-    axios.get(`http://localhost:3000/products/slug/${slug}`).then((resp, err) => {
-      setProduct(resp.data);
-    }).catch((err) => navigate('/not-found', { replace: true }));
+    axios
+      .get(`http://localhost:3000/products/slug/${slug}`)
+      .then((resp, err) => {
+        setProduct(resp.data);
+      })
+      .catch((err) => navigate("/not-found", { replace: true }));
   };
 
   useEffect(fetchProduct, [slug]);
@@ -23,8 +26,25 @@ const DetailProductPage = () => {
   const handleAddToCart = () => {
     const productWithQuantity = { ...product, quantity };
     axios.post("http://localhost:3000/cart", productWithQuantity);
-    setNumberCart(numberCart + quantity)
+    setNumberCart(numberCart + quantity);
     alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+  };
+
+  // 🩷 Aggiungi prodotto alla wishlist
+  const handleAddToWishlist = () => {
+    axios
+      .post("http://localhost:3000/wishlist", product)
+      .then(() => {
+        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+      })
+      .catch((err) => {
+        if (err.response?.status === 409) {
+          alert("Questo prodotto è già nella tua wishlist!");
+        } else {
+          console.error("Errore aggiunta wishlist:", err);
+          alert("Errore durante l'aggiunta alla wishlist");
+        }
+      });
   };
 
   const increaseQuantity = () => {
@@ -112,10 +132,10 @@ const DetailProductPage = () => {
                 Aggiungi al Carrello
               </div>
 
-              {/* wishlist */}
-              <Link to="/wishlist-prodotti">
+              {/* ❤️ bottone wishlist */}
+              <button className="btn-wishlist" onClick={handleAddToWishlist}>
                 <i className="fa-solid fa-heart"></i>
-              </Link>
+              </button>
             </div>
           </div>
         </div>

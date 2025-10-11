@@ -747,6 +747,31 @@ p em {
 }
 
 /* icona cuore */
+
+.btn-wishlist {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  color: #222;
+  font-size: 1.4rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.btn-wishlist:hover {
+  color: #d63384;
+  transform: scale(1.15);
+}
+
+.btn-wishlist:active {
+  transform: scale(1);
+}
+
+.btn-wishlist:focus {
+  outline: none;
+  box-shadow: none;
+}
 .fa-heart {
   font-size: 1.4rem;
   color: #480577;
