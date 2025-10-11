@@ -45,7 +45,7 @@ const DetailProductPage = () => {
           </div>
 
           {/* dettagli prodotto */}
-          <div className="col-12 col-md-6">
+          <div className="col-12 col-md-6 text-start">
             <h3 className="detail-title">{product.name}</h3>
             <p>
               <em>{product.price} &euro;</em>
