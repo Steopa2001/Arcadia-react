@@ -48,7 +48,8 @@ const Homepage = () => {
                 key={category.id}
                 className="col-sm-12 col-md-3 category-card"
               >
-                <Link to={`/${category.slug}`}>
+                <Link to={`/catalogo/${category.id}`}>
+
                   <div className="card-image">
                     <img
                       className="img-fluid"

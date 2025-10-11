@@ -41,7 +41,7 @@ function App() {
               path="/dettaglio-prodotto/:slug"
               element={<DetailProductPage />}
             />
-            <Route path="/giochi-da-tavolo" element={<BoardGames />} />
+            <Route path="/giochi-da-tavolo" element={<Navigate to="/catalogo/1"/>} />
             <Route path="/carrello-prodotti" element={<Cart />} />
             <Route path="/wishlist-prodotti" element={<WishList />} />
             <Route path="/tutti-prodotti" element={<AllProducts />} />
@@ -49,10 +49,10 @@ function App() {
             <Route path="/prodotti-preferiti" element={<OurChoiches />} />
             <Route
               path="/carte-collezionabili"
-              element={<CollectiblesPage />}
+              element={<Navigate to="/catalogo/2" />}
             />
-            <Route path="/cardistry" element={<CardistryPage />} />
-            <Route path="/modellismo" element={<ModelPage />} />
+            <Route path="/cardistry" element={<Navigate to="/catalogo/3"/>} />
+            <Route path="/modellismo" element={<Navigate to="/catalogo/4" />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
             <Route path="/catalogo/:categoryId" element={<CatalogPage />} />

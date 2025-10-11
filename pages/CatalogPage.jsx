@@ -158,9 +158,12 @@ const CatalogPage = () => {
         </div>
       )}
 
-      {items.length === 0 && (
-        <div className="py-5 text-center text-muted">Nessun prodotto trovato</div>
-      )}
+   {items.length === 0 && (
+  <div className="py-5 text-center text-muted">
+    {searchTerm ? `Nessun risultato per "${searchTerm}"` : "Nessun prodotto trovato"}
+  </div>
+)}
+
     </div>
   );
 };
