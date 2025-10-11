@@ -1595,6 +1595,12 @@ select.form-select:focus {
 
 /* -------------------- WISHLIST ----------------------------- */
 
+.wishlist-container h4.text-center.text-muted {
+  color: #000 !important;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+}
+
 /* Overlay che sfoca la pagina */
 .wishlist-gif-overlay {
   position: fixed;
