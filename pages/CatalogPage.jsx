@@ -104,32 +104,30 @@ const CatalogPage = () => {
           {items.map((product) => (
             <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
               <div className="card h-100" style={{ position: "relative" }}>
-
-                  <button
-                    type="button"
-                    onClick={() => handleAddToWishlist(product)}
-                    className="btn btn-light"
-                    style={{
-                      position: "absolute",
-                      top: "10px",
-                      right: "10px",
-                      borderRadius: "50%",
-                      width: "36px",
-                      height: "36px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                    }}
-                  >
-                    <i className="fa-regular fa-heart"></i>
-                  </button>
+                <button
+                  type="button"
+                  onClick={() => handleAddToWishlist(product)}
+                  className="btn btn-light"
+                  style={{
+                    position: "absolute",
+                    top: "10px",
+                    right: "10px",
+                    borderRadius: "50%",
+                    width: "38px",
+                    height: "38px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    boxShadow: "0 2px 6px rgba(0,0,0,0.65)",
+                  }}
+                >
+                  <i className="fa-solid fa-heart"></i>
+                </button>
                 <Link
                   to={`/dettaglio-prodotto/${product.slug}`}
                   className="text-decoration-none"
                   style={{ color: "inherit" }}
                 >
-
                   <img
                     src={product.image}
                     alt={product.name}
