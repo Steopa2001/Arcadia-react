@@ -342,3 +342,20 @@ footer .col-footer .col-3:last-child a.link:hover {
 .checkout-title {
   font-size: 1.4rem;
 }
+/* ---------- CARRELLO ---------- */
+.cart-wizard-gif {
+  right: 12%;
+  top: -15px;
+  width: 90px;
+  animation: floaty 4s ease-in-out infinite;
+  z-index: 9;
+}
+
+/* ---------- WISHLIST ---------- */
+.wishlist-container .btn-wishlist,
+.wishlist-container .btn.btn-outline-danger {
+  margin-bottom: 8px;
+}
+.wishlist-container .btn.btn-outline-danger {
+  margin-bottom: 0;
+}
