@@ -158,7 +158,8 @@ const Cart = () => {
                                 );
                                 setNumberCart(totalItems);
                               });
-                          }}
+                          }
+                          }
                         >
                           X
                         </button>
@@ -188,6 +189,7 @@ const Cart = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

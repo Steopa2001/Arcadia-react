@@ -61,15 +61,15 @@ const Checkout = ({ cartItems }) => {
     const billing = billingSameAsShipping
       ? {}
       : {
-          billing_name: billingData.name,
-          billing_surname: billingData.surname,
-          billing_company: billingData.company || null,
-          billing_address: billingData.address,
-          billing_cap: billingData.cap,
-          billing_city: billingData.city,
-          billing_province: billingData.province,
-          billing_phone: billingData.phone || null,
-        };
+        billing_name: billingData.name,
+        billing_surname: billingData.surname,
+        billing_company: billingData.company || null,
+        billing_address: billingData.address,
+        billing_cap: billingData.cap,
+        billing_city: billingData.city,
+        billing_province: billingData.province,
+        billing_phone: billingData.phone || null,
+      };
 
     const body = {
       name: formData.name,
@@ -440,7 +440,9 @@ const Checkout = ({ cartItems }) => {
               </li>
             </ul>
 
-            <button type="submit" className="btn btn-primary text-center">
+            <button type="submit" className="btn btn-primary text-center" onClick={() => {
+              axios.delete('http://localhost:3000/cart')
+            }}>
               Paga ora
             </button>
           </div>

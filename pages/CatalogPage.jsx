@@ -154,7 +154,8 @@ const CatalogPage = () => {
                       axios.post("http://localhost:3000/cart", product);
                       setNumberCart(numberCart + 1);
                       alert(`${product.name} è stato aggiunto al carrello`);
-                    }}
+                    }
+                    }
                   >
                     Aggiungi al carrello
                   </button>
@@ -203,7 +204,8 @@ const CatalogPage = () => {
                     axios.post("http://localhost:3000/cart", product);
                     setNumberCart(numberCart + 1);
                     alert(`${product.name} è stato aggiunto al carrello`);
-                  }}
+                  }
+                  }
                 >
                   Aggiungi al carrello
                 </button>
@@ -211,16 +213,19 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      )}
+      )
+      }
 
-      {items.length === 0 && (
-        <div className="py-5 text-center text-muted">
-          {searchTerm
-            ? `Nessun risultato per "${searchTerm}"`
-            : "Nessun prodotto trovato"}
-        </div>
-      )}
-    </div>
+      {
+        items.length === 0 && (
+          <div className="py-5 text-center text-muted">
+            {searchTerm
+              ? `Nessun risultato per "${searchTerm}"`
+              : "Nessun prodotto trovato"}
+          </div>
+        )
+      }
+    </div >
   );
 };
 

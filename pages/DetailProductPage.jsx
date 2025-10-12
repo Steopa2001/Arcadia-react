@@ -23,12 +23,40 @@ const DetailProductPage = () => {
 
   useEffect(fetchProduct, [slug]);
 
-  const handleAddToCart = () => {
-    const productWithQuantity = { ...product, quantity };
-    axios.post("http://localhost:3000/cart", productWithQuantity);
-    setNumberCart(numberCart + quantity);
-    alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+  const handleAddToCart = async () => {
+    // Se quantità <= 10
+    try {
+      const productWithQuantity = { ...product, quantity };
+
+      const response = await axios.post("http://localhost:3000/cart", productWithQuantity);
+
+      if (response.status === 201) {
+
+        const updatedCart = response.data.cart;
+
+        const totalItems = updatedCart.reduce((sum, item) => sum + item.quantity, 0);
+        setNumberCart(totalItems);
+
+        alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+      }
+    } catch (error) {
+      // Se quantità > 10
+      if (error.response && error.response.status === 400) {
+        alert("Hai raggiunto la quantità massima (10) per questo prodotto.");
+      }
+      else {
+        console.error(error);
+        alert("Si è verificato un errore durante l'aggiunta al carrello.");
+      }
+    }
   };
+
+  // const handleAddToCart = () => {
+  //   const productWithQuantity = { ...product, quantity };
+  //   axios.post("http://localhost:3000/cart", productWithQuantity);
+  //   setNumberCart(numberCart + quantity);
+  //   alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+  // };
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = () => {

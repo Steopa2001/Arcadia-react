@@ -28,7 +28,12 @@ const WishList = () => {
       setNumberCart(numberCart + 1)
     } catch (err) {
       console.error("Errore durante l'aggiunta al carrello:", err);
-      alert("Errore durante l'aggiunta al carrello");
+      if (product.quantity = 10) {
+        alert("Hai raggiunto la quantità massima (10) per questo prodotto.");
+      }
+      else {
+        alert("Errore durante l'aggiunta al carrello");
+      }
     }
   };
 
