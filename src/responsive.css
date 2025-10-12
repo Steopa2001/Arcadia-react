@@ -31,10 +31,12 @@
 
   /* logo  */
   header img.logo {
-    width: 100px;
-    margin: 0 auto;
+    display: none;
+  }
+
+   header img.small-logo {
     display: block;
-    margin-left: 10px;
+    width: 50px;
   }
 
   /* icone  */

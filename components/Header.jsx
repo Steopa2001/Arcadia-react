@@ -13,6 +13,7 @@ const Header = () => {
         {/* logo */}
         <Link to="/">
           <img src="/img/Arcadia-logo.png" alt="logo" className="logo" />
+          <img src="/img/purple-logo.png" alt="sm-logo" className="small-logo" />
         </Link>
 
         {/* scritta centrale */}
