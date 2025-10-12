@@ -30,9 +30,6 @@ const CatalogPage = () => {
   };
   //Definisco una funzione che, quando viene chiamata, carica i prodotti dal back-end
   function loadProducts() {
-    // Aggiungi prodotto alla wishlist
-    
-
     axios
       .get("http://localhost:3000/products", {
         params: {
