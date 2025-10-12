@@ -56,18 +56,18 @@ const OurChoiches = () => {
                         top: "10px",
                         right: "10px",
                         borderRadius: "50%",
-                        width: "36px",
-                        height: "36px",
+                        width: "38px",
+                        height: "38px",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.65)",
                         zIndex: 2,
                       }}
                       aria-label="Aggiungi alla wishlist"
                       title="Aggiungi alla wishlist"
                     >
-                      <i className="fa-regular fa-heart"></i>
+                      <i className="fa-solid fa-heart"></i>
                     </button>
 
                     <Link
