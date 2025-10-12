@@ -46,11 +46,12 @@ const Cart = () => {
           const newQuantity = (product.quantity || 1) + operation;
           const safeQuantity = newQuantity < 1 ? 1 : newQuantity;
 
-          // aggiorna il backend(PATCH)
+          // aggiorna il backend (PATCH)
           axios
             .patch(`http://localhost:3000/cart/${id}`, {
               quantity: safeQuantity,
-            }).catch((err) =>
+            })
+            .catch((err) =>
               console.error("Errore aggiornamento quantità:", err)
             );
 
@@ -62,120 +63,129 @@ const Cart = () => {
   };
 
   return (
-    <div className="container my-5">
-      {cart.length === 0 ? (
-        <h2 className="text-center">Il carrello &egrave; vuoto</h2>
-      ) : (
-        <>
-          <h2>CARRELLO</h2>
-          <table className="table text-center my-4">
-            <thead className="cart-header">
-              <tr>
-                <th className="col-product">PRODOTTO</th>
-                <th className="col-price">PREZZO</th>
-                <th className="col-quantity">QUANTITÀ</th>
-                <th className="col-total">TOTALE</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((productCart) => {
-                const { image, price, quantity, id, name } = productCart;
+    <div className="cart-container">
+      <div className="container">
+        {cart.length === 0 ? (
+          <h2 className="text-center">Il carrello &egrave; vuoto</h2>
+        ) : (
+          <>
+            <h2 className="cart-title">
+              CARRELLO
+              <img
+                src="/img/Nostradamus.gif"
+                alt=""
+                className="cart-wizard-gif"
+              />
+            </h2>
+            <table className="table text-center my-4">
+              <thead className="cart-header">
+                <tr>
+                  <th className="col-product">PRODOTTO</th>
+                  <th className="col-price">PREZZO</th>
+                  <th className="col-quantity">QUANTITÀ</th>
+                  <th className="col-total">TOTALE</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cart.map((productCart) => {
+                  const { image, price, quantity, id, name } = productCart;
 
-                return (
-                  <tr className="align-middle" key={id}>
-                    <td>
-                      <img className="w-100px" src={image} alt={name} />
-                      <p className="mt-2 fw-semibold">{name}</p>
-                    </td>
-                    <td>{parseFloat(price).toFixed(2)} &euro;</td>
-                    <td>
-                      <button
-                        className="px-2 fs-6"
-                        onClick={() => {
-                          if (quantity < maxQuantity) {
-                            refreshQuantity(id, +1);
-                          }
-                        }}
-                      >
-                        +
-                      </button>
-                      <br />
-                      {quantity}
-                      <br />
-                      <button
-                        className="px-3 fs-6"
-                        onClick={() => {
-                          if (quantity === 1) {
-                            setCart((prev) =>
-                              prev.filter((product) => product.id !== id)
-                            );
-                            setNumberCart((prev) => prev - 1);
-                            axios
-                              .delete(`http://localhost:3000/cart/${id}`)
-                              .catch((err) => console.error(err));
+                  return (
+                    <tr className="align-middle" key={id}>
+                      <td>
+                        <img className="w-100px" src={image} alt={name} />
+                        <p className="mt-2 fw-semibold">{name}</p>
+                      </td>
+                      <td>{parseFloat(price).toFixed(2)} &euro;</td>
+                      <td>
+                        <button
+                          className="px-2 fs-6"
+                          onClick={() => {
+                            if (quantity < maxQuantity) {
+                              refreshQuantity(id, +1);
+                            }
+                          }}
+                        >
+                          +
+                        </button>
+                        <br />
+                        {quantity}
+                        <br />
+                        <button
+                          className="px-3 fs-6"
+                          onClick={() => {
+                            if (quantity === 1) {
+                              setCart((prev) =>
+                                prev.filter((product) => product.id !== id)
+                              );
+                              setNumberCart((prev) => prev - 1);
+                              axios
+                                .delete(`http://localhost:3000/cart/${id}`)
+                                .catch((err) => console.error(err));
+                              alert(`${name} è stato rimosso dal carrello`);
+                            } else {
+                              refreshQuantity(id, -1);
+                            }
+                          }}
+                        >
+                          -
+                        </button>
+                      </td>
+                      <td>
+                        {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "}
+                        &euro;
+                      </td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => {
+                            axios.delete(`http://localhost:3000/cart/${id}`);
                             alert(`${name} è stato rimosso dal carrello`);
-                          } else {
-                            refreshQuantity(id, -1);
-                          }
-                        }}
-                      >
-                        -
-                      </button>
-                    </td>
-                    <td>
-                      {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "}
-                      &euro;
-                    </td>
-                    <td>
-                      <button
-                        className="btn btn-danger"
-                        onClick={() => {
-                          axios.delete(`http://localhost:3000/cart/${id}`);
-                          alert(`${name} è stato rimosso dal carrello`);
-                          axios
-                            .get("http://localhost:3000/cart")
-                            .then((resp) => {
-                              const productsWithQuantity = resp.data.map(
-                                (product) => ({
-                                  ...product,
-                                  quantity: product.quantity || 1,
-                                })
-                              );
-                              setCart(productsWithQuantity);
+                            axios
+                              .get("http://localhost:3000/cart")
+                              .then((resp) => {
+                                const productsWithQuantity = resp.data.map(
+                                  (product) => ({
+                                    ...product,
+                                    quantity: product.quantity || 1,
+                                  })
+                                );
+                                setCart(productsWithQuantity);
 
-                              const totalItems = productsWithQuantity.reduce(
-                                (sum, product) => sum + product.quantity,
-                                0
-                              );
-                              setNumberCart(totalItems);
-                            });
-                        }}
-                      >
-                        X
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </>
-      )}
+                                const totalItems = productsWithQuantity.reduce(
+                                  (sum, product) => sum + product.quantity,
+                                  0
+                                );
+                                setNumberCart(totalItems);
+                              });
+                          }}
+                        >
+                          X
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </>
+        )}
 
-      {/**/}
-      <div className="text-center">
-        <button
-          className="btn btn-primary"
-          onClick={() => setShowCheckout(true)}
-        >
-          Checkout
-        </button>
+        {/* checkout */}
+        <div className="text-center">
+          <button
+            className="btn btn-primary"
+            onClick={() => setShowCheckout(true)}
+          >
+            Checkout
+          </button>
 
-        <ModalCheckout
-          show={showCheckout}
-          onClose={() => setShowCheckout(false)}
-          cartItems={cart}
-        />
+          <ModalCheckout
+            show={showCheckout}
+            onClose={() => setShowCheckout(false)}
+            cartItems={cart}
+          />
+        </div>
       </div>
     </div>
   );
