@@ -1,0 +1,344 @@
+/* =========================================
+   MOBILE – smartphone (<576px)
+   ========================================= */
+@media (max-width: 575.98px) {
+  /* ---------- FIX SFONDO ---------- */
+  .section-cards {
+    background: none !important;
+    filter: none !important;
+  }
+
+  .container hr {
+    display: none !important;
+  }
+
+  .homepage::before {
+    display: none !important;
+  }
+
+  /* ---------- HEADER ---------- */
+  header {
+    position: relative;
+  }
+
+  .header-top {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+  }
+
+  /* logo  */
+  header img.logo {
+    width: 100px;
+    margin: 0 auto;
+    display: block;
+    margin-left: 10px;
+  }
+
+  /* icone  */
+  .icons-header {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    gap: 12px;
+    font-size: 1.1rem;
+  }
+
+  /* NAVBAR orizzontale scrollabile */
+  .header-nav {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .header-nav ul {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 12px; /* ridotto */
+    padding: 10px 12px;
+  }
+
+  .header-nav li {
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    padding: 4px 0;
+    flex-shrink: 0;
+  }
+
+  .header-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .header-nav ul {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+}
+/* scritta centrale */
+.header-center-text {
+  display: none;
+}
+
+/* ---------- HOMEPAGE / JUMBOTRON ---------- */
+.jumbotron {
+  height: 84dvh;
+  background-position: center top;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 15px;
+  position: relative;
+}
+
+.jumbotron-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 320px;
+  padding: 0 10px;
+}
+
+.jumbotron-content h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  margin-bottom: 30px;
+}
+
+.jumbotron-content p {
+  display: none;
+}
+
+.btn-cta {
+  font-size: 0.9rem;
+  padding: 10px 22px;
+  margin-top: 40px;
+}
+
+/* ---------- CATEGORY CARDS ---------- */
+.homepage {
+  background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
+    no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  filter: none;
+}
+
+/* tutti gli elementi dentro restano visibili sopra */
+.homepage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.section-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 90px;
+  margin-bottom: 50px;
+  padding: 0 10px;
+}
+
+.category-card {
+  flex: 0 0 47%;
+  height: 230px;
+  border-radius: 0;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease;
+  margin-bottom: 40px;
+  margin-left: 10px;
+}
+
+.category-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.category-card .overlay {
+  font-size: 13px;
+}
+
+.category-card:hover {
+  transform: scale(1.03);
+}
+
+/* ---------- PROMO SECTION ---------- */
+
+/* ---------- FRECCE SCORRIMENTO PRODOTTI MOBILE ---------- */
+.scroll-btn.left {
+  left: 0;
+}
+
+.scroll-btn.right {
+  right: 0;
+}
+
+.scroll-btn.left,
+.scroll-btn.right {
+  top: 38%;
+}
+
+.scroll-btn {
+  width: 38px;
+  height: 38px;
+  font-size: 1.2rem;
+  background: rgba(9, 1, 18, 0.75);
+}
+
+.promo-section {
+  margin: 20px auto;
+  padding: 0 10px;
+}
+
+.promo-section h2 {
+  font-size: 18px;
+}
+
+.products {
+  gap: 10px;
+}
+
+.product-card {
+  flex: 0 0 180px;
+}
+.product-card p,
+.product-card .product-title {
+  color: #fefefc !important;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+/* ---------- FOOTER ---------- */
+footer {
+  background: #000;
+  color: #f0e6c8;
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* nascondi le colonne superflue */
+footer .col-footer .col-3:nth-child(2),
+footer .col-footer .col-3:nth-child(3),
+footer .icons {
+  display: none !important;
+}
+
+/* FOOTER — testo in orizzontale come un paragrafo */
+footer .col-footer {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* colonna del logo */
+footer .col-footer .col-3:first-child {
+  width: 100%;
+  max-width: 90%;
+}
+
+/* testo */
+footer .col-footer .text {
+  display: block;
+  width: 90%;
+  max-width: 480px;
+  margin: 0 15px 15px auto;
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.5;
+  color: #ccc;
+  font-family: "Raleway", sans-serif;
+  white-space: normal;
+  word-spacing: 1px;
+}
+
+/* logo */
+footer .lofo-f img.logo {
+  display: block;
+  margin: 0 auto 15px auto;
+  width: 90px;
+}
+
+/* sezione ARCADIA */
+footer .col-footer .col-3:last-child {
+  width: 100%;
+  text-align: center;
+}
+
+footer .col-footer .col-3:last-child h4 {
+  display: none;
+}
+
+footer .col-footer .col-3:last-child ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+footer .col-footer .col-3:last-child li {
+  margin: 0;
+}
+
+footer .col-footer .col-3:last-child a.link {
+  color: #f0e6c8;
+  text-decoration: none;
+  font-family: "Cinzel Decorative", serif;
+  font-size: 13px;
+  transition: color 0.3s ease;
+}
+
+footer .col-footer .col-3:last-child a.link:hover {
+  color: #a85cff;
+}
+/* ---------- DETTAGLIO PRODOTTO / CART / WISHLIST BASE ---------- */
+.detail-page .container,
+.cart-container .container,
+.wishlist-container {
+  padding: 20px;
+}
+
+.col-md-6 img.img-fluid {
+  max-width: 100%;
+}
+
+.detail-title {
+  font-size: 22px;
+  text-align: center;
+}
+
+.wishlist-container .table th,
+.wishlist-container .table td {
+  padding: 10px;
+  font-size: 0.85rem;
+}
+
+.w-100px {
+  width: 70px !important;
+  height: 70px;
+}
+
+/* ---------- CHECKOUT MODAL ---------- */
+.checkout-portal-modal {
+  width: 95%;
+  padding: 15px 20px;
+}
+
+.checkout-title {
+  font-size: 1.4rem;
+}
