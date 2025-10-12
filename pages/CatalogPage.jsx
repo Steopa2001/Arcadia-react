@@ -4,8 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import CartContext from "../src/contexts/cartContext";
 
 const CatalogPage = () => {
-   const { slug } = useParams();
-
+  const { slug } = useParams();
 
   const [items, setItems] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,21 +13,39 @@ const CatalogPage = () => {
 
   const { numberCart, setNumberCart } = useContext(CartContext);
 
+  const handleAddToWishlist = (product) => {
+    axios
+      .post("http://localhost:3000/wishlist", product)
+      .then(() => {
+        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+      })
+      .catch((err) => {
+        if (err.response?.status === 409) {
+          alert("Questo prodotto è già nella tua wishlist!");
+        } else {
+          console.error("Errore aggiunta wishlist:", err);
+          alert("Errore durante l'aggiunta alla wishlist");
+        }
+      });
+  };
   //Definisco una funzione che, quando viene chiamata, carica i prodotti dal back-end
- function loadProducts() {
-  axios.get("http://localhost:3000/products", {
-    params: {
-      q: searchTerm,
-      slug: slug,
-      sort: sortOption.split("_")[0],
-      order: sortOption.split("_")[1],
-    },
-  })
-  .then((res) => {
-    setItems(res.data);
-  });
-}
+  function loadProducts() {
+    // Aggiungi prodotto alla wishlist
+    
 
+    axios
+      .get("http://localhost:3000/products", {
+        params: {
+          q: searchTerm,
+          slug: slug,
+          sort: sortOption.split("_")[0],
+          order: sortOption.split("_")[1],
+        },
+      })
+      .then((res) => {
+        setItems(res.data);
+      });
+  }
 
   // chiama il backend all’avvio e quando cambiano ricerca/ordinamento/categoria
   useEffect(() => {
@@ -89,19 +106,50 @@ const CatalogPage = () => {
         <div className="row g-3">
           {items.map((product) => (
             <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-              <div className="card h-100">
-                <Link to={`/dettaglio-prodotto/${product.slug}`} className="text-decoration-none" style={{ color: "inherit" }}>
+              <div className="card h-100" style={{ position: "relative" }}>
+
+                  <button
+                    type="button"
+                    onClick={() => handleAddToWishlist(product)}
+                    className="btn btn-light"
+                    style={{
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      borderRadius: "50%",
+                      width: "36px",
+                      height: "36px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                    }}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
+                <Link
+                  to={`/dettaglio-prodotto/${product.slug}`}
+                  className="text-decoration-none"
+                  style={{ color: "inherit" }}
+                >
+
                   <img
                     src={product.image}
                     alt={product.name}
                     className="card-img-top"
                     loading="lazy"
-                    style={{ height: "250px", width: "100%", objectFit: "cover" }}
+                    style={{
+                      height: "250px",
+                      width: "100%",
+                      objectFit: "cover",
+                    }}
                   />
                 </Link>
                 <div className="card-body">
                   <h6 className="card-title mb-2">{product.name}</h6>
-                  <div className="fw-bold">€ {Number(product.price).toFixed(2)}</div>
+                  <div className="fw-bold">
+                    € {Number(product.price).toFixed(2)}
+                  </div>
                 </div>
                 <div className="card-footer bg-white border-0">
                   <button
@@ -123,17 +171,28 @@ const CatalogPage = () => {
       ) : (
         <div className="vstack gap-2">
           {items.map((product) => (
-            <div key={product.id} className="border rounded p-3 d-flex gap-3 align-items-center">
+            <div
+              key={product.id}
+              className="border rounded p-3 d-flex gap-3 align-items-center"
+            >
               <Link to={`/dettaglio-prodotto/${product.slug}`}>
                 <img
                   src={product.image}
                   alt={product.name}
                   loading="lazy"
-                  style={{ width: "120px", height: "120px", objectFit: "cover", borderRadius: 6 }}
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    objectFit: "cover",
+                    borderRadius: 6,
+                  }}
                 />
               </Link>
               <div className="flex-grow-1">
-                <Link to={`/dettaglio-prodotto/${product.slug}`} className="text-decoration-none text-dark">
+                <Link
+                  to={`/dettaglio-prodotto/${product.slug}`}
+                  className="text-decoration-none text-dark"
+                >
                   <h5 className="mb-1">{product.name}</h5>
                 </Link>
                 <div className="text-muted">{product.description}</div>
@@ -159,12 +218,13 @@ const CatalogPage = () => {
         </div>
       )}
 
-   {items.length === 0 && (
-  <div className="py-5 text-center text-muted">
-    {searchTerm ? `Nessun risultato per "${searchTerm}"` : "Nessun prodotto trovato"}
-  </div>
-)}
-
+      {items.length === 0 && (
+        <div className="py-5 text-center text-muted">
+          {searchTerm
+            ? `Nessun risultato per "${searchTerm}"`
+            : "Nessun prodotto trovato"}
+        </div>
+      )}
     </div>
   );
 };

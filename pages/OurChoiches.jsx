@@ -7,6 +7,23 @@ const OurChoiches = () => {
   const [promos, setPromos] = useState([]);
   const { numberCart, setNumberCart } = useContext(CartContext);
 
+  // Aggiungi prodotto alla wishlist
+  const handleAddToWishlist = (product) => {
+    axios
+      .post("http://localhost:3000/wishlist", product)
+      .then(() => {
+        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+      })
+      .catch((err) => {
+        if (err.response?.status === 409) {
+          alert("Questo prodotto è già nella tua wishlist!");
+        } else {
+          console.error("Errore aggiunta wishlist:", err);
+          alert("Errore durante l'aggiunta alla wishlist");
+        }
+      });
+  };
+
   useEffect(() => {
     axios.get("http://localhost:3000/products").then((resp) => {
       setPromos(resp.data);
@@ -20,8 +37,39 @@ const OurChoiches = () => {
           promos.map((promo) => {
             if (promo.price >= 50.0) {
               return (
-                <div key={promo.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
-                  <div className="card h-100">
+                <div
+                  key={promo.id}
+                  className="col-12 col-sm-6 col-md-4 col-lg-3"
+                >
+                  <div className="card h-100" style={{ position: "relative" }}>
+                    {/* Bottone wishlist */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToWishlist(promo);
+                      }}
+                      className="btn btn-light"
+                      style={{
+                        position: "absolute",
+                        top: "10px",
+                        right: "10px",
+                        borderRadius: "50%",
+                        width: "36px",
+                        height: "36px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                        zIndex: 2,
+                      }}
+                      aria-label="Aggiungi alla wishlist"
+                      title="Aggiungi alla wishlist"
+                    >
+                      <i className="fa-regular fa-heart"></i>
+                    </button>
+
                     <Link
                       to={`/dettaglio-prodotto/${promo.slug}`}
                       className="text-decoration-none"
@@ -32,12 +80,18 @@ const OurChoiches = () => {
                         alt={promo.name}
                         className="card-img-top"
                         loading="lazy"
-                        style={{ height: "250px", width: "100%", objectFit: "cover" }}
+                        style={{
+                          height: "250px",
+                          width: "100%",
+                          objectFit: "cover",
+                        }}
                       />
                     </Link>
                     <div className="card-body">
                       <h6 className="card-title mb-2">{promo.name}</h6>
-                      <div className="fw-bold">€ {Number(promo.price).toFixed(2)}</div>
+                      <div className="fw-bold">
+                        € {Number(promo.price).toFixed(2)}
+                      </div>
                     </div>
                     <div className="card-footer bg-white border-0">
                       <button
@@ -60,7 +114,9 @@ const OurChoiches = () => {
             }
           })
         ) : (
-          <div className="py-5 text-center text-muted">Caricamento prodotti...</div>
+          <div className="py-5 text-center text-muted">
+            Caricamento prodotti...
+          </div>
         )}
       </div>
     </div>
