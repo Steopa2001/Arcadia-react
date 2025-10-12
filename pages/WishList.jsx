@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import CartContext from "../src/contexts/cartContext";
 
 const WishList = () => {
   const [wishlist, setWishlist] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showGif, setShowGif] = useState(false);
+  const { numberCart, setNumberCart } = useContext(CartContext);
 
   // funzione per aggiungere un prodotto della wishlist al carrello
   const handleAddToCart = async (product) => {
@@ -23,6 +25,7 @@ const WishList = () => {
       // Mostra la GIF
       setShowGif(true);
       setTimeout(() => setShowGif(false), 2000); // dopo 2s scompare
+      setNumberCart(numberCart + 1)
     } catch (err) {
       console.error("Errore durante l'aggiunta al carrello:", err);
       alert("Errore durante l'aggiunta al carrello");

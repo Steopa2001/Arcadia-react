@@ -50,20 +50,7 @@ const Cart = () => {
           axios
             .patch(`http://localhost:3000/cart/${id}`, {
               quantity: safeQuantity,
-            })
-            // .then(() => {
-            //   axios.get("http://localhost:3000/cart").then((resp) => {
-            //     const updatedCart = resp.data.map(product => ({
-            //       ...product,
-            //       quantity: product.quantity || 1,
-            //     }));
-            //     setCart(updatedCart);
-
-            //     const totalItems = updatedCart.reduce((sum, product) => sum + product.quantity, 0);
-            //     setNumberCart(totalItems);
-            //   });
-            // })
-            .catch((err) =>
+            }).catch((err) =>
               console.error("Errore aggiornamento quantità:", err)
             );
 
@@ -98,6 +85,7 @@ const Cart = () => {
                   <tr className="align-middle" key={id}>
                     <td>
                       <img className="w-100px" src={image} alt={name} />
+                      <p className="mt-2 fw-semibold">{name}</p>
                     </td>
                     <td>{parseFloat(price).toFixed(2)} &euro;</td>
                     <td>
@@ -126,23 +114,6 @@ const Cart = () => {
                               .delete(`http://localhost:3000/cart/${id}`)
                               .catch((err) => console.error(err));
                             alert(`${name} è stato rimosso dal carrello`);
-                            // axios
-                            //   .get("http://localhost:3000/cart")
-                            //   .then((resp) => {
-                            //     const productsWithQuantity = resp.data.map(
-                            //       (product) => ({
-                            //         ...product,
-                            //         quantity: product.quantity || 1,
-                            //       })
-                            //     );
-                            //     setCart(productsWithQuantity);
-
-                            //     const totalItems = productsWithQuantity.reduce(
-                            //       (sum, product) => sum + product.quantity,
-                            //       0
-                            //     );
-                            //     setNumberCart(totalItems);
-                            //   });
                           } else {
                             refreshQuantity(id, -1);
                           }
