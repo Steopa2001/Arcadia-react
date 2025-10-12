@@ -76,286 +76,289 @@
     -webkit-overflow-scrolling: touch;
     scroll-behavior: smooth;
   }
-}
-/* scritta centrale */
-.header-center-text {
-  display: none;
-}
 
-/* ---------- HOMEPAGE / JUMBOTRON ---------- */
-.jumbotron {
-  height: 84dvh;
-  background-position: center top;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 15px;
-  position: relative;
-}
+  /* scritta centrale */
+  .header-center-text {
+    display: none;
+  }
 
-.jumbotron-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  max-width: 320px;
-  padding: 0 10px;
-}
+  /* ---------- HOMEPAGE / JUMBOTRON ---------- */
+  .jumbotron {
+    height: 84dvh;
+    background-position: center top;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 15px;
+    position: relative;
+  }
 
-.jumbotron-content h1 {
-  font-size: 30px;
-  line-height: 1.2;
-  margin-bottom: 30px;
-}
+  .jumbotron-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 320px;
+    padding: 0 10px;
+  }
 
-.jumbotron-content p {
-  display: none;
-}
+  .jumbotron-content h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin-bottom: 30px;
+  }
 
-.btn-cta {
-  font-size: 0.9rem;
-  padding: 10px 22px;
-  margin-top: 40px;
-}
+  .jumbotron-content p {
+    display: none;
+  }
 
-/* ---------- CATEGORY CARDS ---------- */
-.homepage {
-  background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
-    no-repeat center top;
-  background-size: cover;
-  background-attachment: fixed;
-  min-height: 100vh;
-  filter: none;
-}
+  .btn-cta {
+    font-size: 0.9rem;
+    padding: 10px 22px;
+    margin-top: 40px;
+  }
 
-/* tutti gli elementi dentro restano visibili sopra */
-.homepage > * {
-  position: relative;
-  z-index: 1;
-}
+  /* ---------- CATEGORY CARDS ---------- */
+  .homepage {
+    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
+      no-repeat center top;
+    background-size: cover;
+    background-attachment: fixed;
+    min-height: 100vh;
+    filter: none;
+  }
 
-.section-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 90px;
-  margin-bottom: 50px;
-  padding: 0 10px;
-}
+  /* tutti gli elementi dentro restano visibili sopra */
+  .homepage > * {
+    position: relative;
+    z-index: 1;
+  }
 
-.category-card {
-  flex: 0 0 47%;
-  height: 230px;
-  border-radius: 0;
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.3s ease;
-  margin-bottom: 40px;
-  margin-left: 10px;
-}
+  .section-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 90px;
+    margin-bottom: 50px;
+    padding: 0 10px;
+  }
 
-.category-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 0;
-}
+  .category-card {
+    flex: 0 0 47%;
+    height: 230px;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+    margin-bottom: 40px;
+    margin-left: 10px;
+  }
 
-.category-card .overlay {
-  font-size: 13px;
-}
+  .category-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+  }
 
-.category-card:hover {
-  transform: scale(1.03);
-}
+  .category-card .overlay {
+    font-size: 13px;
+  }
 
-/* ---------- PROMO SECTION ---------- */
+  .category-card:hover {
+    transform: scale(1.03);
+  }
 
-/* ---------- FRECCE SCORRIMENTO PRODOTTI MOBILE ---------- */
-.scroll-btn.left {
-  left: 0;
-}
+  /* ---------- FRECCE SCORRIMENTO PRODOTTI MOBILE ---------- */
+  .scroll-btn.left {
+    left: 0;
+  }
 
-.scroll-btn.right {
-  right: 0;
-}
+  .scroll-btn.right {
+    right: 0;
+  }
 
-.scroll-btn.left,
-.scroll-btn.right {
-  top: 38%;
-}
+  .scroll-btn.left,
+  .scroll-btn.right {
+    top: 38%;
+  }
 
-.scroll-btn {
-  width: 38px;
-  height: 38px;
-  font-size: 1.2rem;
-  background: rgba(9, 1, 18, 0.75);
-}
+  .scroll-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
+    background: rgba(9, 1, 18, 0.75);
+  }
 
-.promo-section {
-  margin: 20px auto;
-  padding: 0 10px;
-}
+  .promo-section {
+    margin: 20px auto;
+    padding: 0 10px;
+  }
 
-.promo-section h2 {
-  font-size: 18px;
-}
+  .promo-section h2 {
+    font-size: 18px;
+  }
 
-.products {
-  gap: 10px;
-}
+  .products {
+    gap: 10px;
+  }
 
-.product-card {
-  flex: 0 0 180px;
-}
-.product-card p,
-.product-card .product-title {
-  color: #fefefc !important;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
-}
+  .product-card {
+    flex: 0 0 180px;
+  }
 
-/* ---------- FOOTER ---------- */
-footer {
-  background: #000;
-  color: #f0e6c8;
-  text-align: center;
-  padding: 30px 20px;
-  font-size: 14px;
-  line-height: 1.5;
-}
+  .product-card p,
+  .product-card .product-title {
+    color: #fefefc !important;
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+  }
 
-/* nascondi le colonne superflue */
-footer .col-footer .col-3:nth-child(2),
-footer .col-footer .col-3:nth-child(3),
-footer .icons {
-  display: none !important;
-}
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: #000;
+    color: #f0e6c8;
+    text-align: center;
+    padding: 30px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
 
-/* FOOTER — testo in orizzontale come un paragrafo */
-footer .col-footer {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
+  /* nascondi le colonne superflue */
+  footer .col-footer .col-3:nth-child(2),
+  footer .col-footer .col-3:nth-child(3),
+  footer .icons {
+    display: none !important;
+  }
 
-/* colonna del logo */
-footer .col-footer .col-3:first-child {
-  width: 100%;
-  max-width: 90%;
-}
+  /* FOOTER — testo in orizzontale come un paragrafo */
+  footer .col-footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
-/* testo */
-footer .col-footer .text {
-  display: block;
-  width: 90%;
-  max-width: 480px;
-  margin: 0 15px 15px auto;
-  text-align: center;
-  font-size: 15px;
-  line-height: 1.5;
-  color: #ccc;
-  font-family: "Raleway", sans-serif;
-  white-space: normal;
-  word-spacing: 1px;
-}
+  /* colonna del logo */
+  footer .col-footer .col-3:first-child {
+    width: 100%;
+    max-width: 90%;
+  }
 
-/* logo */
-footer .lofo-f img.logo {
-  display: block;
-  margin: 0 auto 15px auto;
-  width: 90px;
-}
+  /* testo */
+  footer .col-footer .text {
+    display: block;
+    width: 90%;
+    max-width: 480px;
+    margin: 0 15px 15px auto;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #ccc;
+    font-family: "Raleway", sans-serif;
+    white-space: normal;
+    word-spacing: 1px;
+  }
 
-/* sezione ARCADIA */
-footer .col-footer .col-3:last-child {
-  width: 100%;
-  text-align: center;
-}
+  /* logo */
+  footer .lofo-f img.logo {
+    display: block;
+    margin: 0 auto 15px auto;
+    width: 90px;
+  }
 
-footer .col-footer .col-3:last-child h4 {
-  display: none;
-}
+  /* sezione ARCADIA */
+  footer .col-footer .col-3:last-child {
+    width: 100%;
+    text-align: center;
+  }
 
-footer .col-footer .col-3:last-child ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px 20px;
-}
+  footer .col-footer .col-3:last-child h4 {
+    display: none;
+  }
 
-footer .col-footer .col-3:last-child li {
-  margin: 0;
-}
+  footer .col-footer .col-3:last-child ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
 
-footer .col-footer .col-3:last-child a.link {
-  color: #f0e6c8;
-  text-decoration: none;
-  font-family: "Cinzel Decorative", serif;
-  font-size: 13px;
-  transition: color 0.3s ease;
-}
+  footer .col-footer .col-3:last-child li {
+    margin: 0;
+  }
 
-footer .col-footer .col-3:last-child a.link:hover {
-  color: #a85cff;
-}
-/* ---------- DETTAGLIO PRODOTTO / CART / WISHLIST BASE ---------- */
-.detail-page .container,
-.cart-container .container,
-.wishlist-container {
-  padding: 20px;
-}
+  footer .col-footer .col-3:last-child a.link {
+    color: #f0e6c8;
+    text-decoration: none;
+    font-family: "Cinzel Decorative", serif;
+    font-size: 13px;
+    transition: color 0.3s ease;
+  }
 
-.col-md-6 img.img-fluid {
-  max-width: 100%;
-}
+  footer .col-footer .col-3:last-child a.link:hover {
+    color: #a85cff;
+  }
 
-.detail-title {
-  font-size: 22px;
-  text-align: center;
-}
+  /* ---------- DETTAGLIO PRODOTTO / CART / WISHLIST BASE ---------- */
+  .detail-page .container,
+  .cart-container .container,
+  .wishlist-container {
+    padding: 20px;
+  }
 
-.wishlist-container .table th,
-.wishlist-container .table td {
-  padding: 10px;
-  font-size: 0.85rem;
-}
+  .col-md-6 img.img-fluid {
+    max-width: 100%;
+  }
 
-.w-100px {
-  width: 70px !important;
-  height: 70px;
-}
+  .detail-title {
+    font-size: 22px;
+    text-align: center;
+  }
 
-/* ---------- CHECKOUT MODAL ---------- */
-.checkout-portal-modal {
-  width: 95%;
-  padding: 15px 20px;
-}
+  .wishlist-container .table th,
+  .wishlist-container .table td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
 
-.checkout-title {
-  font-size: 1.4rem;
-}
-/* ---------- CARRELLO ---------- */
-.cart-wizard-gif {
-  right: 12%;
-  top: -15px;
-  width: 90px;
-  animation: floaty 4s ease-in-out infinite;
-  z-index: 9;
-}
+  .w-100px {
+    width: 70px !important;
+    height: 70px;
+  }
 
-/* ---------- WISHLIST ---------- */
-.wishlist-container .btn-wishlist,
-.wishlist-container .btn.btn-outline-danger {
-  margin-bottom: 8px;
-}
-.wishlist-container .btn.btn-outline-danger {
-  margin-bottom: 0;
+  /* ---------- CHECKOUT MODAL ---------- */
+  .checkout-portal-modal {
+    width: 95%;
+    padding: 15px 20px;
+  }
+
+  .checkout-title {
+    font-size: 1.4rem;
+  }
+
+  /* ---------- CARRELLO ---------- */
+  .cart-wizard-gif {
+    right: 12%;
+    top: -15px;
+    width: 90px;
+    animation: floaty 4s ease-in-out infinite;
+    z-index: 9;
+  }
+
+  /* ---------- WISHLIST ---------- */
+  .wishlist-container .btn-wishlist,
+  .wishlist-container .btn.btn-outline-danger {
+    margin-bottom: 8px;
+  }
+
+  .wishlist-container .btn.btn-outline-danger {
+    margin-bottom: 0;
+  }
 }
