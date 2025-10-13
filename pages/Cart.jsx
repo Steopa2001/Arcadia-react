@@ -22,8 +22,7 @@ const Cart = () => {
 
       // Calcola il totale direttamente qui, senza usare "cart"
       const totalCart = productsWithQuantity.reduce(
-        (sum, product) => sum + (product.quantity || 1),
-        0
+        (sum, product) => sum + (product.quantity || 1)
       );
       setNumberCart(totalCart);
     });
