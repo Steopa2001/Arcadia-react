@@ -14,7 +14,7 @@ export default function Chatbot() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  // sta scrivendo
+  // 🌌 Frasi di "sta scrivendo..."
   const typingHints = [
     "🔮 Aria consulta le stelle...",
     "🌌 Aria ascolta l’eco dei tuoi desideri...",
@@ -26,17 +26,17 @@ export default function Chatbot() {
     if (!input.trim()) return;
 
     const userMessage = { role: "user", content: input };
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput("");
     setIsTyping(true);
 
     try {
-      const response = await fetch("http://localhost:3002/api/chat", {
+      // backend principale (porta 3000)
+      const response = await fetch("http://localhost:3000/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: [...messages, userMessage],
-        }),
+        body: JSON.stringify({ messages: updatedMessages }),
       });
 
       const data = await response.json();
