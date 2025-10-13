@@ -4,11 +4,15 @@ import Checkout from "../components/checkout";
 import ModalCheckout from "../components/ModalCheckout";
 import CartContext from "../src/contexts/cartContext";
 
+
 const Cart = () => {
   const [cart, setCart] = useState([]);
   const [maxQuantity, setMaxQuantity] = useState(10);
   const [showCheckout, setShowCheckout] = useState(false);
   const { setNumberCart } = useContext(CartContext);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
   // carica il carrello
   useEffect(() => {
@@ -61,6 +65,42 @@ const Cart = () => {
     );
   };
 
+  // Apri modale
+  const handleRemoveClick = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  // Conferma rimozione
+  const confirmRemove = () => {
+    if (!selectedProduct) return;
+
+    axios
+      .delete(`http://localhost:3000/cart/${selectedProduct.id}`)
+      .then(() => {
+        // aggiorna lista carrello
+        setCart((prev) =>
+          prev.filter((item) => item.id !== selectedProduct.id)
+        );
+        // aggiorna badge
+        setNumberCart((prev) =>
+          Math.max(0, prev - (selectedProduct.quantity || 1))
+        );
+      })
+      .catch((err) =>
+        console.error("Errore durante la rimozione dal carrello:", err)
+      );
+
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
+
+  // Annulla
+  const cancelRemove = () => {
+    setShowModal(false);
+    setSelectedProduct(null);
+  };
+
   return (
     <div className="cart-container">
       <div className="container">
@@ -87,7 +127,8 @@ const Cart = () => {
               </thead>
               <tbody>
                 {cart.map((productCart) => {
-                  const { image, price, quantity, id, name, discount } = productCart;
+                  const { image, price, quantity, id, name, discount } =
+                    productCart;
 
                   return (
                     <tr className="align-middle" key={id}>
@@ -132,14 +173,7 @@ const Cart = () => {
                           className="px-3 fs-6"
                           onClick={() => {
                             if (quantity === 1) {
-                              setCart((prev) =>
-                                prev.filter((product) => product.id !== id)
-                              );
-                              setNumberCart((prev) => prev - 1);
-                              axios
-                                .delete(`http://localhost:3000/cart/${id}`)
-                                .catch((err) => console.error(err));
-                              alert(`${name} è stato rimosso dal carrello`);
+                              handleRemoveClick(productCart);
                             } else {
                               refreshQuantity(id, -1);
                             }
@@ -156,42 +190,25 @@ const Cart = () => {
                             </span>
                             <span className="new-price">
                               €{" "}
-                              {((
-                                Number(price) -
-                                (Number(price) * Number(discount)) / 100
-                              ) * (quantity)).toFixed(2)}
+                              {(
+                                (Number(price) -
+                                  (Number(price) * Number(discount)) / 100) *
+                                quantity
+                              ).toFixed(2)}
                             </span>
                           </div>
                         </td>
                       ) : (
-                        <td>€ {(parseFloat(price) * parseInt(quantity)).toFixed(2)}</td>
+                        <td>
+                          €{" "}
+                          {(parseFloat(price) * parseInt(quantity)).toFixed(2)}
+                        </td>
                       )}
                       {/* {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "} */}
                       <td>
                         <button
                           className="btn btn-danger"
-                          onClick={() => {
-                            axios.delete(`http://localhost:3000/cart/${id}`);
-                            alert(`${name} è stato rimosso dal carrello`);
-                            axios
-                              .get("http://localhost:3000/cart")
-                              .then((resp) => {
-                                const productsWithQuantity = resp.data.map(
-                                  (product) => ({
-                                    ...product,
-                                    quantity: product.quantity || 1,
-                                  })
-                                );
-                                setCart(productsWithQuantity);
-
-                                const totalItems = productsWithQuantity.reduce(
-                                  (sum, product) => sum + product.quantity,
-                                  0
-                                );
-                                setNumberCart(totalItems);
-                              });
-                          }
-                          }
+                          onClick={() => handleRemoveClick(productCart)}
                         >
                           X
                         </button>
@@ -219,9 +236,42 @@ const Cart = () => {
             cartItems={cart}
           />
         </div>
+        {showModal && (
+          <div
+            className="modal fade show"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "fixed",
+              inset: 0,
+              zIndex: 1050,
+            }}
+          >
+            <div
+              className="bg-white p-4 rounded-4 shadow"
+              style={{ minWidth: "320px", textAlign: "center" }}
+            >
+              <p className="modal-text mb-3 fs-5 fw-semibold">
+                Sicuro di volerlo rimuovere dal carrello?
+              </p>
+              <div className="d-flex justify-content-center gap-3">
+                <button className="btn btn-dark" onClick={confirmRemove}>
+                  Sì
+                </button>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={cancelRemove}
+                >
+                  Annulla
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
-
   );
 };
 
