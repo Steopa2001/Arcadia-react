@@ -81,14 +81,14 @@ const DetailProductPage = () => {
     axios
       .post("http://localhost:3000/wishlist", product)
       .then(() => {
-        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+        showToast(`${product.name} è stato aggiunto alla wishlist 💖`, "success");
       })
       .catch((err) => {
         if (err.response?.status === 409) {
-          alert("Questo prodotto è già nella tua wishlist!");
+          showToast("Questo prodotto è già nella tua wishlist!", "info");
         } else {
           console.error("Errore aggiunta wishlist:", err);
-          alert("Errore durante l'aggiunta alla wishlist");
+           showToast("Errore durante l'aggiunta alla wishlist", "error");
         }
       });
   };
