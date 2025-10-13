@@ -121,6 +121,12 @@ const CatalogPage = () => {
           {items.map((product) => (
             <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
               <div className="card h-100" style={{ position: "relative" }}>
+                {Number(product.discount) > 0 && (
+                  <div className="discount-badge">
+                    -{Number(product.discount)}%
+                  </div>
+                )}
+
                 <button
                   type="button"
                   onClick={() => handleAddToWishlist(product)}
@@ -159,9 +165,25 @@ const CatalogPage = () => {
                 </Link>
                 <div className="card-body">
                   <h6 className="card-title mb-2">{product.name}</h6>
-                  <div className="fw-bold">
-                    € {Number(product.price).toFixed(2)}
-                  </div>
+                  {Number(product.discount) > 0 ? (
+                    <div className="price-wrapper">
+                      <span className="old-price">
+                        € {Number(product.price).toFixed(2)}
+                      </span>
+                      <span className="new-price">
+                        €{" "}
+                        {(
+                          Number(product.price) -
+                          (Number(product.price) * Number(product.discount)) /
+                            100
+                        ).toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="fw-bold">
+                      € {Number(product.price).toFixed(2)}
+                    </div>
+                  )}
                 </div>
                 <div className="card-footer bg-white border-0">
                   <button
@@ -226,9 +248,31 @@ const CatalogPage = () => {
                 </Link>
                 <div className="text-muted">{product.description}</div>
               </div>
-              <div className="fw-bold text-end" style={{ minWidth: 120 }}>
-                € {Number(product.price).toFixed(2)}
+              <div className="text-end" style={{ minWidth: 180 }}>
+                {Number(product.discount) > 0 ? (
+                  <div
+                    className="price-wrapper"
+                    style={{ justifyContent: "flex-end" }}
+                  >
+                    <span className="old-price">
+                      € {Number(product.price).toFixed(2)}
+                    </span>
+                    <span className="new-price">
+                      €{" "}
+                      {(
+                        Number(product.price) -
+                        (Number(product.price) * Number(product.discount)) / 100
+                      ).toFixed(2)}
+                    </span>
+                    
+                  </div>
+                ) : (
+                  <div className="fw-bold">
+                    € {Number(product.price).toFixed(2)}
+                  </div>
+                )}
               </div>
+
               <div style={{ minWidth: 180 }}>
                 <button
                   type="button"
