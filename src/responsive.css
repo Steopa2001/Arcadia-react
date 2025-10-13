@@ -159,13 +159,10 @@
     margin-left: 10px;
   }
 
-  .card-p {
-    color: #fff;
-    font-size: 15px;
-  }
-
   .title-sm {
     display: block !important;
+    color: #fff;
+    font-size: 15px;
   }
 
   .category-card img {
@@ -380,4 +377,31 @@
   .wishlist-container .btn.btn-outline-danger {
     margin-bottom: 0;
   }
+}
+
+/* =========================================
+   TABLET (<768px)
+   ========================================= */
+
+@media (max-width: 767.98px) {
+
+  /*HEADER NAV*/
+  .header-nav {
+    padding: 10px 25px;
+  }
+
+  .header-home {
+    display: none;
+  }
+
+  .header-center-text {
+    display: none;
+  }
+
+  /*CARD CATEGORIES HOMEPAGE*/
+  .col-md-3 {
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+
 }

@@ -43,9 +43,11 @@ const Header = () => {
       {/* navbar */}
       <nav className="header-nav">
         <ul>
-          <Link to="/">
+          <div className="header-home"><Link to="/">
             <li>Home</li>
           </Link>
+          </div>
+
           <Link to="/catalogo/giochi-da-tavolo">
             <li>Giochi da Tavolo</li>
           </Link>

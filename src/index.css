@@ -16,8 +16,7 @@ body {
 
 /* homepage  */
 .homepage {
-  background: url("https://i.pinimg.com/1200x/af/68/b6/af68b611d68c4fc34ece206497ece5ac.jpg")
-    no-repeat center top;
+  background: url("https://i.pinimg.com/1200x/af/68/b6/af68b611d68c4fc34ece206497ece5ac.jpg") no-repeat center top;
   background-size: cover;
   background-attachment: fixed;
   min-height: 100vh;
@@ -38,7 +37,7 @@ body {
   pointer-events: none;
 }
 
-.homepage > * {
+.homepage>* {
   position: relative;
   z-index: 1;
 }
@@ -64,8 +63,7 @@ header {
     0 0 25px rgba(180, 120, 255, 0.2);
   transition: all 0.4s ease;
   margin: 0;
-  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1))
-    drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
+  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1)) drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
 }
 
 /* hover */
@@ -87,8 +85,7 @@ header {
 header img.logo {
   width: 120px;
   margin-left: 40px;
-  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1))
-    drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
+  filter: drop-shadow(0 0 12px rgba(168, 92, 255, 1)) drop-shadow(0 0 24px rgba(125, 42, 232, 0.5));
 }
 
 /* barra di ricerca */
@@ -133,10 +130,12 @@ header img.logo {
   text-shadow: 0 0 8px #4e188b, 0 0 16px #fff;
   transition: all 0.3s ease;
 }
+
 .cart-icon {
   position: relative;
   display: inline-block;
 }
+
 .cart-count {
   position: absolute;
   top: -6px;
@@ -158,6 +157,7 @@ header img.logo {
     transform: scale(0.6);
     opacity: 0;
   }
+
   100% {
     transform: scale(1);
     opacity: 1;
@@ -329,14 +329,12 @@ a:active {
   transform: translateX(-50%);
   width: 60px;
   height: 2px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    #e2b977,
-    #f0e6c8,
-    #e2b977,
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      #e2b977,
+      #f0e6c8,
+      #e2b977,
+      transparent);
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(213, 160, 74, 0.7);
 }
@@ -412,16 +410,14 @@ a:active {
   overflow: hidden;
   border: none;
   height: 2px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    #d5a04a,
-    #e2b977,
-    #f0e6c8,
-    #e2b977,
-    #d5a04a,
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      #d5a04a,
+      #e2b977,
+      #f0e6c8,
+      #e2b977,
+      #d5a04a,
+      transparent);
   border-radius: 8px;
   margin: 60px 0;
   box-shadow: 0 0 15px rgba(240, 230, 200, 0.7),
@@ -435,14 +431,12 @@ a:active {
   left: -60%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 1),
-    rgba(255, 240, 200, 0.9),
-    rgba(255, 255, 255, 1),
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(255, 255, 255, 1),
+      rgba(255, 240, 200, 0.9),
+      rgba(255, 255, 255, 1),
+      transparent);
   box-shadow: 0 0 25px rgba(255, 240, 200, 0.8),
     0 0 45px rgba(240, 200, 120, 0.5);
   filter: blur(2px);
@@ -513,14 +507,12 @@ a:active {
   transform: translateX(-50%);
   width: 90px;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    #e2b977,
-    #f0e6c8,
-    #e2b977,
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      #e2b977,
+      #f0e6c8,
+      #e2b977,
+      transparent);
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(213, 160, 74, 0.7);
 }
@@ -628,8 +620,7 @@ a:active {
 /* ------------------ DETTAGLIO PRODOTTO ------------------ */
 
 .detail-page {
-  background: url("https://i.pinimg.com/originals/1e/0c/36/1e0c364034676f9029ad7f74acb202c9.gif")
-    center repeat;
+  background: url("https://i.pinimg.com/originals/1e/0c/36/1e0c364034676f9029ad7f74acb202c9.gif") center repeat;
   min-height: 100vh;
 }
 
@@ -689,16 +680,14 @@ p em {
 
 /* separatore */
 .detail-separator {
-  background: linear-gradient(
-    to right,
-    transparent,
-    #2a0136,
-    #2d004d,
-    #a85cff,
-    #2d004d,
-    #2a0136,
-    transparent
-  ) !important;
+  background: linear-gradient(to right,
+      transparent,
+      #2a0136,
+      #2d004d,
+      #a85cff,
+      #2d004d,
+      #2a0136,
+      transparent) !important;
 }
 
 /* bottone */
@@ -726,11 +715,9 @@ p em {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.15),
-    transparent 70%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.15),
+      transparent 70%);
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -773,6 +760,7 @@ p em {
   outline: none;
   box-shadow: none;
 }
+
 .fa-heart {
   font-size: 1.4rem;
   color: #ccb334;
@@ -880,7 +868,7 @@ footer h4 {
 
 footer img.logo {
   width: 100px;
-  margin-left: 60px;
+  /*margin-left: 60px;*/
 }
 
 .icons a {
@@ -1083,11 +1071,9 @@ select.form-select:focus {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.15),
-    transparent 70%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.15),
+      transparent 70%);
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1177,12 +1163,10 @@ select.form-select:focus {
   left: -120%;
   width: 80%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 100%);
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1226,8 +1210,7 @@ select.form-select:focus {
   position: relative;
   overflow: visible !important;
   min-height: 100vh;
-  background: url("https://i.pinimg.com/1200x/8c/6a/ed/8c6aede76d6d4774d3944740941afd14.jpg")
-    center/cover no-repeat;
+  background: url("https://i.pinimg.com/1200x/8c/6a/ed/8c6aede76d6d4774d3944740941afd14.jpg") center/cover no-repeat;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -1292,6 +1275,7 @@ select.form-select:focus {
   text-shadow: 0 0 8px rgba(168, 92, 255, 0.4);
   letter-spacing: 0.5px;
 }
+
 /* contenitore titolo */
 .cart-title {
   text-align: center;
@@ -1321,13 +1305,16 @@ select.form-select:focus {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-10px);
   }
+
   100% {
     transform: translateY(0px);
   }
 }
+
 /* tabella */
 .table {
   width: 100%;
@@ -1519,10 +1506,12 @@ select.form-select:focus {
 .checkout-portal-modal::-webkit-scrollbar {
   width: 8px;
 }
+
 .checkout-portal-modal::-webkit-scrollbar-thumb {
   background: #6a27d5;
   border-radius: 0;
 }
+
 .checkout-portal-modal::-webkit-scrollbar-thumb:hover {
   background: #2f1061;
 }
@@ -1539,6 +1528,7 @@ select.form-select:focus {
   cursor: pointer;
   transition: color 0.2s ease;
 }
+
 .checkout-portal-close:hover {
   color: #a85cff;
 }
@@ -1549,6 +1539,7 @@ select.form-select:focus {
     opacity: 0;
     transform: scale(0.96);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -1641,14 +1632,17 @@ select.form-select:focus {
     opacity: 0;
     backdrop-filter: blur(0px);
   }
+
   10% {
     opacity: 1;
     backdrop-filter: blur(8px);
   }
+
   90% {
     opacity: 1;
     backdrop-filter: blur(8px);
   }
+
   100% {
     opacity: 0;
     backdrop-filter: blur(0px);
@@ -1661,13 +1655,16 @@ select.form-select:focus {
     opacity: 0;
     transform: scale(0.9);
   }
+
   10% {
     opacity: 1;
     transform: scale(1);
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: scale(1.05);
@@ -1675,8 +1672,7 @@ select.form-select:focus {
 }
 
 .wishlist-container {
-  background: url("https://wallpapers.com/images/hd/lord-of-the-rings-wkdzi1bgb1i7mnb5.jpg")
-    center/cover no-repeat;
+  background: url("https://wallpapers.com/images/hd/lord-of-the-rings-wkdzi1bgb1i7mnb5.jpg") center/cover no-repeat;
   max-width: 100%;
   margin: 0 auto;
   padding: 60px 60px;
@@ -1759,11 +1755,9 @@ select.form-select:focus {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.25),
-    transparent 70%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.25),
+      transparent 70%);
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1805,11 +1799,9 @@ select.form-select:focus {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.15),
-    transparent 70%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.15),
+      transparent 70%);
   transform: skewX(-20deg);
   transition: left 0.7s ease;
 }
@@ -1827,7 +1819,7 @@ select.form-select:focus {
 }
 
 /* stile prezzo */
-.table.wishlist-header + tbody td:nth-child(2),
+.table.wishlist-header+tbody td:nth-child(2),
 .table.text-center.my-4 td:nth-child(2) {
   font-family: "Raleway", serif;
   font-weight: 600;
@@ -1949,10 +1941,11 @@ header img.small-logo {
 }
 
 .new-price {
-  color: #6e2c9e; 
+  color: #6e2c9e;
   font-weight: 700;
   font-size: 1rem;
 }
+
 /* Prezzi più grandi solo nella pagina di dettaglio */
 .detail-page .price-wrapper {
   gap: 10px;
@@ -1974,7 +1967,7 @@ header img.small-logo {
   max-width: 320px;
   padding: 12px 16px;
   border-radius: 10px;
-  box-shadow: 0 6px 24px rgba(0,0,0,.2);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, .2);
   background: #111;
   color: #fff;
   opacity: 0;
@@ -1985,12 +1978,22 @@ header img.small-logo {
   font-size: 14px;
   line-height: 1.4;
 }
+
 .app-toast.show {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
 }
+
 /* Varianti */
-.app-toast.success { background: #0f5132; }
-.app-toast.error   { background: #842029; }
-.app-toast.info    { background: #0d3b66; }
+.app-toast.success {
+  background: #0f5132;
+}
+
+.app-toast.error {
+  background: #842029;
+}
+
+.app-toast.info {
+  background: #0d3b66;
+}
