@@ -600,6 +600,7 @@ a:active {
 
 /* card prodotto */
 .product-card {
+  position: relative;
   flex: 0 0 250px;
   background: transparent;
   border-radius: 8px;
@@ -1916,4 +1917,52 @@ select.form-select:focus {
 
 header img.small-logo {
   display: none;
+}
+
+/* discount badge */
+.discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #e60023;
+  color: white;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* prezzo normale e prezzo scontato */
+.price-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.old-price {
+  color: #aaa;
+  text-decoration: line-through;
+  font-size: 0.9rem;
+}
+
+.new-price {
+  color: #6e2c9e; 
+  font-weight: 700;
+  font-size: 1rem;
+}
+/* Prezzi più grandi solo nella pagina di dettaglio */
+.detail-page .price-wrapper {
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.detail-page .old-price {
+  font-size: 1.1rem;
+}
+
+.detail-page .new-price {
+  font-size: 1.4rem;
 }

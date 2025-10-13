@@ -43,6 +43,13 @@ const PromoPage = () => {
                   className="col-12 col-sm-6 col-md-4 col-lg-3"
                 >
                   <div className="card h-100" style={{ position: "relative" }}>
+                    {/* badge discount */}
+                    {Number(promo.discount) > 0 && (
+                      <div className="discount-badge">
+                        -{Number(promo.discount)}%
+                      </div>
+                    )}
+
                     {/* Bottone wishlist */}
                     <button
                       type="button"
@@ -70,6 +77,7 @@ const PromoPage = () => {
                     >
                       <i className="fa-solid fa-heart"></i>
                     </button>
+
                     <Link
                       to={`/dettaglio-prodotto/${promo.slug}`}
                       className="text-decoration-none"
@@ -90,8 +98,19 @@ const PromoPage = () => {
 
                     <div className="card-body">
                       <h6 className="card-title mb-2">{promo.name}</h6>
-                      <div className="fw-bold">
-                        € {Number(promo.price).toFixed(2)}
+
+                      {/* prezzo normale sbarrato + prezzo scontato */}
+                      <div className="price-wrapper">
+                        <span className="old-price">
+                          € {Number(promo.price).toFixed(2)}
+                        </span>
+                        <span className="new-price">
+                          €{" "}
+                          {(
+                            promo.price -
+                            (promo.price * promo.discount) / 100
+                          ).toFixed(2)}
+                        </span>
                       </div>
                     </div>
 

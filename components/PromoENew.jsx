@@ -42,6 +42,13 @@ const PromoENew = () => {
               if (promo.discount != 0.0) {
                 return (
                   <div className="product-card" key={promo.id}>
+                    {/* Badge sconto */}
+                    {Number(promo.discount) > 0 && (
+                      <div className="discount-badge">
+                        -{Number(promo.discount)}%
+                      </div>
+                    )}
+
                     <Link to={`/dettaglio-prodotto/${promo.slug}`}>
                       <img src={promo.image} alt={promo.name} />
                     </Link>
