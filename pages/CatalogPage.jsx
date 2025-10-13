@@ -11,20 +11,32 @@ const CatalogPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sortOption, setSortOption] = useState("name_asc");
 
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    // nascondi dopo 2.5s
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   const { numberCart, setNumberCart } = useContext(CartContext);
 
   const handleAddToWishlist = (product) => {
     axios
       .post("http://localhost:3000/wishlist", product)
       .then(() => {
-        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+        showToast(`${product.name} added to wishlist 💖`, "success");
       })
       .catch((err) => {
         if (err.response?.status === 409) {
-          alert("Questo prodotto è già nella tua wishlist!");
+          showToast("This product is already in your wishlist", "info");
         } else {
           console.error("Errore aggiunta wishlist:", err);
-          alert("Errore durante l'aggiunta alla wishlist");
+          showToast("Error adding to wishlist", "error");
         }
       });
   };
@@ -150,12 +162,28 @@ const CatalogPage = () => {
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={
-                      () => {
-                        axios.post("http://localhost:3000/cart", product);
-                        setNumberCart(numberCart + 1);
-                        alert(`${product.name} è stato aggiunto al carrello`);
-                      }}
+                    onClick={() => {
+                      axios
+                        .post("http://localhost:3000/cart", {
+                          ...product,
+                          quantity: product.quantity || 1,
+                        })
+                        .then(() => {
+                          setNumberCart(
+                            (prev) => prev + (product.quantity || 1)
+                          );
+                          showToast(
+                            `${product.name} è stato aggiunto al carrello`,
+                            "success"
+                          );
+                        })
+                        .catch(() => {
+                          showToast(
+                            "Errore durante l'aggiunta al carrello",
+                            "error"
+                          );
+                        });
+                    }}
                   >
                     Aggiungi al carrello
                   </button>
@@ -200,12 +228,26 @@ const CatalogPage = () => {
                 <button
                   type="button"
                   className="btn btn-dark btn-sm w-100"
-                  onClick={
-                    () => {
-                      axios.post("http://localhost:3000/cart", product);
-                      setNumberCart(numberCart + 1);
-                      alert(`${product.name} è stato aggiunto al carrello`);
-                    }}
+                  onClick={() => {
+                    axios
+                      .post("http://localhost:3000/cart", {
+                        ...product,
+                        quantity: product.quantity || 1,
+                      })
+                      .then(() => {
+                        setNumberCart((prev) => prev + (product.quantity || 1));
+                        showToast(
+                          `${product.name} è stato aggiunto al carrello`,
+                          "success"
+                        );
+                      })
+                      .catch(() => {
+                        showToast(
+                          "Errore durante l'aggiunta al carrello",
+                          "error"
+                        );
+                      });
+                  }}
                 >
                   Aggiungi al carrello
                 </button>
@@ -213,19 +255,24 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      )
-      }
+      )}
 
-      {
-        items.length === 0 && (
-          <div className="py-5 text-center text-muted">
-            {searchTerm
-              ? `Nessun risultato per "${searchTerm}"`
-              : "Nessun prodotto trovato"}
-          </div>
-        )
-      }
-    </div >
+      {items.length === 0 && (
+        <div className="py-5 text-center text-muted">
+          {searchTerm
+            ? `Nessun risultato per "${searchTerm}"`
+            : "Nessun prodotto trovato"}
+        </div>
+      )}
+      {/* Toast bottom-right */}
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
+      </div>
+    </div>
   );
 };
 

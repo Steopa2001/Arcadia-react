@@ -7,19 +7,33 @@ const PromoPage = () => {
   const [promos, setPromos] = useState([]);
   const { numberCart, setNumberCart } = useContext(CartContext);
 
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
     axios
       .post("http://localhost:3000/wishlist", product)
       .then(() => {
-        alert(`${product.name} è stato aggiunto alla wishlist 💖`);
+        showToast(
+          `${product.name}è stato aggiunto alla wishlist 💖`,
+          "success"
+        );
       })
       .catch((err) => {
         if (err.response?.status === 409) {
-          alert("Questo prodotto è già nella tua wishlist!");
+          showToast("Questo prodotto è già nella tua wishlist!", "info");
         } else {
           console.error("Errore aggiunta wishlist:", err);
-          alert("Errore durante l'aggiunta alla wishlist");
+          showToast("Errore durante l'aggiunta alla wishlist", "error");
         }
       });
   };
@@ -119,9 +133,24 @@ const PromoPage = () => {
                         type="button"
                         className="btn btn-dark btn-sm w-100"
                         onClick={() => {
-                          axios.post("http://localhost:3000/cart", promo);
-                          setNumberCart(numberCart + 1);
-                          alert(`${promo.name} è stato aggiunto al carrello`);
+                          axios
+                            .post("http://localhost:3000/cart", {
+                              ...promo,
+                              quantity: promo.quantity || 1,
+                            })
+                            .then(() => {
+                              setNumberCart((prev) => Number(prev) + 1); // somma sicura
+                              showToast(
+                                `${promo.name} è stato aggiunto al carrello`,
+                                "success"
+                              );
+                            })
+                            .catch(() => {
+                              showToast(
+                                "Errore durante l'aggiunta al carrello",
+                                "error"
+                              );
+                            });
                         }}
                       >
                         Aggiungi al carrello
@@ -138,6 +167,14 @@ const PromoPage = () => {
             Caricamento prodotti...
           </div>
         )}
+      </div>
+      {/* Toast bottom-right */}
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
       </div>
     </div>
   );
