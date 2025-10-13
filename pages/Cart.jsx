@@ -97,7 +97,7 @@ const Cart = () => {
                       </td>
                       {Number(discount) > 0 ? (
                         <td>
-                          <div className="price-wrapper">
+                          <div className="price-wrapper justify-content-center">
                             <span className="old-price">
                               € {Number(price).toFixed(2)}
                             </span>
@@ -150,7 +150,7 @@ const Cart = () => {
                       </td>
                       {Number(discount) > 0 ? (
                         <td>
-                          <div className="price-wrapper">
+                          <div className="price-wrapper justify-content-center">
                             <span className="old-price">
                               € {(Number(price) * Number(quantity)).toFixed(2)}
                             </span>
