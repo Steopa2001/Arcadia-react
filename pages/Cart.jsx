@@ -87,7 +87,7 @@ const Cart = () => {
               </thead>
               <tbody>
                 {cart.map((productCart) => {
-                  const { image, price, quantity, id, name } = productCart;
+                  const { image, price, quantity, id, name, discount } = productCart;
 
                   return (
                     <tr className="align-middle" key={id}>
@@ -95,7 +95,25 @@ const Cart = () => {
                         <img className="w-100px" src={image} alt={name} />
                         <p className="mt-2 fw-semibold">{name}</p>
                       </td>
-                      <td>{parseFloat(price).toFixed(2)} &euro;</td>
+                      {Number(discount) > 0 ? (
+                        <td>
+                          <div className="price-wrapper">
+                            <span className="old-price">
+                              € {Number(price).toFixed(2)}
+                            </span>
+                            <span className="new-price">
+                              €{" "}
+                              {(
+                                Number(price) -
+                                (Number(price) * Number(discount)) / 100
+                              ).toFixed(2)}
+                            </span>
+                          </div>
+                        </td>
+                      ) : (
+                        <td>€ {Number(price).toFixed(2)}</td>
+                      )}
+                      {/* <td>{parseFloat(price).toFixed(2)} &euro;</td> */}
                       <td>
                         <button
                           className="px-2 fs-6"
@@ -130,10 +148,25 @@ const Cart = () => {
                           -
                         </button>
                       </td>
-                      <td>
-                        {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "}
-                        &euro;
-                      </td>
+                      {Number(discount) > 0 ? (
+                        <td>
+                          <div className="price-wrapper">
+                            <span className="old-price">
+                              € {(Number(price) * Number(quantity)).toFixed(2)}
+                            </span>
+                            <span className="new-price">
+                              €{" "}
+                              {((
+                                Number(price) -
+                                (Number(price) * Number(discount)) / 100
+                              ) * (quantity)).toFixed(2)}
+                            </span>
+                          </div>
+                        </td>
+                      ) : (
+                        <td>€ {(parseFloat(price) * parseInt(quantity)).toFixed(2)}</td>
+                      )}
+                      {/* {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "} */}
                       <td>
                         <button
                           className="btn btn-danger"
