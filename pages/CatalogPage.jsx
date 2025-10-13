@@ -127,7 +127,8 @@ const CatalogPage = () => {
               className={`view-toggle ${viewMode === "list" ? "active" : ""}`}
               onClick={() => setViewMode("list")}
             >
-              <i className="fa-solid fa-list"></i>
+              <div className="lista-prodotti-sm"><i className="fa-solid fa-list"></i></div>
+
             </button>
           </div>
 
@@ -230,7 +231,7 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      ) : (
+      ) : <div className="lista-sm">(
         <div className="vstack gap-2">
           {items.map((product) => (
             <div
@@ -296,7 +297,8 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      )}
+        )</div>
+      }
 
       {items.length === 0 && (
         <div className="py-5 text-center text-muted">

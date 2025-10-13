@@ -2,6 +2,7 @@
    MOBILE – smartphone (<576px)
    ========================================= */
 @media (max-width: 575.98px) {
+
   /* ---------- FIX SFONDO ---------- */
   .section-cards {
     background: none !important;
@@ -26,7 +27,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 15px;
   }
 
   /* logo  */
@@ -34,7 +34,7 @@
     display: none;
   }
 
-   header img.small-logo {
+  header img.small-logo {
     display: block;
     width: 50px;
   }
@@ -52,14 +52,14 @@
 
   /* NAVBAR orizzontale scrollabile */
   .header-nav {
-    overflow-x: auto;
-    white-space: nowrap;
+    display: none;
   }
 
   .header-nav ul {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: 12px; /* ridotto */
+    gap: 12px;
+    /* ridotto */
     padding: 10px 12px;
   }
 
@@ -125,8 +125,7 @@
 
   /* ---------- CATEGORY CARDS ---------- */
   .homepage {
-    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
-      no-repeat center top;
+    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg") no-repeat center top;
     background-size: cover;
     background-attachment: fixed;
     min-height: 100vh;
@@ -134,7 +133,7 @@
   }
 
   /* tutti gli elementi dentro restano visibili sopra */
-  .homepage > * {
+  .homepage>* {
     position: relative;
     z-index: 1;
   }
@@ -158,6 +157,15 @@
     transition: transform 0.3s ease;
     margin-bottom: 40px;
     margin-left: 10px;
+  }
+
+  .card-p {
+    color: #fff;
+    font-size: 15px;
+  }
+
+  .title-sm {
+    display: block !important;
   }
 
   .category-card img {
@@ -218,6 +226,15 @@
   .product-card .product-title {
     color: #fefefc !important;
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+  }
+
+  /*LISTA PRODOTTI*/
+  .lista-sm {
+    display: none;
+  }
+
+  .lista-prodotti-sm {
+    display: none;
   }
 
   /* ---------- FOOTER ---------- */

@@ -18,6 +18,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import CartContext from "./contexts/cartContext";
 import CatalogPage from "../pages/CatalogPage";
 import Chatbot from "../components/Chatbot";
+import Thankspage from "../pages/Thankspage.jsx";
 
 function App() {
   const [numberCart, setNumberCart] = useState(() => {
@@ -59,6 +60,7 @@ function App() {
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
             <Route path="/catalogo/:slug" element={<CatalogPage />} />
+            <Route path="/ringraziamenti" element={<Thankspage />} />
           </Route>
         </Routes>
         <Chatbot />
