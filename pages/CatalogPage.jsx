@@ -25,21 +25,26 @@ const CatalogPage = () => {
 
   const { numberCart, setNumberCart } = useContext(CartContext);
 
+  // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
     axios
       .post("http://localhost:3000/wishlist", product)
       .then(() => {
-        showToast(`${product.name} added to wishlist 💖`, "success");
+        showToast(
+          `${product.name} è stato aggiunto alla wishlist 💖`,
+          "success"
+        );
       })
       .catch((err) => {
         if (err.response?.status === 409) {
-          showToast("This product is already in your wishlist", "info");
+          showToast("Questo prodotto è già nella wishlist", "info");
         } else {
           console.error("Errore aggiunta wishlist:", err);
-          showToast("Error adding to wishlist", "error");
+          showToast("Errore durante l'aggiunta alla wishlist", "error");
         }
       });
   };
+
   //Definisco una funzione che, quando viene chiamata, carica i prodotti dal back-end
   function loadProducts() {
     axios
