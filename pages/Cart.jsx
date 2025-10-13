@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import Checkout from "../components/checkout";
+import Checkout from "../components/Checkout";
 import ModalCheckout from "../components/ModalCheckout";
 import CartContext from "../src/contexts/cartContext";
 
@@ -12,6 +12,7 @@ const Cart = () => {
   const { setNumberCart } = useContext(CartContext);
 
   const [showModal, setShowModal] = useState(false);
+  const [showClearCartModal, setShowClearCartModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   // carica il carrello
@@ -101,6 +102,30 @@ const Cart = () => {
     setSelectedProduct(null);
   };
 
+  const confirmClearCart = () => {
+    axios
+      .get("http://localhost:3000/cart")
+      .then((resp) => {
+        const deleteRequests = resp.data.map((product) =>
+          axios.delete(`http://localhost:3000/cart/${product.id}`)
+        );
+
+        // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate
+        Promise.all(deleteRequests).then(() => {
+          setCart([]);
+          setNumberCart(0);
+          localStorage.setItem("numberCart", 0);
+        });
+      })
+      .catch((err) => console.error("Errore durante la pulizia del carrello:", err));
+
+    setShowClearCartModal(false)
+  }
+
+  const cancelClearCart = () => {
+    setShowClearCartModal(false)
+  }
+
   return (
     <div className="cart-container">
       <div className="container">
@@ -108,13 +133,19 @@ const Cart = () => {
           <h2 className="text-center">Il carrello &egrave; vuoto</h2>
         ) : (
           <>
-            <h2 className="cart-title">
+            <h2 className="cart-title d-flex justify-content-between">
               CARRELLO
               <img
                 src="/img/Nostradamus.gif"
                 alt=""
                 className="cart-wizard-gif"
               />
+              <button
+                className="btn btn-danger"
+                onClick={() => { setShowClearCartModal(true) }}
+              >
+                Rimuovi tutti i prodotti
+              </button>
             </h2>
             <table className="table text-center my-4">
               <thead className="cart-header">
@@ -154,7 +185,6 @@ const Cart = () => {
                       ) : (
                         <td>€ {Number(price).toFixed(2)}</td>
                       )}
-                      {/* <td>{parseFloat(price).toFixed(2)} &euro;</td> */}
                       <td>
                         <button
                           className="px-2 fs-6"
@@ -204,7 +234,6 @@ const Cart = () => {
                           {(parseFloat(price) * parseInt(quantity)).toFixed(2)}
                         </td>
                       )}
-                      {/* {(parseFloat(price) * parseInt(quantity)).toFixed(2)}{" "} */}
                       <td>
                         <button
                           className="btn btn-danger"
@@ -263,6 +292,40 @@ const Cart = () => {
                 <button
                   className="btn btn-outline-secondary"
                   onClick={cancelRemove}
+                >
+                  Annulla
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        {showClearCartModal && (
+          <div
+            className="modal fade show"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "fixed",
+              inset: 0,
+              zIndex: 1050,
+            }}
+          >
+            <div
+              className="bg-white p-4 rounded-4 shadow"
+              style={{ minWidth: "320px", textAlign: "center" }}
+            >
+              <p className="modal-text mb-3 fs-5 fw-semibold">
+                Sicuro di voler rimuovere tutti i prodotti dal carrello?
+              </p>
+              <div className="d-flex justify-content-center gap-3">
+                <button className="btn btn-dark" onClick={confirmClearCart}>
+                  Sì
+                </button>
+                <button
+                  className="btn btn-outline-secondary"
+                  onClick={cancelClearCart}
                 >
                   Annulla
                 </button>

@@ -11,6 +11,8 @@ const CatalogPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sortOption, setSortOption] = useState("name_asc");
 
+  const { numberCart, setNumberCart } = useContext(CartContext);
+
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -23,7 +25,37 @@ const CatalogPage = () => {
     setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
   };
 
-  const { numberCart, setNumberCart } = useContext(CartContext);
+  const handleAddToCart = async (product) => {
+    try {
+      const productWithQuantity = {
+        ...product,
+        quantity: product.quantity || 1,
+      };
+      await axios.post(
+        "http://localhost:3000/cart",
+        productWithQuantity
+      );
+      setNumberCart((prev) => prev + (product.quantity || 1));
+      showToast(
+        `${product.name} è stato aggiunto al carrello`,
+        "success"
+      );
+    } catch (err) {
+      console.error("Errore durante l'aggiunta al carrello:", err);
+      if (product.quantity = 10) {
+        showToast(
+          "Hai raggiunto la quantità massima (10) per questo prodotto.",
+          "error"
+        );
+      }
+      else {
+        showToast(
+          "Errore durante l'aggiunta al carrello",
+          "error"
+        );
+      }
+    }
+  };
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
@@ -95,7 +127,8 @@ const CatalogPage = () => {
               className={`view-toggle ${viewMode === "list" ? "active" : ""}`}
               onClick={() => setViewMode("list")}
             >
-              <i className="fa-solid fa-list"></i>
+              <div className="lista-prodotti-sm"><i className="fa-solid fa-list"></i></div>
+
             </button>
           </div>
 
@@ -121,6 +154,12 @@ const CatalogPage = () => {
           {items.map((product) => (
             <div key={product.id} className="col-12 col-sm-6 col-md-4 col-lg-3">
               <div className="card h-100" style={{ position: "relative" }}>
+                {Number(product.discount) > 0 && (
+                  <div className="discount-badge">
+                    -{Number(product.discount)}%
+                  </div>
+                )}
+
                 <button
                   type="button"
                   onClick={() => handleAddToWishlist(product)}
@@ -159,36 +198,31 @@ const CatalogPage = () => {
                 </Link>
                 <div className="card-body">
                   <h6 className="card-title mb-2">{product.name}</h6>
-                  <div className="fw-bold">
-                    € {Number(product.price).toFixed(2)}
-                  </div>
+                  {Number(product.discount) > 0 ? (
+                    <div className="price-wrapper">
+                      <span className="old-price">
+                        € {Number(product.price).toFixed(2)}
+                      </span>
+                      <span className="new-price">
+                        €{" "}
+                        {(
+                          Number(product.price) -
+                          (Number(product.price) * Number(product.discount)) /
+                          100
+                        ).toFixed(2)}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="fw-bold">
+                      € {Number(product.price).toFixed(2)}
+                    </div>
+                  )}
                 </div>
                 <div className="card-footer bg-white border-0">
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={() => {
-                      axios
-                        .post("http://localhost:3000/cart", {
-                          ...product,
-                          quantity: product.quantity || 1,
-                        })
-                        .then(() => {
-                          setNumberCart(
-                            (prev) => prev + (product.quantity || 1)
-                          );
-                          showToast(
-                            `${product.name} è stato aggiunto al carrello`,
-                            "success"
-                          );
-                        })
-                        .catch(() => {
-                          showToast(
-                            "Errore durante l'aggiunta al carrello",
-                            "error"
-                          );
-                        });
-                    }}
+                    onClick={() => { handleAddToCart(product) }}
                   >
                     Aggiungi al carrello
                   </button>
@@ -197,7 +231,7 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      ) : (
+      ) : <div className="lista-sm">(
         <div className="vstack gap-2">
           {items.map((product) => (
             <div
@@ -226,33 +260,36 @@ const CatalogPage = () => {
                 </Link>
                 <div className="text-muted">{product.description}</div>
               </div>
-              <div className="fw-bold text-end" style={{ minWidth: 120 }}>
-                € {Number(product.price).toFixed(2)}
+              <div className="text-end" style={{ minWidth: 180 }}>
+                {Number(product.discount) > 0 ? (
+                  <div
+                    className="price-wrapper"
+                    style={{ justifyContent: "flex-end" }}
+                  >
+                    <span className="old-price">
+                      € {Number(product.price).toFixed(2)}
+                    </span>
+                    <span className="new-price">
+                      €{" "}
+                      {(
+                        Number(product.price) -
+                        (Number(product.price) * Number(product.discount)) / 100
+                      ).toFixed(2)}
+                    </span>
+
+                  </div>
+                ) : (
+                  <div className="fw-bold">
+                    € {Number(product.price).toFixed(2)}
+                  </div>
+                )}
               </div>
+
               <div style={{ minWidth: 180 }}>
                 <button
                   type="button"
                   className="btn btn-dark btn-sm w-100"
-                  onClick={() => {
-                    axios
-                      .post("http://localhost:3000/cart", {
-                        ...product,
-                        quantity: product.quantity || 1,
-                      })
-                      .then(() => {
-                        setNumberCart((prev) => prev + (product.quantity || 1));
-                        showToast(
-                          `${product.name} è stato aggiunto al carrello`,
-                          "success"
-                        );
-                      })
-                      .catch(() => {
-                        showToast(
-                          "Errore durante l'aggiunta al carrello",
-                          "error"
-                        );
-                      });
-                  }}
+                  onClick={() => { handleAddToCart(product) }}
                 >
                   Aggiungi al carrello
                 </button>
@@ -260,7 +297,8 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      )}
+        )</div>
+      }
 
       {items.length === 0 && (
         <div className="py-5 text-center text-muted">

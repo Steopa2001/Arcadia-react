@@ -2,6 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Checkout = ({ cartItems }) => {
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const [isPaying, setIsPaying] = useState(false);
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -14,9 +27,7 @@ const Checkout = ({ cartItems }) => {
   });
 
   // --------------------------FATTURAZIONE------------------------------------
-  // variabile booleana per l'indirizzo di fatturazione
   const [billingSameAsShipping, setBillingSameAsShipping] = useState(true);
-  // variabile indirizzo fatturazione diverso
   const [billingData, setBillingData] = useState({
     name: "",
     surname: "",
@@ -37,7 +48,14 @@ const Checkout = ({ cartItems }) => {
     cardHolder: "",
   });
 
-  const total = cartItems.reduce((acc, i) => acc + parseFloat(i.price) * parseInt(i.quantity), 0);
+  // -------- Totale con sconti (15 => 15%)
+  const total = cartItems.reduce((acc, i) => {
+    const price = parseFloat(i.price);
+    const discount = parseFloat(i.discount) || 0;
+    const qty = parseInt(i.quantity);
+    const discountedPrice = price - (price * discount) / 100;
+    return acc + discountedPrice * qty;
+  }, 0);
 
   // ----------------------Handlers-----------------------
   const handleChange = (e) => {
@@ -54,52 +72,79 @@ const Checkout = ({ cartItems }) => {
     const { name, value } = e.target;
     setCardData((prev) => ({ ...prev, [name]: value }));
   };
-  // -----------------------SUMbit---------------------------
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    const billing = billingSameAsShipping
-      ? {}
-      : {
-        billing_name: billingData.name,
-        billing_surname: billingData.surname,
-        billing_company: billingData.company || null,
-        billing_address: billingData.address,
-        billing_cap: billingData.cap,
-        billing_city: billingData.city,
-        billing_province: billingData.province,
-        billing_phone: billingData.phone || null,
-      };
+  // -----------------------Submit---------------------------
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const body = {
-      name: formData.name,
-      surname: formData.surname,
-      email: formData.email,
-      address: formData.address,
-      cap: formData.cap,
-      city: formData.city,
-      province: formData.province,
-      phone: formData.phone,
-      total,
+  // dati minimi degli items
+  const items = cartItems.map(i => ({
+    id: i.id,
+    name: i.name,
+    qty: i.quantity || 1,
+  }));
 
-      items: cartItems.map((i) => ({
-        id: i.id,
-        name: i.name,
-        price: i.price,
-        qty: i.quantity,
-      })),
-    };
+  // billing opzionale (se diverso dalla spedizione)
+  const billing = billingSameAsShipping ? {} : {
+    billing_name: billingData.name,
+    billing_surname: billingData.surname,
+    billing_company: billingData.company || null,
+    billing_address: billingData.address,
+    billing_cap: billingData.cap,
+    billing_city: billingData.city,
+    billing_province: billingData.province,
+    billing_phone: billingData.phone || null,
+  };
 
+  // payload ordine (usa il tuo `total` già calcolato nel componente)
+  const body = {
+    name: formData.name,
+    surname: formData.surname,
+    email: formData.email,
+    address: formData.address,
+    cap: formData.cap,
+    city: formData.city,
+    province: formData.province,
+    phone: formData.phone,
+    total: Number(total.toFixed(2)),
+    items,
+    payment_method: paymentMethod,
+    ...billing,
+  };
+
+  axios.post("http://localhost:3000/orders", body)
+    .then(() => {
+      showToast("Pagamento riuscito! Ordine creato", "success");
+      // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
+      return axios.delete("http://localhost:3000/cart").catch(() => {});
+    })
+    .catch(() => {
+      showToast("Errore durante il pagamento", "error");
+    });
+};
+
+
+
+  const clearCart = () => {
     axios
-      .post("http://localhost:3000/orders", body)
-      .then(({ data }) => {
-        console.log("Ordine creato:", data);
-        alert("Ordine creato con successo.");
+      .get("http://localhost:3000/cart")
+      .then((resp) => {
+        const deleteRequests = resp.data.map((product) =>
+          axios.delete(`http://localhost:3000/cart/${product.id}`)
+        );
+
+        // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate
+        Promise.all(deleteRequests).then(() => {
+          setCart([]);
+          setNumberCart(0);
+          localStorage.setItem("numberCart", 0);
+        });
       })
-      .catch((err) => {
-        console.error(err);
-        alert("Errore durante la creazione dell'ordine");
-      });
+      .catch((err) =>
+        console.error("Errore durante la pulizia del carrello:", err)
+      );
+
+    setShowClearCartModal(false);
   };
 
   return (
@@ -217,7 +262,6 @@ const Checkout = ({ cartItems }) => {
           <div className="card-body">
             <h3 className="h5 mb-3">Pagamento</h3>
 
-            {/* Metodo di pagamento */}
             <div className="list-group mb-3">
               <label className="list-group-item d-flex align-items-center gap-2">
                 <input
@@ -242,7 +286,6 @@ const Checkout = ({ cartItems }) => {
               </label>
             </div>
 
-            {/* Campi carta */}
             {paymentMethod === "card" && (
               <div className="row g-3 mb-3">
                 <div className="col-12">
@@ -298,7 +341,6 @@ const Checkout = ({ cartItems }) => {
               </div>
             )}
 
-            {/* Checkbox: indirizzo fatturazione */}
             <div className="form-check mb-3">
               <input
                 className="form-check-input"
@@ -312,7 +354,6 @@ const Checkout = ({ cartItems }) => {
               </label>
             </div>
 
-            {/* Indirizzo di fatturazione */}
             {!billingSameAsShipping && (
               <>
                 <h4 className="h6 mb-3">Indirizzo di fatturazione</h4>
@@ -422,17 +463,50 @@ const Checkout = ({ cartItems }) => {
             <h3 className="h5 mb-3">Riepilogo ordine</h3>
 
             <ul className="list-group mb-3">
-              {cartItems.map((item) => (
-                <li
-                  key={item.id}
-                  className="list-group-item d-flex justify-content-between align-items-center"
-                >
-                  <span>
-                    {item.name} ×{item.quantity}
-                  </span>
-                  €{parseFloat(item.price).toFixed(2)}
-                </li>
-              ))}
+              {cartItems.map((item) => {
+                const price = parseFloat(item.price);
+                const discount = parseFloat(item.discount) || 0; // 15 = 15%
+                const qty = parseInt(item.quantity) || 0;
+                const unit = price * (1 - discount / 100);
+                const hasDiscount = discount > 0;
+
+                return (
+                  <li
+                    key={item.id}
+                    className="list-group-item d-flex justify-content-between align-items-center"
+                  >
+                    <span>
+                      {item.name} ×{qty}
+                    </span>
+
+                    <div className="text-end" style={{ minWidth: 160 }}>
+                      {hasDiscount ? (
+                        <div
+                          className="price-wrapper"
+                          style={{ justifyContent: "flex-end" }}
+                        >
+                          <span className="old-price">
+                            € {price.toFixed(2)}
+                          </span>
+                          <span className="new-price">€ {unit.toFixed(2)}</span>
+                        </div>
+                      ) : (
+                        // per i non-scontati mostro il prezzo unitario "nuovo" direttamente
+                        <div
+                          className="price-wrapper"
+                          style={{ justifyContent: "flex-end" }}
+                        >
+                          <span className="new-price">€ {unit.toFixed(2)}</span>
+                        </div>
+                      )}
+
+                      <small className="text-muted">
+                        Subtotale: € {(unit * qty).toFixed(2)}
+                      </small>
+                    </div>
+                  </li>
+                );
+              })}
 
               <li className="list-group-item d-flex justify-content-between">
                 <strong>Totale</strong>
@@ -440,14 +514,23 @@ const Checkout = ({ cartItems }) => {
               </li>
             </ul>
 
-            <button type="submit" className="btn btn-primary text-center" onClick={() => {
-              axios.delete('http://localhost:3000/cart')
-            }}>
-              Paga ora
+            <button
+              type="submit"
+              className="btn btn-primary text-center"
+              disabled={isPaying}
+            >
+              {isPaying ? "Elaboro..." : "Paga ora"}{" "}
             </button>
           </div>
         </div>
       </form>
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
+      </div>
     </div>
   );
 };

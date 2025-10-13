@@ -48,13 +48,14 @@ const Homepage = () => {
                 key={category.id}
                 className="col-sm-12 col-md-3 category-card"
               >
-               <Link to={`/catalogo/${category.slug}`}>
+                <Link to={`/catalogo/${category.slug}`}>
                   <div className="card-image">
                     <img
                       className="img-fluid"
                       src={category.image}
                       alt={category.name}
                     />
+                    <div className="title-sm d-none"><p className="card-p">{category.name}</p></div>
                     <div className={`overlay ${category.slug}`}>
                       <span>{category.name}</span>
                     </div>
