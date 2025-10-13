@@ -2,6 +2,19 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const Checkout = ({ cartItems }) => {
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const [isPaying, setIsPaying] = useState(false);
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -61,63 +74,56 @@ const Checkout = ({ cartItems }) => {
   };
 
   // -----------------------Submit---------------------------
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    const billing = billingSameAsShipping
-      ? {}
-      : {
-        billing_name: billingData.name,
-        billing_surname: billingData.surname,
-        billing_company: billingData.company || null,
-        billing_address: billingData.address,
-        billing_cap: billingData.cap,
-        billing_city: billingData.city,
-        billing_province: billingData.province,
-        billing_phone: billingData.phone || null,
-      };
+  // dati minimi degli items
+  const items = cartItems.map(i => ({
+    id: i.id,
+    name: i.name,
+    qty: i.quantity || 1,
+  }));
 
-    const items = cartItems.map((i) => {
-      const price = parseFloat(i.price);
-      const discount = parseFloat(i.discount) || 0;
-      const qty = parseInt(i.quantity) || 0;
-      const unit = price * (1 - discount / 100);
-
-      return {
-        id: i.id,
-        name: i.name,
-        price_unit: +unit.toFixed(2), // prezzo unitario SCONTATO
-        qty,
-        line_total: +(unit * qty).toFixed(2), // subtotale
-      };
-    });
-
-    const body = {
-      name: formData.name,
-      surname: formData.surname,
-      email: formData.email,
-      address: formData.address,
-      cap: formData.cap,
-      city: formData.city,
-      province: formData.province,
-      phone: formData.phone,
-      total: +total.toFixed(2),
-      ...billing,
-      items,
-      payment_method: paymentMethod,
-    };
-
-    axios
-      .post("http://localhost:3000/orders", body)
-      .then(({ data }) => {
-        console.log("Ordine creato:", data);
-        alert("Ordine creato con successo.");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Errore durante la creazione dell'ordine");
-      });
+  // billing opzionale (se diverso dalla spedizione)
+  const billing = billingSameAsShipping ? {} : {
+    billing_name: billingData.name,
+    billing_surname: billingData.surname,
+    billing_company: billingData.company || null,
+    billing_address: billingData.address,
+    billing_cap: billingData.cap,
+    billing_city: billingData.city,
+    billing_province: billingData.province,
+    billing_phone: billingData.phone || null,
   };
+
+  // payload ordine (usa il tuo `total` già calcolato nel componente)
+  const body = {
+    name: formData.name,
+    surname: formData.surname,
+    email: formData.email,
+    address: formData.address,
+    cap: formData.cap,
+    city: formData.city,
+    province: formData.province,
+    phone: formData.phone,
+    total: Number(total.toFixed(2)),
+    items,
+    payment_method: paymentMethod,
+    ...billing,
+  };
+
+  axios.post("http://localhost:3000/orders", body)
+    .then(() => {
+      showToast("Pagamento riuscito! Ordine creato", "success");
+      // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
+      return axios.delete("http://localhost:3000/cart").catch(() => {});
+    })
+    .catch(() => {
+      showToast("Errore durante il pagamento", "error");
+    });
+};
+
+
 
   const clearCart = () => {
     axios
@@ -134,10 +140,12 @@ const Checkout = ({ cartItems }) => {
           localStorage.setItem("numberCart", 0);
         });
       })
-      .catch((err) => console.error("Errore durante la pulizia del carrello:", err));
+      .catch((err) =>
+        console.error("Errore durante la pulizia del carrello:", err)
+      );
 
-    setShowClearCartModal(false)
-  }
+    setShowClearCartModal(false);
+  };
 
   return (
     <div className="container py-4">
@@ -509,13 +517,20 @@ const Checkout = ({ cartItems }) => {
             <button
               type="submit"
               className="btn btn-primary text-center"
-              onClick={() => { clearCart() }}
+              disabled={isPaying}
             >
-              Paga ora
+              {isPaying ? "Elaboro..." : "Paga ora"}{" "}
             </button>
           </div>
         </div>
       </form>
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
+      </div>
     </div>
   );
 };
