@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import ScrollToTopNotFound from "../components/ScrollToTop";
+import ScrollToTop1 from "../components/ScrollToTop1.jsx";
+import ScrollToTopNotFound from "../components/ScrollToTop.jsx";
 import DefaultLayout from "../layouts/DefaultLayout";
 import Homepage from "../pages/Homepage";
 import BoardGames from "../pages/BoardGames";
@@ -16,8 +17,6 @@ import ModelPage from "../pages/ModelPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import CartContext from "./contexts/cartContext";
 import CatalogPage from "../pages/CatalogPage";
-
-// importiamo Aria (il chatbot)
 import Chatbot from "../components/Chatbot";
 
 function App() {
@@ -33,7 +32,8 @@ function App() {
   return (
     <CartContext.Provider value={{ numberCart, setNumberCart }}>
       <BrowserRouter>
-        <ScrollToTopNotFound />
+        <ScrollToTop1 /> {/* scroll globale */}
+        <ScrollToTopNotFound /> {/* solo not-found */}
         <Routes>
           <Route element={<DefaultLayout />}>
             <Route index element={<Homepage />} />
@@ -41,7 +41,10 @@ function App() {
               path="/dettaglio-prodotto/:slug"
               element={<DetailProductPage />}
             />
-            <Route path="/giochi-da-tavolo" element={<Navigate to="/catalogo/1"/>} />
+            <Route
+              path="/giochi-da-tavolo"
+              element={<Navigate to="/catalogo/1" />}
+            />
             <Route path="/carrello-prodotti" element={<Cart />} />
             <Route path="/wishlist-prodotti" element={<WishList />} />
             <Route path="/tutti-prodotti" element={<AllProducts />} />
@@ -51,15 +54,13 @@ function App() {
               path="/carte-collezionabili"
               element={<Navigate to="/catalogo/2" />}
             />
-            <Route path="/cardistry" element={<Navigate to="/catalogo/3"/>} />
+            <Route path="/cardistry" element={<Navigate to="/catalogo/3" />} />
             <Route path="/modellismo" element={<Navigate to="/catalogo/4" />} />
             <Route path="/not-found" element={<NotFoundPage />} />
             <Route path="*" element={<Navigate to="/not-found" replace />} />
             <Route path="/catalogo/:slug" element={<CatalogPage />} />
           </Route>
         </Routes>
-
-        {/* Aria sempre visibile in basso a destra */}
         <Chatbot />
       </BrowserRouter>
     </CartContext.Provider>
