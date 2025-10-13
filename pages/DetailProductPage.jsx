@@ -12,6 +12,18 @@ const DetailProductPage = () => {
   const { numberCart, setNumberCart } = useContext(CartContext);
   const navigate = useNavigate();
 
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    // nascondi dopo 2.5s
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   const fetchProduct = () => {
     axios
       .get(`http://localhost:3000/products/slug/${slug}`)
@@ -42,15 +54,24 @@ const DetailProductPage = () => {
         );
         setNumberCart(totalItems);
 
-        alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
+        showToast(
+          `${product.name} ${quantity}x è stato aggiunto al carrello`,
+          "success"
+        );
       }
     } catch (error) {
       // Se quantità > 10
       if (error.response && error.response.status === 400) {
-        alert("Hai raggiunto la quantità massima (10) per questo prodotto.");
+        showToast(
+          "Hai raggiunto la quantità massima (10) per questo prodotto.",
+          "error"
+        );
       } else {
         console.error(error);
-        alert("Si è verificato un errore durante l'aggiunta al carrello.");
+        showToast(
+          "Errore durante l'aggiunta al carrello",
+          "error"
+        );
       }
     }
   };
@@ -180,6 +201,21 @@ const DetailProductPage = () => {
             </div>
           </div>
         </div>
+      </div>
+      {product.length === 0 && (
+        <div className="py-5 text-center text-muted">
+          {searchTerm
+            ? `Nessun risultato per "${searchTerm}"`
+            : "Nessun prodotto trovato"}
+        </div>
+      )}
+      {/* Toast bottom-right */}
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
       </div>
     </div>
   );

@@ -67,15 +67,15 @@ const Checkout = ({ cartItems }) => {
     const billing = billingSameAsShipping
       ? {}
       : {
-          billing_name: billingData.name,
-          billing_surname: billingData.surname,
-          billing_company: billingData.company || null,
-          billing_address: billingData.address,
-          billing_cap: billingData.cap,
-          billing_city: billingData.city,
-          billing_province: billingData.province,
-          billing_phone: billingData.phone || null,
-        };
+        billing_name: billingData.name,
+        billing_surname: billingData.surname,
+        billing_company: billingData.company || null,
+        billing_address: billingData.address,
+        billing_cap: billingData.cap,
+        billing_city: billingData.city,
+        billing_province: billingData.province,
+        billing_phone: billingData.phone || null,
+      };
 
     const items = cartItems.map((i) => {
       const price = parseFloat(i.price);
@@ -118,6 +118,26 @@ const Checkout = ({ cartItems }) => {
         alert("Errore durante la creazione dell'ordine");
       });
   };
+
+  const clearCart = () => {
+    axios
+      .get("http://localhost:3000/cart")
+      .then((resp) => {
+        const deleteRequests = resp.data.map((product) =>
+          axios.delete(`http://localhost:3000/cart/${product.id}`)
+        );
+
+        // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate
+        Promise.all(deleteRequests).then(() => {
+          setCart([]);
+          setNumberCart(0);
+          localStorage.setItem("numberCart", 0);
+        });
+      })
+      .catch((err) => console.error("Errore durante la pulizia del carrello:", err));
+
+    setShowClearCartModal(false)
+  }
 
   return (
     <div className="container py-4">
@@ -489,9 +509,7 @@ const Checkout = ({ cartItems }) => {
             <button
               type="submit"
               className="btn btn-primary text-center"
-              onClick={() => {
-                axios.delete("http://localhost:3000/cart");
-              }}
+              onClick={() => { clearCart() }}
             >
               Paga ora
             </button>

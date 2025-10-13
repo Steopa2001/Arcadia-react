@@ -11,6 +11,8 @@ const CatalogPage = () => {
   const [viewMode, setViewMode] = useState("grid");
   const [sortOption, setSortOption] = useState("name_asc");
 
+  const { numberCart, setNumberCart } = useContext(CartContext);
+
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -23,7 +25,37 @@ const CatalogPage = () => {
     setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
   };
 
-  const { numberCart, setNumberCart } = useContext(CartContext);
+  const handleAddToCart = async (product) => {
+    try {
+      const productWithQuantity = {
+        ...product,
+        quantity: product.quantity || 1,
+      };
+      await axios.post(
+        "http://localhost:3000/cart",
+        productWithQuantity
+      );
+      setNumberCart((prev) => prev + (product.quantity || 1));
+      showToast(
+        `${product.name} è stato aggiunto al carrello`,
+        "success"
+      );
+    } catch (err) {
+      console.error("Errore durante l'aggiunta al carrello:", err);
+      if (product.quantity = 10) {
+        showToast(
+          "Hai raggiunto la quantità massima (10) per questo prodotto.",
+          "error"
+        );
+      }
+      else {
+        showToast(
+          "Errore durante l'aggiunta al carrello",
+          "error"
+        );
+      }
+    }
+  };
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
@@ -175,7 +207,7 @@ const CatalogPage = () => {
                         {(
                           Number(product.price) -
                           (Number(product.price) * Number(product.discount)) /
-                            100
+                          100
                         ).toFixed(2)}
                       </span>
                     </div>
@@ -189,28 +221,7 @@ const CatalogPage = () => {
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={() => {
-                      axios
-                        .post("http://localhost:3000/cart", {
-                          ...product,
-                          quantity: product.quantity || 1,
-                        })
-                        .then(() => {
-                          setNumberCart(
-                            (prev) => prev + (product.quantity || 1)
-                          );
-                          showToast(
-                            `${product.name} è stato aggiunto al carrello`,
-                            "success"
-                          );
-                        })
-                        .catch(() => {
-                          showToast(
-                            "Errore durante l'aggiunta al carrello",
-                            "error"
-                          );
-                        });
-                    }}
+                    onClick={() => { handleAddToCart(product) }}
                   >
                     Aggiungi al carrello
                   </button>
@@ -264,7 +275,7 @@ const CatalogPage = () => {
                         (Number(product.price) * Number(product.discount)) / 100
                       ).toFixed(2)}
                     </span>
-                    
+
                   </div>
                 ) : (
                   <div className="fw-bold">
@@ -277,26 +288,7 @@ const CatalogPage = () => {
                 <button
                   type="button"
                   className="btn btn-dark btn-sm w-100"
-                  onClick={() => {
-                    axios
-                      .post("http://localhost:3000/cart", {
-                        ...product,
-                        quantity: product.quantity || 1,
-                      })
-                      .then(() => {
-                        setNumberCart((prev) => prev + (product.quantity || 1));
-                        showToast(
-                          `${product.name} è stato aggiunto al carrello`,
-                          "success"
-                        );
-                      })
-                      .catch(() => {
-                        showToast(
-                          "Errore durante l'aggiunta al carrello",
-                          "error"
-                        );
-                      });
-                  }}
+                  onClick={() => { handleAddToCart(product) }}
                 >
                   Aggiungi al carrello
                 </button>
