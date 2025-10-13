@@ -51,13 +51,6 @@ const DetailProductPage = () => {
     }
   };
 
-  // const handleAddToCart = () => {
-  //   const productWithQuantity = { ...product, quantity };
-  //   axios.post("http://localhost:3000/cart", productWithQuantity);
-  //   setNumberCart(numberCart + quantity);
-  //   alert(`${product.name} (${quantity}x) è stato aggiunto al carrello`);
-  // };
-
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = () => {
     axios

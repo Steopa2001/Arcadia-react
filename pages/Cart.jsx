@@ -20,12 +20,12 @@ const Cart = () => {
 
       setCart(productsWithQuantity);
 
-      if (cart.length > 0) {
-        const totalCart = productsWithQuantity.reduce((sum, product) => {
-          return sum + (product.quantity || 1), 0;
-        });
-        setNumberCart(totalCart);
-      }
+      // Calcola il totale direttamente qui, senza usare "cart"
+      const totalCart = productsWithQuantity.reduce(
+        (sum, product) => sum + (product.quantity || 1),
+        0
+      );
+      setNumberCart(totalCart);
     });
   }, [setNumberCart]);
 

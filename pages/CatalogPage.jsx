@@ -150,12 +150,12 @@ const CatalogPage = () => {
                   <button
                     type="button"
                     className="btn btn-dark btn-sm w-100"
-                    onClick={() => {
-                      axios.post("http://localhost:3000/cart", product);
-                      setNumberCart(numberCart + 1);
-                      alert(`${product.name} è stato aggiunto al carrello`);
-                    }
-                    }
+                    onClick={
+                      () => {
+                        axios.post("http://localhost:3000/cart", product);
+                        setNumberCart(numberCart + 1);
+                        alert(`${product.name} è stato aggiunto al carrello`);
+                      }}
                   >
                     Aggiungi al carrello
                   </button>
@@ -200,12 +200,12 @@ const CatalogPage = () => {
                 <button
                   type="button"
                   className="btn btn-dark btn-sm w-100"
-                  onClick={() => {
-                    axios.post("http://localhost:3000/cart", product);
-                    setNumberCart(numberCart + 1);
-                    alert(`${product.name} è stato aggiunto al carrello`);
-                  }
-                  }
+                  onClick={
+                    () => {
+                      axios.post("http://localhost:3000/cart", product);
+                      setNumberCart(numberCart + 1);
+                      alert(`${product.name} è stato aggiunto al carrello`);
+                    }}
                 >
                   Aggiungi al carrello
                 </button>
