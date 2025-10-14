@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
+import CartContext from "../src/contexts/cartContext";
 
 const Checkout = ({ cartItems }) => {
+  const { cart, setCart, numberCart, setNumberCart } = useContext(CartContext)
+
   const [toast, setToast] = useState({
     show: false,
     message: "",
@@ -74,56 +77,54 @@ const Checkout = ({ cartItems }) => {
   };
 
   // -----------------------Submit---------------------------
-const handleSubmit = (e) => {
-  e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  // dati minimi degli items
-  const items = cartItems.map(i => ({
-    id: i.id,
-    name: i.name,
-    qty: i.quantity || 1,
-  }));
+    // dati minimi degli items
+    const items = cartItems.map(i => ({
+      id: i.id,
+      name: i.name,
+      qty: i.quantity || 1,
+    }));
 
-  // billing opzionale (se diverso dalla spedizione)
-  const billing = billingSameAsShipping ? {} : {
-    billing_name: billingData.name,
-    billing_surname: billingData.surname,
-    billing_company: billingData.company || null,
-    billing_address: billingData.address,
-    billing_cap: billingData.cap,
-    billing_city: billingData.city,
-    billing_province: billingData.province,
-    billing_phone: billingData.phone || null,
+    // billing opzionale (se diverso dalla spedizione)
+    const billing = billingSameAsShipping ? {} : {
+      billing_name: billingData.name,
+      billing_surname: billingData.surname,
+      billing_company: billingData.company || null,
+      billing_address: billingData.address,
+      billing_cap: billingData.cap,
+      billing_city: billingData.city,
+      billing_province: billingData.province,
+      billing_phone: billingData.phone || null,
+    };
+
+    // payload ordine (usa il tuo `total` già calcolato nel componente)
+    const body = {
+      name: formData.name,
+      surname: formData.surname,
+      email: formData.email,
+      address: formData.address,
+      cap: formData.cap,
+      city: formData.city,
+      province: formData.province,
+      phone: formData.phone,
+      total: Number(total.toFixed(2)),
+      items,
+      payment_method: paymentMethod,
+      ...billing,
+    };
+
+    axios.post("http://localhost:3000/orders", body)
+      .then(() => {
+        showToast("Pagamento riuscito! Ordine creato", "success");
+        // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
+        return axios.delete("http://localhost:3000/cart").catch(() => { });
+      })
+      .catch(() => {
+        showToast("Errore durante il pagamento", "error");
+      });
   };
-
-  // payload ordine (usa il tuo `total` già calcolato nel componente)
-  const body = {
-    name: formData.name,
-    surname: formData.surname,
-    email: formData.email,
-    address: formData.address,
-    cap: formData.cap,
-    city: formData.city,
-    province: formData.province,
-    phone: formData.phone,
-    total: Number(total.toFixed(2)),
-    items,
-    payment_method: paymentMethod,
-    ...billing,
-  };
-
-  axios.post("http://localhost:3000/orders", body)
-    .then(() => {
-      showToast("Pagamento riuscito! Ordine creato", "success");
-      // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
-      return axios.delete("http://localhost:3000/cart").catch(() => {});
-    })
-    .catch(() => {
-      showToast("Errore durante il pagamento", "error");
-    });
-};
-
-
 
   const clearCart = () => {
     axios
@@ -135,16 +136,12 @@ const handleSubmit = (e) => {
 
         // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate
         Promise.all(deleteRequests).then(() => {
-          setCart([]);
+          setCart([])
           setNumberCart(0);
           localStorage.setItem("numberCart", 0);
         });
       })
-      .catch((err) =>
-        console.error("Errore durante la pulizia del carrello:", err)
-      );
-
-    setShowClearCartModal(false);
+      .catch((err) => console.error("Errore durante la pulizia del carrello:", err));
   };
 
   return (
@@ -517,6 +514,7 @@ const handleSubmit = (e) => {
             <button
               type="submit"
               className="btn btn-primary text-center"
+              onClick={() => { clearCart() }}
               disabled={isPaying}
             >
               {isPaying ? "Elaboro..." : "Paga ora"}{" "}

@@ -21,6 +21,7 @@ import Chatbot from "../components/Chatbot";
 import Thankspage from "../pages/Thankspage.jsx";
 
 function App() {
+  const [cart, setCart] = useState([])
   const [numberCart, setNumberCart] = useState(() => {
     const saved = localStorage.getItem("numberCart");
     return saved ? parseInt(saved) : 0;
@@ -31,7 +32,7 @@ function App() {
   }, [numberCart]);
 
   return (
-    <CartContext.Provider value={{ numberCart, setNumberCart }}>
+    <CartContext.Provider value={{ cart, setCart, numberCart, setNumberCart }}>
       <BrowserRouter>
         <ScrollToTop1 /> {/* scroll globale */}
         <ScrollToTopNotFound /> {/* solo not-found */}
