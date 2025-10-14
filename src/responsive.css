@@ -430,6 +430,37 @@
   .wishlist-container .btn.btn-outline-danger {
     margin-bottom: 0;
   }
+
+  .thankspage-container {
+    min-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background: #000 !important;
+  }
+
+  .thankspage-container h1,
+  .thankspage-container p {
+    color: #a85cff !important;
+    font-family: "Cinzel Decorative", serif !important;
+    letter-spacing: 1.2;
+  }
+
+  .thankspage-container p {
+    color: #fefefc !important;
+    font-family: "Raleway", sans-serif !important;
+  }
+
+  .thankspage-container .text-center {
+    background: transparent !important;
+    padding: 40px 20px;
+  }
+
+  footer {
+    margin-top: auto !important;
+    background: #000 !important;
+  }
 }
 
 /* =========================================
