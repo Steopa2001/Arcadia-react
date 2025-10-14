@@ -378,14 +378,6 @@
   }
 
   /* ---------- CARRELLO ---------- */
-  .cart-wizard-gif {
-    right: 12%;
-    top: -15px;
-    width: 90px;
-    animation: floaty 4s ease-in-out infinite;
-    z-index: 9;
-  }
-
   .tab-total {
     display: none;
   }
@@ -412,7 +404,6 @@
   /* QUANTITÀ -> PREZZO */
   .cart-container thead th.tab-quantità::after,
   .cart-container thead th.tab-quantit\u00E0::after {
-    /* fallback */
     content: "PREZZO";
     font-size: 14px;
   }
@@ -423,6 +414,11 @@
     padding-top: 8px;
     padding-bottom: 8px;
     vertical-align: middle;
+  }
+
+  .cart-wizard-gif {
+    top: 70px;
+    right: -8px;
   }
 
   /* ---------- WISHLIST ---------- */
