@@ -151,10 +151,10 @@ const Cart = () => {
             <table className="table text-center my-4">
               <thead className="cart-header">
                 <tr>
-                  <th className="col-product">PRODOTTO</th>
-                  <th className="col-price">PREZZO</th>
-                  <th className="col-quantity">QUANTITÀ</th>
-                  <th className="col-total">TOTALE</th>
+                  <th className="col-product tab-prodotto">PRODOTTO</th>
+                  <th className="col-price tab-prezzo">PREZZO</th>
+                  <th className="col-quantity tab-quantità">QUANTITÀ</th>
+                  <th className="col-total tab-total">TOTALE</th>
                 </tr>
               </thead>
               <tbody>
@@ -169,7 +169,7 @@ const Cart = () => {
                         <p className="mt-2 fw-semibold">{name}</p>
                       </td>
                       {Number(discount) > 0 ? (
-                        <td>
+                        <td className="sm-none">
                           <div className="price-wrapper justify-content-center">
                             <span className="old-price">
                               € {Number(price).toFixed(2)}
@@ -184,7 +184,7 @@ const Cart = () => {
                           </div>
                         </td>
                       ) : (
-                        <td>€ {Number(price).toFixed(2)}</td>
+                        <td className="sm-none">€ {Number(price).toFixed(2)}</td>
                       )}
                       <td>
                         <button
@@ -234,7 +234,7 @@ const Cart = () => {
                           € {(parseFloat(price) * parseInt(quantity)).toFixed(2)}
                         </td>
                       )}
-                      <td>
+                      <td className="col-remove">
                         <button
                           className="btn btn-danger"
                           onClick={() => handleRemoveClick(productCart)}

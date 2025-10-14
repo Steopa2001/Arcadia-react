@@ -243,7 +243,7 @@
     padding: 30px 20px;
     font-size: 14px;
     line-height: 1.5;
-    margin-top: auto !important; /* 👈 footer resta al fondo */
+    margin-top: auto !important;
   }
 
   /* nascondi le colonne superflue */
@@ -386,6 +386,45 @@
     z-index: 9;
   }
 
+  .tab-total {
+    display: none;
+  }
+
+  .sm-none {
+    display: none;
+  }
+
+  /* Nascondo il testo originale e inietto il nuovo */
+  .cart-container thead th.tab-prezzo,
+  .cart-container thead th.tab-quantità,
+  .cart-container thead th.tab-quantit\u00E0 {
+    position: relative;
+    font-size: 0;
+    line-height: 1;
+  }
+
+  /* PREZZO -> QUANTITÀ */
+  .cart-container thead th.tab-prezzo::after {
+    content: "QUANTITÀ";
+    font-size: 14px;
+  }
+
+  /* QUANTITÀ -> PREZZO */
+  .cart-container thead th.tab-quantità::after,
+  .cart-container thead th.tab-quantit\u00E0::after {
+    /* fallback */
+    content: "PREZZO";
+    font-size: 14px;
+  }
+
+  .cart-container thead th.tab-prodotto {
+    font-size: 14px !important;
+    line-height: 1.2;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    vertical-align: middle;
+  }
+
   /* ---------- WISHLIST ---------- */
   .wishlist-container .btn-wishlist,
   .wishlist-container .btn.btn-outline-danger {
@@ -394,26 +433,6 @@
 
   .wishlist-container .btn.btn-outline-danger {
     margin-bottom: 0;
-  }
-
-  /* --- FIX SPAZIO BIANCO SOTTO FOOTER PER PAGINA THANKS --- */
-  .thankspage-container,
-  .container.thankspage,
-  .container.thankspage-page {
-    min-height: calc(
-      100dvh - 120px
-    ) !important; /* spazio visibile meno header/footer */
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  footer {
-    position: relative !important;
-    bottom: 0 !important;
-    left: 0;
-    width: 100%;
-    margin-top: 0 !important;
   }
 }
 
