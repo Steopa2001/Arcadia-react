@@ -379,13 +379,13 @@
 
   /* ---------- CARRELLO ---------- */
 
-   .cart-wizard-gif {
+  .cart-wizard-gif {
     right: 12%;
     top: -15px;
     width: 90px;
     animation: floaty 4s case-in-out infinite;
     z-index: 9;
-   }
+  }
 
   .tab-total {
     display: none;
@@ -446,12 +446,13 @@
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    background: #000 !important;
+    background: url("https://i.pinimg.com/1200x/81/7e/b2/817eb252dccc4d93cdc533a0934c788e.jpg")
+      center/cover no-repeat !important;
   }
 
   .thankspage-container h1,
   .thankspage-container p {
-    color: #a85cff !important;
+    color: #f0e6c8 !important;
     font-family: "Cinzel Decorative", serif !important;
     letter-spacing: 1.2;
   }
