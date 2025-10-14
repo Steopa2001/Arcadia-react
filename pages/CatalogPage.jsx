@@ -231,7 +231,7 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-      ) : <div className="lista-sm">(
+      ) : <div className="lista-sm">
         <div className="vstack gap-2">
           {items.map((product) => (
             <div
@@ -297,7 +297,7 @@ const CatalogPage = () => {
             </div>
           ))}
         </div>
-        )</div>
+        </div>
       }
 
       {items.length === 0 && (
