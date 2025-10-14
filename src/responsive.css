@@ -378,6 +378,15 @@
   }
 
   /* ---------- CARRELLO ---------- */
+
+   .cart-wizard-gif {
+    right: 12%;
+    top: -15px;
+    width: 90px;
+    animation: floaty 4s case-in-out infinite;
+    z-index: 9;
+   }
+
   .tab-total {
     display: none;
   }
