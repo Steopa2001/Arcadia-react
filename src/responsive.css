@@ -2,7 +2,6 @@
    MOBILE – smartphone (<576px)
    ========================================= */
 @media (max-width: 575.98px) {
-
   /* ---------- FIX SFONDO ---------- */
   .section-cards {
     background: none !important;
@@ -20,6 +19,7 @@
   /* ---------- HEADER ---------- */
   header {
     position: relative;
+    z-index: 1500;
   }
 
   .header-top {
@@ -125,15 +125,16 @@
 
   /* ---------- CATEGORY CARDS ---------- */
   .homepage {
-    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg") no-repeat center top;
+    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
+      no-repeat center top;
     background-size: cover;
-    background-attachment: fixed;
-    min-height: 100vh;
+    background-attachment: scroll !important;
+    min-height: 100dvh;
     filter: none;
   }
 
   /* tutti gli elementi dentro restano visibili sopra */
-  .homepage>* {
+  .homepage > * {
     position: relative;
     z-index: 1;
   }
@@ -236,12 +237,13 @@
 
   /* ---------- FOOTER ---------- */
   footer {
-    background: #000;
+    background: #000 !important;
     color: #f0e6c8;
     text-align: center;
     padding: 30px 20px;
     font-size: 14px;
     line-height: 1.5;
+    margin-top: auto !important; /* 👈 footer resta al fondo */
   }
 
   /* nascondi le colonne superflue */
@@ -277,6 +279,12 @@
     font-family: "Raleway", sans-serif;
     white-space: normal;
     word-spacing: 1px;
+  }
+
+  .wishlist-container h4.text-center.text-muted {
+    color: #fff !important;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    margin-top: 150px;
   }
 
   /* logo */
@@ -320,6 +328,16 @@
 
   footer .col-footer .col-3:last-child a.link:hover {
     color: #a85cff;
+  }
+
+  /* --- FIX SFONDO SOTTO FOOTER --- */
+  .wishlist-container {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    min-height: 100dvh !important;
+    background-attachment: scroll !important;
+    background-position: center top !important;
+    background-size: cover !important;
   }
 
   /* ---------- DETTAGLIO PRODOTTO / CART / WISHLIST BASE ---------- */
@@ -377,6 +395,26 @@
   .wishlist-container .btn.btn-outline-danger {
     margin-bottom: 0;
   }
+
+  /* --- FIX SPAZIO BIANCO SOTTO FOOTER PER PAGINA THANKS --- */
+  .thankspage-container,
+  .container.thankspage,
+  .container.thankspage-page {
+    min-height: calc(
+      100dvh - 120px
+    ) !important; /* spazio visibile meno header/footer */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  footer {
+    position: relative !important;
+    bottom: 0 !important;
+    left: 0;
+    width: 100%;
+    margin-top: 0 !important;
+  }
 }
 
 /* =========================================
@@ -384,7 +422,6 @@
    ========================================= */
 
 @media (max-width: 767.98px) {
-
   /*HEADER NAV*/
   .header-nav {
     padding: 10px 25px;
@@ -403,5 +440,4 @@
     margin-top: 10px;
     margin-bottom: 40px;
   }
-
 }
