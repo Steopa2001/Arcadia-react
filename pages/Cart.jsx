@@ -169,7 +169,7 @@ const Cart = () => {
                         <p className="mt-2 fw-semibold">{name}</p>
                       </td>
                       {Number(discount) > 0 ? (
-                        <td>
+                        <td className="sm-none">
                           <div className="price-wrapper justify-content-center">
                             <span className="old-price">
                               € {Number(price).toFixed(2)}
@@ -184,7 +184,7 @@ const Cart = () => {
                           </div>
                         </td>
                       ) : (
-                        <td>€ {Number(price).toFixed(2)}</td>
+                        <td className="sm-none">€ {Number(price).toFixed(2)}</td>
                       )}
                       <td>
                         <button
