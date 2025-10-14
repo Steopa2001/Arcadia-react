@@ -2,6 +2,7 @@
    MOBILE – smartphone (<576px)
    ========================================= */
 @media (max-width: 575.98px) {
+
   /* ---------- FIX SFONDO ---------- */
   .section-cards {
     background: none !important;
@@ -125,8 +126,7 @@
 
   /* ---------- CATEGORY CARDS ---------- */
   .homepage {
-    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg")
-      no-repeat center top;
+    background: url("https://i.pinimg.com/1200x/34/eb/de/34ebdeb38c4d43635abd756e67414100.jpg") no-repeat center top;
     background-size: cover;
     background-attachment: scroll !important;
     min-height: 100dvh;
@@ -134,7 +134,7 @@
   }
 
   /* tutti gli elementi dentro restano visibili sopra */
-  .homepage > * {
+  .homepage>* {
     position: relative;
     z-index: 1;
   }
@@ -446,8 +446,7 @@
     flex-direction: column !important;
     justify-content: center !important;
     align-items: center !important;
-    background: url("https://i.pinimg.com/1200x/81/7e/b2/817eb252dccc4d93cdc533a0934c788e.jpg")
-      center/cover no-repeat !important;
+    background: url("https://i.pinimg.com/1200x/81/7e/b2/817eb252dccc4d93cdc533a0934c788e.jpg") center/cover no-repeat !important;
   }
 
   .thankspage-container h1,
@@ -478,6 +477,7 @@
    ========================================= */
 
 @media (max-width: 767.98px) {
+
   /*HEADER NAV*/
   .header-nav {
     padding: 10px 25px;
@@ -495,5 +495,9 @@
   .col-md-3 {
     margin-top: 10px;
     margin-bottom: 40px;
+  }
+
+  .sm-column {
+    flex-direction: column;
   }
 }

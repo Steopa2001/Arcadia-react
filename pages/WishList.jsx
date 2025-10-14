@@ -125,7 +125,7 @@ const WishList = () => {
                   </td>
                   {Number(discount) > 0 ? (
                     <td>
-                      <div className="price-wrapper justify-content-center flex-column">
+                      <div className="price-wrapper justify-content-center sm-column">
                         <span className="old-price">
                           € {Number(price).toFixed(2)}
                         </span>
