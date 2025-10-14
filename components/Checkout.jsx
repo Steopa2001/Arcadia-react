@@ -1,9 +1,12 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import CartContext from "../src/contexts/cartContext";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = ({ cartItems }) => {
   const { cart, setCart, numberCart, setNumberCart } = useContext(CartContext)
+
+  const navigate = useNavigate();
 
   const [toast, setToast] = useState({
     show: false,
@@ -121,9 +124,15 @@ const Checkout = ({ cartItems }) => {
         // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
         return axios.delete("http://localhost:3000/cart").catch(() => { });
       })
+      .then(() => {
+        // piccolo delay opzionale per permettere al toast di mostrarsi
+        setTimeout(() => navigate("/ringraziamenti"), 1000);
+      })
       .catch(() => {
         showToast("Errore durante il pagamento", "error");
       });
+
+
   };
 
   const clearCart = () => {

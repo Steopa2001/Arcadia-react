@@ -9,6 +9,18 @@ const WishList = () => {
   const [showGif, setShowGif] = useState(false);
   const { numberCart, setNumberCart } = useContext(CartContext);
 
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    variant: "success",
+  });
+
+  const showToast = (message, variant = "success") => {
+    setToast({ show: true, message, variant });
+    // nascondi dopo 2.5s
+    setTimeout(() => setToast((t) => ({ ...t, show: false })), 2500);
+  };
+
   // funzione per aggiungere un prodotto della wishlist al carrello
   const handleAddToCart = async (product) => {
     try {
@@ -29,10 +41,16 @@ const WishList = () => {
     } catch (err) {
       console.error("Errore durante l'aggiunta al carrello:", err);
       if (product.quantity = 10) {
-        alert("Hai raggiunto la quantità massima (10) per questo prodotto.");
+        showToast(
+          "Hai raggiunto la quantità massima (10) per questo prodotto.",
+          "error"
+        );
       }
       else {
-        alert("Errore durante l'aggiunta al carrello");
+        showToast(
+          "Errore durante l'aggiunta al carrello",
+          "error"
+        );
       }
     }
   };
@@ -173,6 +191,14 @@ const WishList = () => {
           />
         </div>
       )}
+      {/* Toast bottom-right */}
+      <div
+        className={`app-toast ${toast.show ? "show" : ""} ${toast.variant}`}
+        role="status"
+        aria-live="polite"
+      >
+        {toast.message}
+      </div>
     </div>
   );
 };
