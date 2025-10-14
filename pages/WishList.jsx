@@ -111,7 +111,7 @@ const WishList = () => {
           </thead>
           <tbody>
             {wishlist.map((product) => {
-              const { id, image, name, price } = product;
+              const { id, image, name, price, discount } = product;
 
               return (
                 <tr key={id} className="align-middle">
@@ -123,7 +123,25 @@ const WishList = () => {
                     />
                     <p className="mt-2 fw-semibold">{name}</p>
                   </td>
-                  <td>{parseFloat(price).toFixed(2)} €</td>
+                  {Number(discount) > 0 ? (
+                    <td>
+                      <div className="price-wrapper justify-content-center flex-column">
+                        <span className="old-price">
+                          € {Number(price).toFixed(2)}
+                        </span>
+                        <span className="new-price">
+                          €{" "}
+                          {(
+                            Number(price) -
+                            (Number(price) * Number(discount)) / 100
+                          ).toFixed(2)}
+                        </span>
+                      </div>
+                    </td>
+                  ) : (
+                    <td>€ {Number(price).toFixed(2)}</td>
+                  )}
+                  {/* <td>€ {parseFloat(price).toFixed(2)}</td> */}
                   <td>
                     <button
                       className="btn-wishlist me-3"
