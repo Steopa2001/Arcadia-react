@@ -417,7 +417,13 @@
   .wishlist-container .btn.btn-outline-danger {
     margin-bottom: 0;
   }
+
+  .cart-wizard-gif {
+    top: 70px;
+    right: -8px;
+  }
 }
+
 
 /* =========================================
    TABLET (<768px)
