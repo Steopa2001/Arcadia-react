@@ -1261,6 +1261,72 @@ select.form-select:focus {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
+.cart-container:has(> .container > h2.text-center) {
+  background: url("https://i.pinimg.com/1200x/b6/b5/c9/b6b5c9dcc17f6d3f2b8f43d68e3e7f66.jpg")
+    center/contain repeat;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+/* overlay scuro leggero, senza blur */
+.cart-container:has(> .container > h2.text-center)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); /* 👈 solo oscuramento */
+  z-index: 0;
+}
+
+/* blocco vetroso con blur — solo quando il carrello è vuoto */
+.cart-container:has(> .container > h2.text-center) .container {
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px); /* 👈 blur SOLO dentro il box */
+  border-radius: 14px;
+  padding: 60px 40px;
+  animation: fadeInCartEmpty 1s ease both;
+}
+
+/* titolo "Il carrello è vuoto" */
+.cart-container h2.text-center {
+  font-family: "Cinzel Decorative", serif;
+  font-size: 2rem;
+  color: #f0e6c8;
+  text-shadow: 0 0 6px rgba(168, 92, 255, 0.4), 0 0 14px rgba(60, 11, 115, 0.4);
+  margin: 0;
+  letter-spacing: 1px;
+  animation: fadeInCartEmptyText 1.2s ease both;
+}
+
+/* animazioni */
+@keyframes fadeInCartEmpty {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeInCartEmptyText {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* rimozione bordi visibili tra le celle */
 .cart-container table {
   border-collapse: collapse;
