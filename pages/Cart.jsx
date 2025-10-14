@@ -151,10 +151,10 @@ const Cart = () => {
             <table className="table text-center my-4">
               <thead className="cart-header">
                 <tr>
-                  <th className="col-product">PRODOTTO</th>
-                  <th className="col-price">PREZZO</th>
-                  <th className="col-quantity">QUANTITÀ</th>
-                  <th className="col-total">TOTALE</th>
+                  <th className="col-product tab-prodotto">PRODOTTO</th>
+                  <th className="col-price tab-prezzo">PREZZO</th>
+                  <th className="col-quantity tab-quantità">QUANTITÀ</th>
+                  <th className="col-total tab-total">TOTALE</th>
                 </tr>
               </thead>
               <tbody>
@@ -234,7 +234,7 @@ const Cart = () => {
                           € {(parseFloat(price) * parseInt(quantity)).toFixed(2)}
                         </td>
                       )}
-                      <td>
+                      <td className="col-remove">
                         <button
                           className="btn btn-danger"
                           onClick={() => handleRemoveClick(productCart)}
