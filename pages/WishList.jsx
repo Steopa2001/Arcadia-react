@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import CartContext from "../src/contexts/cartContext";
+import axiosClient from "../src/api/axiosClient";
 
 const WishList = () => {
   const [wishlist, setWishlist] = useState([]);
@@ -28,8 +29,8 @@ const WishList = () => {
         ...product,
         quantity: product.quantity || 1,
       };
-      const resp = await axios.post(
-        "http://localhost:3000/cart",
+      const resp = await axiosClient.post(
+        "/cart",
         productWithQuantity
       );
       console.log("✅ Prodotto aggiunto al carrello:", resp.data);
@@ -57,8 +58,8 @@ const WishList = () => {
 
   // Carica wishlist dal backend
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/wishlist")
+    axiosClient
+      .get("/wishlist")
       .then((resp) => setWishlist(resp.data))
       .catch((err) =>
         console.error("Errore nel caricamento della wishlist:", err)
@@ -75,8 +76,8 @@ const WishList = () => {
   const confirmRemove = () => {
     if (!selectedProduct) return;
 
-    axios
-      .delete(`http://localhost:3000/wishlist/${selectedProduct.id}`)
+    axiosClient
+      .delete(`/wishlist/${selectedProduct.id}`)
       .then(() => {
         setWishlist((prev) =>
           prev.filter((item) => item.id !== selectedProduct.id)

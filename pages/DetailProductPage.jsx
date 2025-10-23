@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import CartContext from "../src/contexts/cartContext";
+import axiosClient from "../src/api/axiosClient";
 
 const DetailProductPage = () => {
   const { slug } = useParams();
@@ -25,8 +26,8 @@ const DetailProductPage = () => {
   };
 
   const fetchProduct = () => {
-    axios
-      .get(`http://localhost:3000/products/slug/${slug}`)
+    axiosClient
+      .get(`/products/slug/${slug}`)
       .then((resp, err) => {
         setProduct(resp.data);
       })
@@ -40,8 +41,8 @@ const DetailProductPage = () => {
     try {
       const productWithQuantity = { ...product, quantity };
 
-      const response = await axios.post(
-        "http://localhost:3000/cart",
+      const response = await axiosClient.post(
+        "/cart",
         productWithQuantity
       );
 
@@ -78,8 +79,8 @@ const DetailProductPage = () => {
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = () => {
-    axios
-      .post("http://localhost:3000/wishlist", product)
+    axiosClient
+      .post("/wishlist", product)
       .then(() => {
         showToast(`${product.name} è stato aggiunto alla wishlist 💖`, "success");
       })

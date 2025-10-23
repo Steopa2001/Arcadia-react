@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import PromoENew from "../components/PromoENew";
+import axiosClient from "../src/api/axiosClient";
 
 const Homepage = () => {
   const sectionRef = useRef(null);
@@ -18,10 +19,10 @@ const Homepage = () => {
 
   // chiamate API dei colleghi
   useEffect(() => {
-    axios.get("http://localhost:3000/categories").then((resp) => {
+    axiosClient.get("/categories").then((resp) => {
       setCategories(resp.data);
     });
-    axios.get("http://localhost:3000/products").then((resp) => {
+    axiosClient.get("/products").then((resp) => {
       setGames(resp.data);
     });
   }, []);

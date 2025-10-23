@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import CartContext from "../src/contexts/cartContext";
+import axiosClient from "../src/api/axiosClient";
 
 const CatalogPage = () => {
   const { slug } = useParams();
@@ -31,8 +32,8 @@ const CatalogPage = () => {
         ...product,
         quantity: product.quantity || 1,
       };
-      await axios.post(
-        "http://localhost:3000/cart",
+      await axiosClient.post(
+        "cart",
         productWithQuantity
       );
       setNumberCart((prev) => prev + (product.quantity || 1));
@@ -59,8 +60,8 @@ const CatalogPage = () => {
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
-    axios
-      .post("http://localhost:3000/wishlist", product)
+    axiosClient
+      .post("/wishlist", product)
       .then(() => {
         showToast(
           `${product.name} è stato aggiunto alla wishlist 💖`,
@@ -79,8 +80,8 @@ const CatalogPage = () => {
 
   //Definisco una funzione che, quando viene chiamata, carica i prodotti dal back-end
   function loadProducts() {
-    axios
-      .get("http://localhost:3000/products", {
+    axiosClient
+      .get("/products", {
         params: {
           q: searchTerm,
           slug: slug,

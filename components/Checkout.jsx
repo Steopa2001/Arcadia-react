@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import CartContext from "../src/contexts/cartContext";
 import { useNavigate } from "react-router-dom";
+import axiosClient from "../src/api/axiosClient";
 
 const Checkout = ({ cartItems }) => {
   const { cart, setCart, numberCart, setNumberCart } = useContext(CartContext)
@@ -118,11 +119,11 @@ const Checkout = ({ cartItems }) => {
       ...billing,
     };
 
-    axios.post("http://localhost:3000/orders", body)
+    axiosClient.post("/orders", body)
       .then(() => {
         showToast("Pagamento riuscito! Ordine creato", "success");
         // prova a svuotare il carrello ma non bloccare l'esperienza se fallisce
-        return axios.delete("http://localhost:3000/cart").catch(() => { });
+        return axiosClient.delete("/cart").catch(() => { });
       })
       .then(() => {
         // piccolo delay opzionale per permettere al toast di mostrarsi
@@ -136,11 +137,11 @@ const Checkout = ({ cartItems }) => {
   };
 
   const clearCart = () => {
-    axios
-      .get("http://localhost:3000/cart")
+    axiosClient
+      .get("/cart")
       .then((resp) => {
         const deleteRequests = resp.data.map((product) =>
-          axios.delete(`http://localhost:3000/cart/${product.id}`)
+          axiosClient.delete(`/cart/${product.id}`)
         );
 
         // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate

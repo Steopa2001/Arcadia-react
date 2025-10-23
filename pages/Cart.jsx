@@ -3,6 +3,7 @@ import axios from "axios";
 import Checkout from "../components/Checkout";
 import ModalCheckout from "../components/ModalCheckout";
 import CartContext from "../src/contexts/cartContext";
+import axiosClient from "../src/api/axiosClient";
 
 
 const Cart = () => {
@@ -17,7 +18,7 @@ const Cart = () => {
 
   // carica il carrello
   useEffect(() => {
-    axios.get("http://localhost:3000/cart").then((resp) => {
+    axiosClient.get("/cart").then((resp) => {
       const productsWithQuantity = resp.data.map((product) => ({
         ...product,
         quantity: product.quantity || 1,
@@ -52,8 +53,8 @@ const Cart = () => {
           const safeQuantity = newQuantity < 1 ? 1 : newQuantity;
 
           // aggiorna il backend (PATCH)
-          axios
-            .patch(`http://localhost:3000/cart/${id}`, {
+          axiosClient
+            .patch(`/cart/${id}`, {
               quantity: safeQuantity,
             })
             .catch((err) =>
@@ -77,8 +78,8 @@ const Cart = () => {
   const confirmRemove = () => {
     if (!selectedProduct) return;
 
-    axios
-      .delete(`http://localhost:3000/cart/${selectedProduct.id}`)
+    axiosClient
+      .delete(`/cart/${selectedProduct.id}`)
       .then(() => {
         // aggiorna lista carrello
         setCart((prev) =>
@@ -104,11 +105,11 @@ const Cart = () => {
   };
 
   const confirmClearCart = () => {
-    axios
-      .get("http://localhost:3000/cart")
+    axiosClient
+      .get("/cart")
       .then((resp) => {
         const deleteRequests = resp.data.map((product) =>
-          axios.delete(`http://localhost:3000/cart/${product.id}`)
+          axiosClient.delete(`/cart/${product.id}`)
         );
 
         // Promise.all per eseguire più operazioni asincrone in parallelo e aspettare che tutte siano completate

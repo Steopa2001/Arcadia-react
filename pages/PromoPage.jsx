@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import CartContext from "../src/contexts/cartContext";
+import axiosClient from "../src/api/axiosClient";
 
 const PromoPage = () => {
   const [promos, setPromos] = useState([]);
@@ -20,8 +21,8 @@ const PromoPage = () => {
 
   // Aggiungi prodotto alla wishlist
   const handleAddToWishlist = (product) => {
-    axios
-      .post("http://localhost:3000/wishlist", product)
+    axiosClient
+      .post("/wishlist", product)
       .then(() => {
         showToast(
           `${product.name}è stato aggiunto alla wishlist 💖`,
@@ -40,7 +41,7 @@ const PromoPage = () => {
 
   // chiamate API
   useEffect(() => {
-    axios.get("http://localhost:3000/products").then((resp) => {
+    axiosClient.get("/products").then((resp) => {
       setPromos(resp.data);
     });
   }, []);

@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import axiosClient from "../src/api/axiosClient";
 
 const PromoENew = () => {
   const [promos, setPromos] = useState([]);
   // chiamate API
   useEffect(() => {
-    axios.get("http://localhost:3000/products").then((resp) => {
+    axiosClient.get("/products").then((resp) => {
       setPromos(resp.data);
     });
   }, []);
