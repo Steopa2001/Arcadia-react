@@ -4,7 +4,7 @@ import axios from "axios";
 const API = import.meta.env.VITE_API_URL;
 
 const axiosClient = axios.create({
-  baseURL: API,
+  baseURL: 'https://arcadia-react-production.up.railway.app',
   headers: {
     "Content-Type": "application/json",
   },
